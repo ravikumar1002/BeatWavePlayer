@@ -1,10 +1,8 @@
 
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import AdbIcon from '@mui/icons-material/Adb';
 
 const Header = () => {
 
@@ -16,7 +14,6 @@ const Header = () => {
         }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters className='p-6'>
-                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
                     <Typography
                         variant="h5"
                         noWrap
