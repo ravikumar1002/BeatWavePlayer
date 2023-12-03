@@ -1,4 +1,4 @@
-import tmdbAxiosInstance from '../services/axiosInstance/tmdb';
+import tmdbAxiosInstance from './axiosInstance/spotify';
 import { AxiosRequestConfig } from 'axios';
 
 
