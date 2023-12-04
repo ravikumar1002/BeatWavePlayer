@@ -17,8 +17,6 @@ const VerticalSongCard = () => {
         animationDelay: "0.25s",
         animationFillMode: "both",
         animationName: `${dDzoI}`,
-        transform: "translateY(100%)",
-        animationPlayState: "running",
     }
 
     return (
