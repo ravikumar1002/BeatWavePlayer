@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { keyframes } from '@mui/system';
 import './App.css'
 import Header from './components/Header/Header';
 import VerticalSongCard from './components/SongCard/VerticalSongCard';
@@ -37,27 +38,36 @@ function App() {
 
   // console.log(trendingData)
 
+  const dmNUZD = keyframes`
+  100% {
+    transform: translate(0px);
+}`;
+
+  const animationHeading = {
+    animationDuration: "0.3s",
+    animationFillMode: "forwards",
+    display: "block",
+    animationName: `${dmNUZD}`,
+    transform: "translateY(100%)",
+    animationPlayState: "running"
+  }
+
   return (
     <>
       <div>
         <Header />
-        <Box sx={{
-          animationDuration: "0.3s",
-          animationFillMode: "forwards",
-          display: "block",
-          animationName: "dmNUZD",
-          transform: "translateY(100%)",
-          animationPlayState: "running"
-        }}>
+        <Box>
           <Box sx={{
             padding: "2rem"
           }} >
             <Typography variant='h4' className='p-4' sx={{
               fontWeight: "bold",
+              ...animationHeading,
             }}>Weekly Top Songs Global</Typography>
             <Typography variant='body1' className='p-4' sx={{
               color: "gray",
               fontWeight: 500,
+              ...animationHeading,
             }}>Friday, November 24 - Thursday, November 30, 2023</Typography>
           </Box>
         </Box>
@@ -79,7 +89,7 @@ function App() {
           <VerticalSongCard />
           <VerticalSongCard />
         </Box>
-      </div>
+      </div >
     </>
   )
 }
