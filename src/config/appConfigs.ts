@@ -1,7 +1,8 @@
 
 const appConfigs = {
     spotify: {
-        // clientID: process.env.CLIENT_ID_KEY
+        client_id: import.meta.env.VITE_CLIENT_ID_KEY,
+        client_secret: import.meta.env.VITE_CLIENT_ID_KEY,
     },
 }
 
