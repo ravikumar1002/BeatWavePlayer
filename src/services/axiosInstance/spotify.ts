@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import appConfigs from '../../config/appConfigs';
 
 const tmdbAxiosInstance = axios.create({
     baseURL: 'https://api.spotify.com/v1/',
