@@ -3,6 +3,9 @@ import { keyframes } from '@mui/system';
 import './App.css'
 import Header from './components/Header/Header';
 import VerticalSongCard from './components/SongCard/VerticalSongCard';
+import appConfigs from './config/appConfigs';
+import axios from 'axios';
+
 // import { GetSpotifyDataAsJSON } from './services/getApiData';
 
 // export const getTrendingData = () => {
@@ -17,26 +20,28 @@ import VerticalSongCard from './components/SongCard/VerticalSongCard';
 
 function App() {
 
-  // const authOptions = {
-  //   url: 'https://accounts.spotify.com/api/token',
-  //   headers: {
-  //     'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-  //   },
-  //   form: {
-  //     grant_type: 'client_credentials'
-  //   },
-  //   json: true
-  // };
+  const { ClientSecret: Client_secret, clientID: client_id } = appConfigs.spotify;
 
-  // request.post(authOptions, function (error, response, body) {
-  //   if (!error && response.statusCode === 200) {
-  //     var token = body.access_token;
-  //   }
-  // });
 
-  // const trendingData = getTrendingData();
+  const authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    method: 'post',
+    headers: {
+      'Authorization': 'Basic ' + Buffer.from(client_id + ':' + Client_secret).toString('base64'),
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data: 'grant_type=client_credentials',
+  };
 
-  // console.log(trendingData)
+  axios(authOptions)
+    .then(response => {
+      const token = response.data.access_token;
+      console.log('Access Token:', token);
+    })
+    .catch(error => {
+      console.error('Error getting access token:', error.response ? error.response.data : error.message);
+    });
+
 
   const dmNUZD = keyframes`
   100% {
