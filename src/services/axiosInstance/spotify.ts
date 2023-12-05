@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const tmdbAxiosInstance = axios.create({
+const spotifyAxiosInstance = axios.create({
     baseURL: 'https://api.spotify.com/v1/',
 });
 
-tmdbAxiosInstance.interceptors.request.use((config) => {
+spotifyAxiosInstance.interceptors.request.use((config) => {
     config.params = {
         ...config.params,
     }
     return config
 })
 
-export default tmdbAxiosInstance;
+export default spotifyAxiosInstance;
