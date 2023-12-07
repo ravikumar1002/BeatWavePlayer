@@ -3,7 +3,8 @@ import { keyframes } from '@mui/system';
 
 
 
-const VerticalSongCard = () => {
+const VerticalSongCard = (props) => {
+    const { songDetails, listRank } = props
     const dDzoI = keyframes`
         0% {
             opacity: 0;
@@ -30,14 +31,14 @@ const VerticalSongCard = () => {
                     borderRadius: "5px"
                 }}>
                     <Box>
-                        <img src="https://i.scdn.co/image/ab67616d00001e0234f21d3047d85440dfa37f10" alt="" style={{
+                        <img src={songDetails.track.album.images[0].url} alt="" style={{
                             height: "96px",
                             width: "96px",
                             objectFit: "cover",
                         }} />
                     </Box>
                     <Box>
-                        <Typography variant="h5" sx={{ fontWeight: 700 }}>1</Typography>
+                        <Typography variant="h5" sx={{ fontWeight: 700 }}>{listRank + 1}</Typography>
                     </Box>
                 </Box>
                 <Box className="" sx={{
@@ -45,14 +46,20 @@ const VerticalSongCard = () => {
                 }}>
                     <Box>
                         <Typography variant="h5" className='p-1' sx={{ fontWeight: 900 }}>
-                            All I Want for Christmas Is You
+                            {songDetails.track.name}
                         </Typography>
-                        <Typography variant='body1' className='p-1' sx={{
-                            color: "gray",
-                            fontWeight: 500,
-                        }}>
-                            Mariah Carey
-                        </Typography>
+                        <Box className="flex">
+                            {songDetails.track.artists.map((details, i) => {
+                                return (
+                                    <Typography key={i} variant='body1' className='p-1' sx={{
+                                        color: "gray",
+                                        fontWeight: 500,
+                                    }}>
+                                        {details.name}{i !== songDetails.track.artists.length - 1 ? ", " : ""}
+                                    </Typography>
+                                )
+                            })}
+                        </Box>
                     </Box>
                 </Box>
             </Box>
