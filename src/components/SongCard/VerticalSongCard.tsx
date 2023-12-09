@@ -61,6 +61,9 @@ const VerticalSongCard = (props) => {
                             })}
                         </Box>
                     </Box>
+                    <Box>
+                        <audio controls src={songDetails.track.preview_url}></audio>
+                    </Box>
                 </Box>
             </Box>
         </Box>
