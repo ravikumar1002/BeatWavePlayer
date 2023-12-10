@@ -1,27 +1,15 @@
-import { GetSpotifyDataAsJSON } from "../services/getApiData";
 import VerticalSongCard from "../components/SongCard/VerticalSongCard"
 import { Box, Typography } from "@mui/material"
-import { useState, useEffect } from 'react'
 import { keyframes } from '@mui/system';
+import { PlaylsitDataDTO } from "../dto/playlistDataDTO";
 
 
+interface ITreadingPage {
+    data: PlaylsitDataDTO ;
+}
 
-const TreadingPage = () => {
-
-    const [data, setData] = useState({})
-
-    const getTrendingData = async () => {
-
-        const trendingResponse = await GetSpotifyDataAsJSON<any>("/playlists/37i9dQZEVXbLZ52XmnySJg", {
-            params: {},
-        });
-        setData(trendingResponse)
-        return trendingResponse
-    }
-
-    useEffect(() => {
-        getTrendingData()
-    }, [])
+const TreadingPage = (props: ITreadingPage) => {
+    const { data } = props
 
     const dmNUZD = keyframes`
     100% {
