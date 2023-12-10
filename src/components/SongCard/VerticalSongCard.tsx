@@ -1,9 +1,13 @@
+import { TrackItem } from "../../dto/playlistDataDTO";
 import { Box, Typography } from "@mui/material"
 import { keyframes } from '@mui/system';
 
+interface IVerticalSongCardProps {
+    songDetails: TrackItem,
+    listRank: number,
+}
 
-
-const VerticalSongCard = (props) => {
+const VerticalSongCard = (props: IVerticalSongCardProps) => {
     const { songDetails, listRank } = props
     const dDzoI = keyframes`
         0% {
