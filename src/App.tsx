@@ -5,6 +5,7 @@ import TreadingPage from './pages/TrendingPage';
 import { GetSpotifyDataAsJSON } from './services/getApiData';
 import { useState, useEffect } from 'react'
 import AudioPlayer from './components/AudioPlayer/AudioPlayer'
+import { Box } from '@mui/material';
 
 const App = () => {
 
@@ -24,16 +25,22 @@ const App = () => {
     getTrendingData()
   }, [])
 
+
   return (
     <>
-      <div>
+      <Box className={"relative"}>
         <Header />
         {data && <TreadingPage data={data} />}
-        {/* {data && <AudioPlayer playlist={data.track.item.map(item) => {
-            title: ;
-  url: string
-        }}/>} */}
-      </div >
+        {data && <AudioPlayer playlist={data?.tracks?.items.map((item) => {
+          return {
+            title: item.track.name,
+            url: item.track.preview_url,
+            image: item.track.album.images[0].url,
+          }
+        })}
+        />
+        }
+      </Box >
     </>
   )
 }
