@@ -194,33 +194,6 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                         </Typography>
                     </Box>
                 </CardContent>
-                {/* <Stack spacing={2} direction="row" sx={{ mb: 1, px: 1}} alignItems="center">
-                    <VolumeDownRounded />
-                    <Slider
-                        aria-label="Volume"
-                        // defaultValue={30}
-                        onChange={volumeChangeHandler}
-                        value={volume / 100}
-                        sx={{
-                            width:"10rem",
-                            '& .MuiSlider-track': {
-                                border: 'none',
-                            },
-                            '& .MuiSlider-thumb': {
-                                width: 24,
-                                height: 24,
-                                backgroundColor: '#fff',
-                                '&:before': {
-                                    boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
-                                },
-                                '&:hover, &.Mui-focusVisible, &.Mui-active': {
-                                    boxShadow: 'none',
-                                },
-                            },
-                        }}
-                    />
-                    <VolumeUpRounded />
-                </Stack> */}
                 <Stack spacing={2} direction="row" sx={{ mb: 1, px: 1 }} alignItems="center">
                     <VolumeDownRounded />
                     <Slider
@@ -228,8 +201,11 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                         // defaultValue={30}
                         value={volume}
                         onChange={volumeChangeHandler}
+                        min={0}
+                        max={1}
+                        step={0.01}
                         sx={{
-                            width:'10rem',
+                            width: '10rem',
                             color: 'rgba(0,0,0,0.87)',
                             '& .MuiSlider-track': {
                                 border: 'none',
