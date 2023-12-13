@@ -21,7 +21,7 @@ const Header = () => {
                         href="#"
                         sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            // display: { sm: 'none', md: 'flex' },
                             fontWeight: 700,
                             color: 'inherit',
                             textDecoration: 'none',
