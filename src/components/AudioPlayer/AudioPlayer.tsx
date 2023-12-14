@@ -22,11 +22,10 @@ interface IAudioPlayerProps {
 
 const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
 
-    const { audioLevel, isAudioMuted, setAudioLevel, setIsAudioMuted } = useAppStore()
+    const { audioLevel, isAudioMuted, setAudioLevel, setIsAudioMuted, } = useAppStore()
 
     const [currentTrack, setCurrentTrack] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    const [volume, setVolume] = useState<number>(0.5); // Initial volume
 
     const [progress, setProgress] = useState<number>(0);
 
@@ -67,9 +66,11 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
         const trackNumber = (currentTrack + 1) % playlist.length
         setCurrentTrack(trackNumber);
         // console.log(currentTrack, playlist[currentTrack].url, "currtr")
+        console.log(playlist[currentTrack].url, currentTrack)
         audioRef.current.src = playlist[trackNumber].url;
         setTimeout(() => {
             const playPromise = audioRef.current.play();
+            console.log(trackNumber, "zxc")
 
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
@@ -85,13 +86,11 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
     };
 
     const prevTrackHandler = (): void => {
-        setCurrentTrack((prevTrack) =>
-            prevTrack === 0 ? playlist.length - 1 : prevTrack - 1
-        );
-        audioRef.current.src = playlist[currentTrack].url;
+        const treackNumber = currentTrack === 0 ? playlist.length - 1 : currentTrack - 1
+        setCurrentTrack(treackNumber);
+        audioRef.current.src = playlist[treackNumber].url;
         setTimeout(() => {
             const playPromise = audioRef.current.play();
-
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
                     setIsPlaying(true);
@@ -135,7 +134,7 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
 
 
     return (
-        <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10"}>
+        <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10"} key={playlist[currentTrack].url}>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', marginTop: "0.5rem" }}>
                 {/* <audio ref={audioRef} preload="
             none" src={playlist[currentTrack].url} volume={volume} /> */}
