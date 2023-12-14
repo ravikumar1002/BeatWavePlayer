@@ -44,7 +44,14 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
         };
     }, [currentTrack]);
 
-
+    const playPauseHandler = (): void => {
+        if (isPlaying) {
+            audioRef.current.pause();
+        } else {
+            audioRef.current.play();
+        }
+        setIsPlaying(!isPlaying);
+    };
 
 
     const nextTrackHandler = (): void => {
@@ -165,6 +172,7 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                 />
             </Box>
             <ProgressSlider sliderValue={progress} sliderFunction={progressChangeHandler} />
+
         </Card>
     )
 }
