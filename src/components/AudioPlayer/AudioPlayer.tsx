@@ -1,14 +1,11 @@
-import { Box, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
-import PauseRounded from '@mui/icons-material/PauseRounded';
-import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
-import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
-import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
 
 import { useAppStore } from "../../store/store";
 import ProgressSlider from "../ProgessSlider/ProgressSlider";
 import VolumeController from "../VolumeController/VolumeController";
+import SongController from "../SongController/SongController";
 interface Track {
     title: string;
     url: string;
@@ -22,12 +19,8 @@ interface IAudioPlayerProps {
 const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
 
     const { audioLevel, isAudioMuted, currentTrack, setAudioLevel, setIsAudioMuted, setCurrentTrack } = useAppStore()
-
-    // const [currentTrack, setCurrentTrack] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
     const [progress, setProgress] = useState<number>(0);
-
     const audioRef = useRef(new Audio(playlist[currentTrack].url));
 
     useEffect(() => {
@@ -51,26 +44,15 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
         };
     }, [currentTrack]);
 
-    const playPauseHandler = (): void => {
-        if (isPlaying) {
-            audioRef.current.pause();
-        } else {
-            audioRef.current.play();
-        }
-        setIsPlaying(!isPlaying);
-    };
+
 
 
     const nextTrackHandler = (): void => {
         const trackNumber = (currentTrack + 1) % playlist.length
         setCurrentTrack(trackNumber);
-        // console.log(currentTrack, playlist[currentTrack].url, "currtr")
-        console.log(playlist[currentTrack].url, currentTrack)
         audioRef.current.src = playlist[trackNumber].url;
         setTimeout(() => {
             const playPromise = audioRef.current.play();
-            console.log(trackNumber, "zxc")
-
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
                     setIsPlaying(true);
@@ -105,7 +87,6 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
 
     const volumeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const newVolume = parseFloat(e.target.value);
-        // setVolume(newVolume);
         setAudioLevel(newVolume)
         audioRef.current.volume = newVolume;
     };
@@ -135,8 +116,6 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
     return (
         <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10"} key={playlist[currentTrack].url}>
             <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', marginTop: "0.5rem" }}>
-                {/* <audio ref={audioRef} preload="
-            none" src={playlist[currentTrack].url} volume={volume} /> */}
                 <Box
                     sx={{
                         display: 'flex',
@@ -145,22 +124,12 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                         mt: -1,
                     }}
                 >
-                    <IconButton aria-label="previous song" onClick={prevTrackHandler} >
-                        <FastRewindRounded fontSize="large" />
-                    </IconButton>
-                    <IconButton
-                        aria-label={isPlaying ? 'play' : 'pause'}
-                        onClick={playPauseHandler}
-                    >
-                        {isPlaying ? <PauseRounded sx={{ fontSize: '3rem' }} /> :
-                            <PlayArrowRounded
-                                sx={{ fontSize: '3rem' }}
-                            />
-                        }
-                    </IconButton>
-                    <IconButton aria-label="next song" onClick={nextTrackHandler}>
-                        <FastForwardRounded fontSize="large" />
-                    </IconButton>
+                    <SongController
+                        isPlaying={isPlaying}
+                        prevTrackHandler={prevTrackHandler}
+                        playPauseHandler={playPauseHandler}
+                        nextTrackHandler={nextTrackHandler}
+                    />
                     <Box className="flex justify-between ml-2">
                         <Typography variant="body2">
                             {formatDuration(audioRef.current.currentTime).toString().split(".")[0]} / {formatDuration(audioRef.current.duration).toString().split(".")[0]}
@@ -196,7 +165,6 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                 />
             </Box>
             <ProgressSlider sliderValue={progress} sliderFunction={progressChangeHandler} />
-
         </Card>
     )
 }
