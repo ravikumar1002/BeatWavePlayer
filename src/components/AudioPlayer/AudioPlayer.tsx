@@ -79,7 +79,6 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
             }
             setIsPlaying(true);
         }, 0)
-
     };
 
     const prevTrackHandler = (): void => {
