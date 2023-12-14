@@ -1,16 +1,14 @@
 import { Box, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
-import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import PauseRounded from '@mui/icons-material/PauseRounded';
 import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
 import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
-import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 import Slider from '@mui/material/Slider';
-
+import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 interface Track {
     title: string;
     url: string;
@@ -26,6 +24,7 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
     const [currentTrack, setCurrentTrack] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [volume, setVolume] = useState<number>(0.5); // Initial volume
+
     const [progress, setProgress] = useState<number>(0);
 
     const audioRef = useRef(new Audio(playlist[currentTrack].url));
@@ -122,37 +121,21 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
         }
     };
 
+    function formatDuration(value: number) {
+        const minute = Math.floor(value / 60);
+        const secondLeft = value - minute * 60;
+        if (isNaN(minute) || isNaN(secondLeft)) {
+            return "0:00"
+        }
+        return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
+    }
+
 
     return (
-        // <Box className={"m-6 absolute sticky bottom-1 bg-gray-700 p-4 z-10"}>
-        //     <h3>{playlist[currentTrack].title}</h3>
-        //     <audio ref={audioRef} preload="
-        //     none" src={playlist[currentTrack].url} volume={volume} />
-        //     <Box className={"flex gap-8 p-3"}>
-        //         <button onClick={prevTrackHandler}>Previous</button>
-        //         <button onClick={playPauseHandler}>
-        //             {isPlaying ? 'Pause' : 'Play'}
-        //         </button>
-        //         <button onClick={nextTrackHandler}>Next</button>
-        //     </Box>
-        //     <div>
-        //         <label>Volume:</label>
-        //         <input
-        //             type="range"
-        //             min="0"
-        //             max="1"
-        //             step="0.01"
-        //             value={volume}
-        //             onChange={volumeChangeHandler}
-        //         />
-        //     </div>
-        // </Box>
-        <Card sx={{ display: 'flex' }} className={"absolute sticky bottom-0 bg-gray-700 z-10"}>
-            <Box>
-                <audio ref={audioRef} preload="
-            none" src={playlist[currentTrack].url} volume={volume} />
-            </Box>
-            <Box sx={{ display: 'flex', }}>
+        <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10"}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', marginTop: "0.5rem" }}>
+                {/* <audio ref={audioRef} preload="
+            none" src={playlist[currentTrack].url} volume={volume} /> */}
                 <Box
                     sx={{
                         display: 'flex',
@@ -177,8 +160,18 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                     <IconButton aria-label="next song" onClick={nextTrackHandler}>
                         <FastForwardRounded fontSize="large" />
                     </IconButton>
+                    <Box className="flex justify-between ml-2">
+                        <Typography variant="body2">
+                            {formatDuration(audioRef.current.currentTime).toString().split(".")[0]} / {formatDuration(audioRef.current.duration).toString().split(".")[0]}
+                        </Typography>
+
+                    </Box>
                 </Box>
-                <CardContent className="flex gap-8">
+
+                <CardContent className="flex gap-8 grow justify-center" sx={{
+                    padding: "0 1rem",
+                    alignItems: "center"
+                }}>
                     <CardMedia
                         component="img"
                         sx={{ width: 50, height: 50 }}
@@ -186,16 +179,24 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                         alt={playlist[currentTrack].title}
                     />
                     <Box>
-                        <Typography component="div" variant="h6">
+                        <Typography component="div" variant="h6" noWrap>
                             {playlist[currentTrack].title}
                         </Typography>
-                        <Typography variant="subtitle1" color="text.secondary" component="div">
+                        <Typography variant="subtitle1" color="text.secondary" component="div" noWrap>
                             Mac Miller
                         </Typography>
                     </Box>
                 </CardContent>
-                <Stack spacing={2} direction="row" sx={{ mb: 1, px: 1 }} alignItems="center">
-                    <VolumeDownRounded />
+                <Stack spacing={1} direction="row" sx={{ mb: 1, px: 1, mr: 4 }} alignItems="center">
+                    <IconButton aria-label="next song" onClick={() => {
+                        if (volume === 0) {
+                            setVolume(0.5)
+                        } else {
+                            setVolume(0)
+                        }
+                    }}>
+                       {volume === 0 ? <VolumeOffRoundedIcon  fontSize="medium" />  : <VolumeUpRounded fontSize="medium" />} 
+                    </IconButton>
                     <Slider
                         aria-label="Volume"
                         // defaultValue={30}
@@ -211,8 +212,8 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                                 border: 'none',
                             },
                             '& .MuiSlider-thumb': {
-                                width: 24,
-                                height: 24,
+                                width: 16,
+                                height: 16,
                                 backgroundColor: '#fff',
                                 '&:before': {
                                     boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
@@ -223,8 +224,9 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                             },
                         }}
                     />
-                    <VolumeUpRounded />
                 </Stack>
+            </Box>
+            <Box>
             </Box>
             <Slider
                 aria-label="time-indicator"
