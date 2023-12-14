@@ -1,15 +1,14 @@
 import { Box, Card, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
-import Stack from '@mui/material/Stack';
 import PauseRounded from '@mui/icons-material/PauseRounded';
 import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded';
 import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
 import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
-import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
-import Slider from '@mui/material/Slider';
-import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
+
 import { useAppStore } from "../../store/store";
+import ProgressSlider from "../ProgessSlider/ProgressSlider";
+import VolumeController from "../VolumeController/VolumeController";
 interface Track {
     title: string;
     url: string;
@@ -188,84 +187,15 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                         </Typography>
                     </Box>
                 </CardContent>
-                <Stack spacing={1} direction="row" sx={{ mb: 1, px: 1, mr: 4 }} alignItems="center">
-                    <IconButton aria-label="next song" onClick={() => {
-                        if (isAudioMuted) {
-                            setIsAudioMuted(false)
-                            audioRef.current.volume = audioLevel
-                        } else {
-                            setIsAudioMuted(true)
-                            audioRef.current.volume = 0
-                        }
-                    }}>
-                        {isAudioMuted ? <VolumeOffRoundedIcon fontSize="medium" /> : <VolumeUpRounded fontSize="medium" />}
-                    </IconButton>
-                    <Slider
-                        aria-label="Volume"
-                        // defaultValue={30}
-                        value={isAudioMuted ? 0 : audioLevel}
-                        onChange={volumeChangeHandler}
-                        min={0}
-                        max={1}
-                        step={0.01}
-                        sx={{
-                            width: '10rem',
-                            color: 'rgba(0,0,0,0.87)',
-                            '& .MuiSlider-track': {
-                                border: 'none',
-                            },
-                            '& .MuiSlider-thumb': {
-                                width: 16,
-                                height: 16,
-                                backgroundColor: '#fff',
-                                '&:before': {
-                                    boxShadow: '0 4px 8px rgba(0,0,0,0.4)',
-                                },
-                                '&:hover, &.Mui-focusVisible, &.Mui-active': {
-                                    boxShadow: 'none',
-                                },
-                            },
-                        }}
-                    />
-                </Stack>
+                <VolumeController
+                    isAudioMuted={isAudioMuted}
+                    audioRef={audioRef}
+                    audioLevel={audioLevel}
+                    setIsAudioMuted={setIsAudioMuted}
+                    volumeChangeHandler={volumeChangeHandler}
+                />
             </Box>
-            <Box>
-            </Box>
-            <Slider
-                aria-label="time-indicator"
-                size="small"
-                value={progress}
-                min={0}
-                step={0.01}
-                max={100}
-                onChange={progressChangeHandler}
-                sx={{
-                    position: "absolute",
-                    width: "100%",
-                    top: 0,
-                    height: 4,
-                    margin: "0.1rem",
-                    padding: "0",
-                    '& .MuiSlider-thumb': {
-                        width: 8,
-                        height: 8,
-                        transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
-                        '&:before': {
-                            boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
-                        },
-                        '&:hover, &.Mui-focusVisible': {
-                            boxShadow: `0px 0px 0px 8px rgb(0 0 0 / 16%) }`,
-                        },
-                        '&.Mui-active': {
-                            width: 20,
-                            height: 20,
-                        },
-                    },
-                    '& .MuiSlider-rail': {
-                        opacity: 0.50,
-                    },
-                }}
-            />
+            <ProgressSlider sliderValue={progress} sliderFunction={progressChangeHandler} />
 
         </Card>
     )
