@@ -9,6 +9,7 @@ import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import Slider from '@mui/material/Slider';
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
+import { useAppStore } from "../../store/store";
 interface Track {
     title: string;
     url: string;
@@ -20,6 +21,8 @@ interface IAudioPlayerProps {
 }
 
 const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
+
+    const { audioLevel, isAudioMuted, setAudioLevel, setIsAudioMuted } = useAppStore()
 
     const [currentTrack, setCurrentTrack] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -104,7 +107,8 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
 
     const volumeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const newVolume = parseFloat(e.target.value);
-        setVolume(newVolume);
+        // setVolume(newVolume);
+        setAudioLevel(newVolume)
         audioRef.current.volume = newVolume;
     };
 
@@ -163,7 +167,6 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                         <Typography variant="body2">
                             {formatDuration(audioRef.current.currentTime).toString().split(".")[0]} / {formatDuration(audioRef.current.duration).toString().split(".")[0]}
                         </Typography>
-
                     </Box>
                 </Box>
 
@@ -188,18 +191,20 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
                 </CardContent>
                 <Stack spacing={1} direction="row" sx={{ mb: 1, px: 1, mr: 4 }} alignItems="center">
                     <IconButton aria-label="next song" onClick={() => {
-                        if (volume === 0) {
-                            setVolume(0.5)
+                        if (isAudioMuted) {
+                            setIsAudioMuted(false)
+                            audioRef.current.volume = audioLevel
                         } else {
-                            setVolume(0)
+                            setIsAudioMuted(true)
+                            audioRef.current.volume = 0
                         }
                     }}>
-                       {volume === 0 ? <VolumeOffRoundedIcon  fontSize="medium" />  : <VolumeUpRounded fontSize="medium" />} 
+                        {isAudioMuted ? <VolumeOffRoundedIcon fontSize="medium" /> : <VolumeUpRounded fontSize="medium" />}
                     </IconButton>
                     <Slider
                         aria-label="Volume"
                         // defaultValue={30}
-                        value={volume}
+                        value={isAudioMuted ? 0 : audioLevel}
                         onChange={volumeChangeHandler}
                         min={0}
                         max={1}
