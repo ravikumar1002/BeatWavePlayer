@@ -22,9 +22,9 @@ interface IAudioPlayerProps {
 
 const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
 
-    const { audioLevel, isAudioMuted, setAudioLevel, setIsAudioMuted, } = useAppStore()
+    const { audioLevel, isAudioMuted, currentTrack, setAudioLevel, setIsAudioMuted, setCurrentTrack } = useAppStore()
 
-    const [currentTrack, setCurrentTrack] = useState<number>(0);
+    // const [currentTrack, setCurrentTrack] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
     const [progress, setProgress] = useState<number>(0);
