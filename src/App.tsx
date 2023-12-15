@@ -34,7 +34,7 @@ const App = () => {
         {data && <AudioPlayer playlist={data?.tracks?.items.map((item) => {
           return {
             title: item.track.name,
-            url: item.track.preview_url,
+            url: item.track?.preview_url ? item.track?.preview_url : "",
             image: item.track.album.images[0].url,
           }
         })}

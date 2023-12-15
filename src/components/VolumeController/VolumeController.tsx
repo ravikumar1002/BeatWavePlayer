@@ -7,7 +7,7 @@ interface IVolumeController {
     audioRef: React.MutableRefObject<HTMLAudioElement>
     audioLevel: number
     setIsAudioMuted: (isAudioMuted: boolean) => void
-    volumeChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+    volumeChangeHandler: (e: number | number[]) => void
 }
 
 const VolumeController = (props: IVolumeController) => {
@@ -29,9 +29,10 @@ const VolumeController = (props: IVolumeController) => {
             </IconButton>
             <Slider
                 aria-label="Volume"
-                // defaultValue={30}
                 value={isAudioMuted ? 0 : audioLevel}
-                onChange={volumeChangeHandler}
+                onChange={(_, value) => {
+                    volumeChangeHandler(value)
+                }}
                 min={0}
                 max={1}
                 step={0.01}

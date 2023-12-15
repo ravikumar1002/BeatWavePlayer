@@ -16,12 +16,14 @@ interface IAudioPlayerProps {
     playlist: Track[];
 }
 
-const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
+const AudioPlayer = (props: IAudioPlayerProps) => {
+
+    const { playlist } = props
 
     const { audioLevel, isAudioMuted, currentTrack, setAudioLevel, setIsAudioMuted, setCurrentTrack } = useAppStore()
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
-    const audioRef = useRef(new Audio(playlist[currentTrack].url));
+    const audioRef = useRef(new Audio(playlist[currentTrack]?.url));
 
     useEffect(() => {
         const updateProgress = () => {
@@ -57,11 +59,12 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
     const nextTrackHandler = (): void => {
         const trackNumber = (currentTrack + 1) % playlist.length
         setCurrentTrack(trackNumber);
-        audioRef.current.src = playlist[trackNumber].url;
+        const trackURL = playlist[trackNumber]?.url ? playlist[trackNumber]?.url : ""
+        audioRef.current.src = trackURL;
         setTimeout(() => {
             const playPromise = audioRef.current.play();
             if (playPromise !== undefined) {
-                playPromise.then(_ => {
+                playPromise.then(() => {
                     setIsPlaying(true);
                 })
                     .catch(error => {
@@ -80,7 +83,7 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
         setTimeout(() => {
             const playPromise = audioRef.current.play();
             if (playPromise !== undefined) {
-                playPromise.then(_ => {
+                playPromise.then(() => {
                     setIsPlaying(true);
                 })
                     .catch(error => {
@@ -92,14 +95,14 @@ const AudioPlayer = ({ playlist }: IAudioPlayerProps) => {
         }, 0)
     };
 
-    const volumeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const newVolume = parseFloat(e.target.value);
+    const volumeChangeHandler = (e: number | number[]): void => {
+        const newVolume = parseFloat(e.toString());
         setAudioLevel(newVolume)
         audioRef.current.volume = newVolume;
     };
 
-    const progressChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const newProgress = parseFloat(e.target.value);
+    const progressChangeHandler = (e: number | number[]) => {
+        const newProgress = parseFloat(e.toString());
         const newTime = (newProgress / 100) * audioRef.current.duration;
         setProgress(newProgress);
         console.log(newProgress, newTime)

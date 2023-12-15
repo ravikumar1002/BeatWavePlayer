@@ -2,7 +2,7 @@ import { Slider } from "@mui/material"
 
 interface IProgressSLider {
     sliderValue: number
-    sliderFunction: (e: React.ChangeEvent<HTMLInputElement>) => void
+    sliderFunction: (value: number | number[]) => void
 }
 
 const ProgressSlider = (props: IProgressSLider) => {
@@ -16,7 +16,9 @@ const ProgressSlider = (props: IProgressSLider) => {
             min={0}
             step={0.01}
             max={100}
-            onChange={sliderFunction}
+            onChange={(_, value) => {
+                sliderFunction(value)
+            }}
             sx={{
                 position: "absolute",
                 width: "100%",
