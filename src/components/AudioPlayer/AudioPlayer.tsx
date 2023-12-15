@@ -124,8 +124,8 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
 
 
     return (
-        <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10"} key={playlist[currentTrack].url}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', marginTop: "0.5rem" }}>
+        <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10 flex-wrap"} key={playlist[currentTrack].url}>
+            <Box sx={{ display: 'flex', flexWrap: "wrap", justifyContent: 'space-around', width: '100%', marginTop: "0.5rem" }}>
                 <Box
                     sx={{
                         display: 'flex',
@@ -175,7 +175,6 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
                 />
             </Box>
             <ProgressSlider sliderValue={progress} sliderFunction={progressChangeHandler} />
-
         </Card>
     )
 }

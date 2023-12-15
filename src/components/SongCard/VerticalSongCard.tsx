@@ -64,7 +64,7 @@ const VerticalSongCard = (props: IVerticalSongCardProps) => {
                         <Typography variant="h5" className='p-1' sx={{ fontWeight: 900 }}>
                             {songDetails.track.name}
                         </Typography>
-                        <Box className="flex">
+                        <Box className="flex flex-wrap">
                             {songDetails.track.artists.map((details, i) => {
                                 return (
                                     <Typography key={i} variant='body1' className='p-1' sx={{

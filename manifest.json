@@ -1,0 +1,52 @@
+{
+  "name": "Yfitops",
+  "short_name": "Yfitops",
+  "description": "A preview song listener app.",
+  "start_url": "http://localhost:5173/",
+  "display": "standalone",
+  "background_color": "red",
+  "theme_color": "#4285f4",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/public/spotify-48.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/spotify-96.svg",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/spotify-144.svg",
+      "sizes": "144x144",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/spotify-240.svg",
+      "sizes": "240x240",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/spotify-480.svg",
+      "sizes": "480x480",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/spotify-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/spotify-48.svg",
+      "sizes": "any"
+    }
+  ]
+}
