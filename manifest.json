@@ -2,7 +2,7 @@
   "name": "Yfitops",
   "short_name": "Yfitops",
   "description": "A preview song listener app.",
-  "start_url": "https://yfitops.ravikumar.dev/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "red",
   "theme_color": "#4285f4",
