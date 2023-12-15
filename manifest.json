@@ -1,7 +1,7 @@
 {
   "name": "Yfitops",
   "short_name": "Yfitops",
-  "description": "A readable Hacker News app.",
+  "description": "A preview song listener app.",
   "start_url": "http://localhost:5173/",
   "display": "standalone",
   "background_color": "red",
