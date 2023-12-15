@@ -1,3 +1,4 @@
+import { useAppStore } from "../../store/store";
 import { TrackItem } from "../../dto/playlistDataDTO";
 import { Box, Typography } from "@mui/material"
 import { keyframes } from '@mui/system';
@@ -9,6 +10,8 @@ interface IVerticalSongCardProps {
 
 const VerticalSongCard = (props: IVerticalSongCardProps) => {
     const { songDetails, listRank } = props
+    const { setCurrentTrack } = useAppStore()
+
     const dDzoI = keyframes`
         0% {
             opacity: 0;
@@ -25,11 +28,20 @@ const VerticalSongCard = (props: IVerticalSongCardProps) => {
     }
 
     return (
-        <Box>
-            <Box className="w-full flex p-8 bg-white" sx={{
+        <Box sx={{
+            "&:hover": {
+                color: 'red',
+                cursor: "pointer",
+            }
+        }}>
+            <Box className="w-full flex p-6 bg-white" sx={{
                 ...cardAnimation,
                 marginTop: "0.5rem"
-            }}>
+            }}
+                onClick={() => {
+                    setCurrentTrack(listRank)
+                }}
+            >
                 <Box className="flex gap-10 w-1/6" sx={{
                     alignItems: "center",
                     borderRadius: "5px"

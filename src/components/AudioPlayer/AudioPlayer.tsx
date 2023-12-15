@@ -25,6 +25,24 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
     const [progress, setProgress] = useState<number>(0);
     const audioRef = useRef(new Audio(playlist[currentTrack]?.url));
 
+    const songPlayHandler = (songsList: Track[], playingTrak: number, audioRef: React.MutableRefObject<HTMLAudioElement>, setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>) => {
+        const trackURL = songsList[playingTrak]?.url ? songsList[playingTrak]?.url : ""
+        audioRef.current.src = trackURL;
+        setTimeout(() => {
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    setIsPlaying(true);
+                })
+                    .catch(error => {
+                        console.log(error)
+                        setIsPlaying(false);
+                    });
+            }
+            setIsPlaying(true);
+        }, 0)
+    }
+
     useEffect(() => {
         const updateProgress = () => {
             const currentTime = audioRef.current.currentTime;
@@ -46,6 +64,10 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
         };
     }, [currentTrack]);
 
+    useEffect(() => {
+        songPlayHandler(playlist, currentTrack, audioRef, setIsPlaying)
+    }, [currentTrack])
+
     const playPauseHandler = (): void => {
         if (isPlaying) {
             audioRef.current.pause();
@@ -59,40 +81,13 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
     const nextTrackHandler = (): void => {
         const trackNumber = (currentTrack + 1) % playlist.length
         setCurrentTrack(trackNumber);
-        const trackURL = playlist[trackNumber]?.url ? playlist[trackNumber]?.url : ""
-        audioRef.current.src = trackURL;
-        setTimeout(() => {
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    setIsPlaying(true);
-                })
-                    .catch(error => {
-                        console.log(error)
-                        setIsPlaying(false);
-                    });
-            }
-            setIsPlaying(true);
-        }, 0)
+        songPlayHandler(playlist, trackNumber, audioRef, setIsPlaying)
     };
 
     const prevTrackHandler = (): void => {
-        const treackNumber = currentTrack === 0 ? playlist.length - 1 : currentTrack - 1
-        setCurrentTrack(treackNumber);
-        audioRef.current.src = playlist[treackNumber].url;
-        setTimeout(() => {
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    setIsPlaying(true);
-                })
-                    .catch(error => {
-                        console.log(error)
-                        setIsPlaying(false);
-                    });
-            }
-            setIsPlaying(true);
-        }, 0)
+        const trackNumber = currentTrack === 0 ? playlist.length - 1 : currentTrack - 1
+        setCurrentTrack(trackNumber);
+        songPlayHandler(playlist, trackNumber, audioRef, setIsPlaying)
     };
 
     const volumeChangeHandler = (e: number | number[]): void => {
