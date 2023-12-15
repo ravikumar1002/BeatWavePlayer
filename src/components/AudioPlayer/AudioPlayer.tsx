@@ -98,6 +98,11 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
     const volumeChangeHandler = (e: number | number[]): void => {
         const newVolume = parseFloat(e.toString());
         setAudioLevel(newVolume)
+        if (newVolume === 0) {
+            setIsAudioMuted(true)
+        } else {
+            setIsAudioMuted(false)
+        }
         audioRef.current.volume = newVolume;
     };
 
