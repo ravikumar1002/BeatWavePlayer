@@ -13,6 +13,7 @@ interface IVerticalSongCardProps {
 const styles: Record<string, SxProps> = {
     imageIconHover: {
         position: "absolute",
+        background: "#aca4a45e",
         top: 0,
         right: 0,
         width: "100%",
