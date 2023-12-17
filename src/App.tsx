@@ -36,6 +36,7 @@ const App = () => {
             title: item.track.name,
             url: item.track?.preview_url ? item.track?.preview_url : "",
             image: item.track.album.images[0].url,
+            id: item.track.id
           }
         })}
         />
