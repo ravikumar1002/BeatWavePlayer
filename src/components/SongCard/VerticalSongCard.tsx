@@ -54,7 +54,6 @@ const VerticalSongCard = (props: IVerticalSongCardProps) => {
         animationFillMode: "both",
         animationName: `${dDzoI}`,
     }
-    console.log(songDetails)
     return (
         <Box sx={styles.verticalSongContainer}>
             <Box className="w-full flex p-6 bg-white" sx={{

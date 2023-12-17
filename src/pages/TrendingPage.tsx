@@ -25,7 +25,6 @@ const TreadingPage = (props: ITreadingPage) => {
         animationPlayState: "running"
     }
 
-    console.log(data, "data");
     return (
         <>
             <Box>

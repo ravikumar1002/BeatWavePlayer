@@ -107,7 +107,6 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
         const newProgress = parseFloat(e.toString());
         const newTime = (newProgress / 100) * audioRef.current.duration;
         setProgress(newProgress);
-        console.log(newProgress, newTime)
         audioRef.current.currentTime = newTime;
 
         if (isNaN(newTime)) {

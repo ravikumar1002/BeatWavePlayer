@@ -8,7 +8,6 @@ export const getSpotifyAccessToken = async () => {
     const tokenexpiresIn = localStorage.getItem('spotifyAccesstokenexpiresIn')
     const spotifyAccessToken = localStorage.getItem('spotifyAccessToken')
 
-    console.log(client_id, client_secret)
     const currentTime = Math.floor(Date.now() / 1000)
     if (currentTime && Number(tokenexpiresIn) > Number(currentTime)) return spotifyAccessToken
     const enc = `${client_id}:${client_secret}`.toString();
