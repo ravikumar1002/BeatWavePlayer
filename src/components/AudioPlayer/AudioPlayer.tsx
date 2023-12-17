@@ -10,6 +10,7 @@ interface Track {
     title: string;
     url: string;
     image: string,
+    id: string
 }
 
 interface IAudioPlayerProps {
@@ -20,7 +21,7 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
 
     const { playlist } = props
 
-    const { audioLevel, isAudioMuted, currentTrack, setAudioLevel, setIsAudioMuted, setCurrentTrack } = useAppStore()
+    const { audioLevel, isAudioMuted, currentTrack, setAudioLevel, setIsAudioMuted, setCurrentTrack, setPlayingSongId } = useAppStore()
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const audioRef = useRef(new Audio(playlist[currentTrack]?.url));
@@ -66,6 +67,7 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
 
     useEffect(() => {
         songPlayHandler(playlist, currentTrack, audioRef, setIsPlaying)
+        setPlayingSongId(playlist[currentTrack].id)
     }, [currentTrack])
 
     const playPauseHandler = (): void => {
@@ -122,7 +124,6 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
         return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
     }
 
-
     return (
         <Card sx={{ display: 'flex', flexDirection: "column", justifyContent: "center" }} className={"sticky bottom-0 bg-gray-700 z-10 flex-wrap"} key={playlist[currentTrack].url}>
             <Box sx={{ display: 'flex', flexWrap: "wrap", justifyContent: 'space-around', width: '100%', marginTop: "0.5rem" }}>
@@ -158,7 +159,8 @@ const AudioPlayer = (props: IAudioPlayerProps) => {
                         alt={playlist[currentTrack].title}
                     />
                     <Box>
-                        <Typography component="div" variant="h6" noWrap>
+                        <Typography component="div" variant="h6" noWrap sx={{
+                        }}>
                             {playlist[currentTrack].title}
                         </Typography>
                         <Typography variant="subtitle1" color="text.secondary" component="div" noWrap>
