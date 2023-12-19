@@ -7,11 +7,30 @@ import { useState, useEffect } from 'react'
 import AudioPlayer from './components/AudioPlayer/AudioPlayer'
 import { Box } from '@mui/material';
 import PlaylistCard from './components/PlaylistCard/PlaylistCard';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from './pages/HomePage';
+import DetailsPage from './pages/DetailsPAge';
 
 const App = () => {
 
 
   const [data, setData] = useState()
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <HomePage />
+      ),
+    },
+    {
+      path: "/playlist",
+      element: (
+        <DetailsPage />
+      )
+    }
+
+  ]);
 
   // const getTrendingData = async () => {
 
@@ -46,6 +65,7 @@ const App = () => {
   console.log(data, "data")
   return (
     <>
+      <RouterProvider router={router} />
       <Box className={"relative"}>
         <Header />
         {/* {data && <TreadingPage data={data} />} */}
