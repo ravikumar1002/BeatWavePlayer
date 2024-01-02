@@ -10,7 +10,7 @@ import { useAppStore } from "../store/store";
 const TreadingPage = () => {
     const [playlistDetails, setPlaylistDetails] = useState<PlaylsitDataDTO | null>(null)
     const { playlistid } = useParams();
-    const { setPlaylistSongs, setOpenPlaylist } = useAppStore()
+    const { setPlaylistSongs, setOpenPlaylist,setCurrentTrack } = useAppStore()
 
     console.log(playlistid)
 
@@ -63,6 +63,7 @@ const TreadingPage = () => {
                 <Box className="grow">
                     <Button type="button" variant="outlined" onClick={() => {
                         setPlaylistSongs(playlistDetails)
+                        setCurrentTrack(0)
                     }}>
                         Play
                     </Button>
