@@ -1,7 +1,6 @@
 import './App.css'
 import TreadingPage from './pages/TrendingPage';
 
-import { Box } from '@mui/material';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
@@ -39,12 +38,6 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      <Box className={"relative"}>
-        {/* <Header /> */}
-        {/* {data && <TreadingPage data={data} />} */}
-
-
-      </Box >
     </>
   )
 }
