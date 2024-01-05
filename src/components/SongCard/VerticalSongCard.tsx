@@ -38,7 +38,7 @@ const styles: Record<string, SxProps> = {
 
 const VerticalSongCard = (props: IVerticalSongCardProps) => {
     const { songDetails, listRank } = props
-    const { playingsongId, setCurrentTrack } = useAppStore()
+    const { playingsongId, openPlaylist, setCurrentTrack, setPlaylistSongs } = useAppStore()
 
     const dDzoI = keyframes`
         0% {
@@ -61,6 +61,7 @@ const VerticalSongCard = (props: IVerticalSongCardProps) => {
                 marginTop: "0.5rem"
             }}
                 onClick={() => {
+                    setPlaylistSongs(openPlaylist)
                     setCurrentTrack(listRank)
                 }}
             >

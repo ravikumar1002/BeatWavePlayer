@@ -3,9 +3,10 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router';
 
 const Header = () => {
-
+    const navigate = useNavigate()
     return (
         <AppBar position="static" sx={{
             background: "white",
@@ -25,6 +26,9 @@ const Header = () => {
                             fontWeight: 700,
                             color: 'inherit',
                             textDecoration: 'none',
+                        }}
+                        onClick={() => {
+                            navigate("/")
                         }}
                     >
                         Yfitops

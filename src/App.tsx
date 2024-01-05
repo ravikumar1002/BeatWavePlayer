@@ -1,47 +1,43 @@
 import './App.css'
-import Header from './components/Header/Header';
-import { PlaylsitDataDTO } from './dto/playlistDataDTO';
 import TreadingPage from './pages/TrendingPage';
-import { GetSpotifyDataAsJSON } from './services/getApiData';
-import { useState, useEffect } from 'react'
-import AudioPlayer from './components/AudioPlayer/AudioPlayer'
-import { Box } from '@mui/material';
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import HomePage from './pages/HomePage';
+import DetailsPage from './pages/DetailsPage';
+import { PageWrapper } from './components/PageWrapper';
 
 const App = () => {
 
-
-  const [data, setData] = useState<PlaylsitDataDTO>()
-
-  const getTrendingData = async () => {
-
-    const trendingResponse = await GetSpotifyDataAsJSON<PlaylsitDataDTO>("/playlists/37i9dQZEVXbLZ52XmnySJg", {
-      params: {},
-    });
-    setData(trendingResponse)
-    return trendingResponse
-  }
-
-  useEffect(() => {
-    getTrendingData()
-  }, [])
-
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <PageWrapper>
+          <HomePage />
+        </PageWrapper>
+      ),
+    },
+    {
+      path: "/playlist",
+      element: (
+        <PageWrapper>
+          <DetailsPage />
+        </PageWrapper>
+      )
+    },
+    {
+      path: "/playlist/:playlistid",
+      element: (
+        <PageWrapper>
+          <TreadingPage />
+        </PageWrapper>
+      ),
+    },
+  ]);
 
   return (
     <>
-      <Box className={"relative"}>
-        <Header />
-        {data && <TreadingPage data={data} />}
-        {data && <AudioPlayer playlist={data?.tracks?.items.map((item) => {
-          return {
-            title: item.track.name,
-            url: item.track?.preview_url ? item.track?.preview_url : "",
-            image: item.track.album.images[0].url,
-            id: item.track.id
-          }
-        })}
-        />
-        }
-      </Box >
+      <RouterProvider router={router} />
     </>
   )
 }
