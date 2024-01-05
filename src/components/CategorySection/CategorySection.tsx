@@ -11,7 +11,7 @@ interface ICategorySection {
 export const CategorySection = (props: ICategorySection) => {
     const { title, data } = props
     const navigate = useNavigate();
-
+    console.log(data)
     return (
         <Box className="p-6">
             <Box className="mb-5">
