@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
 import { PlaylsitDataDTO } from "../dto/playlistDataDTO";
 import { GetSpotifyDataAsJSON } from "../services/getApiData";
-import { Box } from "@mui/material";
-import { useNavigate } from "react-router";
-import PlaylistCard from "../components/PlaylistCard/PlaylistCard";
-import { useAppStore } from "../store/store";
 import { CategorySection } from "../components/CategorySection/CategorySection";
+import { SkeletonCategorySection } from "../components/CategorySection/skeletonCategoryCard";
 
 const HomePage = () => {
-    const navigate = useNavigate();
-    const [data, setData] = useState()
-    const { setPlaylistSongs } = useAppStore()
+    const [data, setData] = useState<PlaylsitDataDTO>()
+    const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default")
 
     const getTrendingData = async () => {
-
+        setLoadingState("loading")
         const trendingResponse = await GetSpotifyDataAsJSON<PlaylsitDataDTO>("browse/featured-playlists?limit=50", {
             params: {},
         });
         setData(trendingResponse)
+        setLoadingState("fulfilled")
         return trendingResponse
     }
 
@@ -28,7 +25,8 @@ const HomePage = () => {
 
     return (
         <div>
-            <CategorySection title="Browse your favorite" data={data} />
+            {loadingState === "loading" && <SkeletonCategorySection />}
+            {loadingState === "fulfilled" && <CategorySection title="Browse your favorite" data={data} />}
         </div>
     )
 }
