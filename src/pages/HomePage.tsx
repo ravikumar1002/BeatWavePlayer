@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import { PlaylsitDataDTO } from "../dto/playlistDataDTO";
 import { GetSpotifyDataAsJSON } from "../services/getApiData";
 import { CategorySection } from "../components/CategorySection/CategorySection";
 import { SkeletonCategorySection } from "../components/CategorySection/skeletonCategoryCard";
+import { CategoryDTO } from "../dto/categoryDTO";
 
 const HomePage = () => {
-    const [data, setData] = useState<PlaylsitDataDTO>()
+    const [data, setData] = useState<CategoryDTO>()
     const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default")
 
     const getTrendingData = async () => {
         setLoadingState("loading")
-        const trendingResponse = await GetSpotifyDataAsJSON<PlaylsitDataDTO>("browse/featured-playlists?limit=50", {
+        const trendingResponse = await GetSpotifyDataAsJSON<CategoryDTO>("browse/featured-playlists?limit=24", {
             params: {},
         });
+        console.log(trendingResponse, 'ds')
         setData(trendingResponse)
         setLoadingState("fulfilled")
         return trendingResponse

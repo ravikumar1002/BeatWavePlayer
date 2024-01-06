@@ -1,7 +1,7 @@
 import VerticalSongCard from "../components/SongCard/VerticalSongCard"
 import { Box, Button, Skeleton, Typography } from "@mui/material"
 import { keyframes } from '@mui/system';
-import { PlaylsitDataDTO } from "../dto/playlistDataDTO";
+import { PlaylistDataDTO } from "../dto/playlistDataDTO";
 import { GetSpotifyDataAsJSON } from "../services/getApiData";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { useAppStore } from "../store/store";
 import SkeletonVerticalSongCard from "../components/SongCard/SkeletonVerticalSong";
 
 const TreadingPage = () => {
-    const [playlistDetails, setPlaylistDetails] = useState<PlaylsitDataDTO | null>(null)
+    const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null)
     const { playlistid } = useParams();
     const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore()
     const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default")
@@ -17,7 +17,7 @@ const TreadingPage = () => {
 
     const getTrendingData = async (playlistID: string) => {
         setLoadingState("loading")
-        const trendingResponse = await GetSpotifyDataAsJSON<PlaylsitDataDTO>(`/playlists/${playlistID}`, {
+        const trendingResponse = await GetSpotifyDataAsJSON<PlaylistDataDTO>(`/playlists/${playlistID}`, {
             params: {},
         });
         setPlaylistDetails(trendingResponse)
