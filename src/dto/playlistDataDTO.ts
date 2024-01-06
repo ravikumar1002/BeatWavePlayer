@@ -1,4 +1,4 @@
-export interface PlaylsitDataDTO {
+export interface PlaylistDataDTO {
     collaborative: boolean
     description: string
     external_urls: ExternalUrls

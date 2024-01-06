@@ -1,17 +1,17 @@
 import { Box, Typography } from "@mui/material"
 import PlaylistCard from "../PlaylistCard/PlaylistCard"
-import { PlaylsitDataDTO } from "../../dto/playlistDataDTO"
 import { useNavigate } from "react-router"
+import { CategoryDTO } from "../../dto/categoryDTO"
 
 interface ICategorySection {
     title: string
-    data: PlaylsitDataDTO | undefined
+    data: CategoryDTO | undefined
 }
 
 export const CategorySection = (props: ICategorySection) => {
     const { title, data } = props
     const navigate = useNavigate();
-
+    console.log(data)
     return (
         <Box className="p-6">
             <Box className="mb-5">
