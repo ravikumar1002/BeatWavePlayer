@@ -22,7 +22,6 @@ const Header = () => {
                         href="#"
                         sx={{
                             mr: 2,
-                            // display: { sm: 'none', md: 'flex' },
                             fontWeight: 700,
                             color: 'inherit',
                             textDecoration: 'none',
@@ -30,6 +29,7 @@ const Header = () => {
                         onClick={() => {
                             navigate("/")
                         }}
+                        data-testid="pageTitle"
                     >
                         Yfitops
                     </Typography>

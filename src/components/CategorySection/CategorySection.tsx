@@ -11,7 +11,6 @@ interface ICategorySection {
 export const CategorySection = (props: ICategorySection) => {
     const { title, data } = props
     const navigate = useNavigate();
-    console.log(data)
     return (
         <Box className="p-6">
             <Box className="mb-5">
@@ -22,7 +21,6 @@ export const CategorySection = (props: ICategorySection) => {
                     return (
                         <div onClick={() => {
                             navigate(`/playlist/${item.id}`)
-                            console.log(item)
                         }}>
                             <PlaylistCard details={{
                                 image: item.images[0].url,

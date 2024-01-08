@@ -4,6 +4,12 @@ import { CategorySection } from "../components/CategorySection/CategorySection";
 import { SkeletonCategoryCard } from "../components/CategorySection/SkeletonCategoryCard";
 import { CategoryDTO } from "../dto/categoryDTO";
 
+const loadingStateKey = {
+    loading: "loading",
+    fulfilled: "fulfilled",
+    default: "default",
+}
+
 const HomePage = () => {
     const [data, setData] = useState<CategoryDTO>()
     const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default")
@@ -13,7 +19,6 @@ const HomePage = () => {
         const trendingResponse = await GetSpotifyDataAsJSON<CategoryDTO>("browse/featured-playlists?limit=24", {
             params: {},
         });
-        console.log(trendingResponse, 'ds')
         setData(trendingResponse)
         setLoadingState("fulfilled")
         return trendingResponse

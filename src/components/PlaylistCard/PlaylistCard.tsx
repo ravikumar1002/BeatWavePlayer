@@ -30,7 +30,6 @@ const styles: Record<string, SxProps> = {
 
 
 export default function PlaylistCard(props: IPlaylistCardProps) {
-    console.log(props, "props")
     const { image, name, description } = props.details
     return (
         <Card sx={styles.wrapper}>
