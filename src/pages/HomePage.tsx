@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetSpotifyDataAsJSON } from "../services/getApiData";
 import { CategorySection } from "../components/CategorySection/CategorySection";
-import { SkeletonCategorySection } from "../components/CategorySection/skeletonCategoryCard";
+import { SkeletonCategoryCard } from "../components/CategorySection/SkeletonCategoryCard";
 import { CategoryDTO } from "../dto/categoryDTO";
 
 const HomePage = () => {
@@ -26,7 +26,7 @@ const HomePage = () => {
 
     return (
         <div>
-            {loadingState === "loading" && <SkeletonCategorySection />}
+            {loadingState === "loading" && <SkeletonCategoryCard />}
             {loadingState === "fulfilled" && <CategorySection title="Browse your favorite" data={data} />}
         </div>
     )
