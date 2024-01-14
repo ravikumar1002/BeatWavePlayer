@@ -1,7 +1,8 @@
+import { PlaylistCard } from "@components/PlaylistCard"
+import { CategoryDTO } from "@dto/categoryDTO"
 import { Box, Typography } from "@mui/material"
 import { useNavigate } from "react-router"
-import PlaylistCard from "../PlaylistCard/PlaylistCard"
-import { CategoryDTO } from "../../dto/categoryDTO"
+
 
 interface ICategorySection {
     title: string

@@ -3,7 +3,6 @@ import { SkeletonPlaylistCard } from "../PlaylistCard/SkeletonPlaylistCard"
 
 export const SkeletonCategoryCard = () => {
 
-
     return (
         <Box className="p-6">
             <Box className="mb-5">

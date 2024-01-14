@@ -1,6 +1,6 @@
 import { RenderResult, fireEvent, render } from '@testing-library/react'
-import Header from '../Header'
 import { wrapperReactRouter } from '../../../tests/wrappers'
+import { Header } from '..'
 
 
 jest.mock('react-router', () => ({

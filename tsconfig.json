@@ -21,8 +21,12 @@
     "paths": {
       "@components/*": ["components/*"],
       "@config/*": ["config/*"],
+      "@dto/*": ["dto/*"],
+      "@hooks/*": ["hooks/*"],
       "@pages/*": ["pages/*"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@store/*": ["store/*"],
+      "@tests/*": ["tests/*"],
     }
   },
   "include": ["src"],

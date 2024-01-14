@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { GetSpotifyDataAsJSON } from "../services/getApiData";
-import { CategoryDTO } from "../dto/categoryDTO";
-import { CategorySection } from "@components/CategorySection/CategorySection";
-import { SkeletonCategoryCard } from "@components/CategorySection/SkeletonCategoryCard";
 
-const loadingStateKey = {
-    loading: "loading",
-    fulfilled: "fulfilled",
-    default: "default",
-}
+import { CategorySection, SkeletonCategoryCard } from "@components/CategorySection";
+import { CategoryDTO } from "@dto/categoryDTO";
+import { GetSpotifyDataAsJSON } from "@services/getApiData";
+
+// const loadingStateKey = {
+//     loading: "loading",
+//     fulfilled: "fulfilled",
+//     default: "default",
+// }
 
 const HomePage = () => {
     const [data, setData] = useState<CategoryDTO>()
