@@ -11,6 +11,7 @@ interface ICategorySection {
 export const CategorySection = (props: ICategorySection) => {
     const { title, data } = props
     const navigate = useNavigate();
+
     return (
         <Box className="p-6">
             <Box className="mb-5">
@@ -19,7 +20,7 @@ export const CategorySection = (props: ICategorySection) => {
             <Box className="flex flex-wrap gap-4">
                 {data && data?.playlists.items.map((item) => {
                     return (
-                        <div onClick={() => {
+                        <div key={item.id} onClick={() => {
                             navigate(`/playlist/${item.id}`)
                         }}>
                             <PlaylistCard details={{

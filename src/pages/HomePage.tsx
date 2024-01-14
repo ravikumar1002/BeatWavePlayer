@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { GetSpotifyDataAsJSON } from "../services/getApiData";
-import { CategorySection } from "../components/CategorySection/CategorySection";
-import { SkeletonCategoryCard } from "../components/CategorySection/SkeletonCategoryCard";
 import { CategoryDTO } from "../dto/categoryDTO";
+import { CategorySection } from "@components/CategorySection/CategorySection";
+import { SkeletonCategoryCard } from "@components/CategorySection/SkeletonCategoryCard";
 
 const loadingStateKey = {
     loading: "loading",
@@ -32,7 +32,7 @@ const HomePage = () => {
     return (
         <div>
             {loadingState === "loading" && <SkeletonCategoryCard />}
-            {loadingState === "fulfilled" && <CategorySection title="Browse your favorite" data={data} />}
+            {loadingState === "fulfilled" && <CategorySection title="Browse popular playlists" data={data} />}
         </div>
     )
 }
