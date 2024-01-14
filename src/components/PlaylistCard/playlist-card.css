@@ -1,8 +1,8 @@
 .mydiv {
   position: relative;
   display: block;
-  width: 110px;
-  height: calc(40px + 5px);
+  width: 135px;
+  height: calc(38px + 5px);
   overflow: hidden;
   white-space: normal;
 }

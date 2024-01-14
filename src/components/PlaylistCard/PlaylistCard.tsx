@@ -16,7 +16,7 @@ interface IPlaylistCardProps {
 
 const styles: Record<string, SxProps> = {
     wrapper: {
-        maxWidth: 145,
+        maxWidth: 165,
         "&:hover": {
             "& .image-container": {
                 transform: "scale(1.1)",
@@ -43,6 +43,7 @@ export default function PlaylistCard(props: IPlaylistCardProps) {
                         image={image}
                         alt={name}
                         className='image-container'
+                        loading='lazy'
                     />
                 </Box>
 
