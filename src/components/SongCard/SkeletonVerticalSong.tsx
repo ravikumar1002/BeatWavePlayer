@@ -2,7 +2,7 @@
 
 import { Box, Skeleton } from "@mui/material"
 
-const SkeletonVerticalSongCard = () => {
+export const SkeletonVerticalSongCard = () => {
 
     return (
         <Box sx={{}}>
@@ -39,5 +39,3 @@ const SkeletonVerticalSongCard = () => {
         </Box>
     )
 }
-
-export default SkeletonVerticalSongCard

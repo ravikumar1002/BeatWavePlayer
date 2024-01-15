@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
-import { useAppStore } from "../store/store";
-import AudioPlayer from "./AudioPlayer/AudioPlayer";
-import Header from "./Header/Header"
+import { useAppStore } from "@store/store";
+import { Header } from "./Header";
+import { AudioPlayer } from "./AudioPlayer";
+
 
 interface IPageWrapper {
     children: React.ReactNode;

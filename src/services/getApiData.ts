@@ -1,6 +1,6 @@
-import appConfigs from '../config/appConfigs';
 import axios, { AxiosRequestConfig } from 'axios';
 import spotifyAxiosInstance from './axiosInstance/spotify';
+import { appConfigs } from '@config/appConfigs';
 
 const { client_id, client_secret } = appConfigs.spotify;
 

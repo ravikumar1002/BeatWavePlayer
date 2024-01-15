@@ -1,14 +1,13 @@
-import VerticalSongCard from "../components/SongCard/VerticalSongCard"
 import { Box, Button, Skeleton, Typography } from "@mui/material"
 import { keyframes } from '@mui/system';
-import { PlaylistDataDTO } from "../dto/playlistDataDTO";
-import { GetSpotifyDataAsJSON } from "../services/getApiData";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { useAppStore } from "../store/store";
-import SkeletonVerticalSongCard from "../components/SongCard/SkeletonVerticalSong";
+import { PlaylistDataDTO } from "@dto/playlistDataDTO";
+import { useAppStore } from "@store/store";
+import { GetSpotifyDataAsJSON } from "@services/getApiData";
+import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
 
-const TreadingPage = () => {
+export const TrendingPage = () => {
     const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null)
     const { playlistid } = useParams();
     const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore()
@@ -53,7 +52,7 @@ const TreadingPage = () => {
                     flexGrow: 2,
                     width: "13rem"
                 }} >
-                    {loadingState === "loading" && < Skeleton width={300} height={50}/>}
+                    {loadingState === "loading" && < Skeleton width={300} height={50} />}
                     {loadingState === "loading" && < Skeleton width={300} />}
                     {loadingState === "fulfilled" && <>
                         <Typography variant='h4' className='p-2' sx={{
@@ -94,4 +93,4 @@ const TreadingPage = () => {
 
 }
 
-export default TreadingPage
+export default TrendingPage

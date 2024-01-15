@@ -1,4 +1,4 @@
-import { PlaylistDataDTO } from '../dto/playlistDataDTO';
+import { PlaylistDataDTO } from '@dto/playlistDataDTO';
 import { create } from 'zustand';
 
 

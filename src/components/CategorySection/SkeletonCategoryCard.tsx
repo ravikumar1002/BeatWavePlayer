@@ -1,8 +1,7 @@
 import { Box, Skeleton } from "@mui/material"
 import { SkeletonPlaylistCard } from "../PlaylistCard/SkeletonPlaylistCard"
 
-export const SkeletonCategorySection = () => {
-
+export const SkeletonCategoryCard = () => {
 
     return (
         <Box className="p-6">

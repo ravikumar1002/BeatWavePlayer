@@ -1,10 +1,11 @@
 import './App.css'
-import TreadingPage from './pages/TrendingPage';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from './pages/HomePage';
-import DetailsPage from './pages/DetailsPage';
-import { PageWrapper } from './components/PageWrapper';
+import { createTheme, ThemeProvider } from '@mui/material';
+import TrendingPage from '@pages/TrendingPage';
+import HomePage from '@pages/HomePage';
+import DetailsPage from '@pages/DetailsPage';
+import { PageWrapper } from '@components/PageWrapper';
 
 const App = () => {
 
@@ -29,16 +30,22 @@ const App = () => {
       path: "/playlist/:playlistid",
       element: (
         <PageWrapper>
-          <TreadingPage />
+          <TrendingPage />
         </PageWrapper>
       ),
     },
   ]);
 
+  const theme = createTheme(({
+    typography: {
+      fontFamily: 'Inter'
+    }
+  }))
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
-    </>
+    </ThemeProvider>
   )
 }
 

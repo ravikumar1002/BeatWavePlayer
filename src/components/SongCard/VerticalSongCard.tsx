@@ -1,10 +1,11 @@
-import { useAppStore } from "../../store/store";
-import { TrackItem } from "../../dto/playlistDataDTO";
+
 import { Box, Typography, SxProps } from "@mui/material"
 import { keyframes } from '@mui/system';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import PlayArrowSharpIcon from '@mui/icons-material/PlayArrowSharp';
-// import "./vertical-song.css"
+import { TrackItem } from "@dto/playlistDataDTO";
+import { useAppStore } from "@store/store";
+
 interface IVerticalSongCardProps {
     songDetails: TrackItem,
     listRank: number,
@@ -36,7 +37,7 @@ const styles: Record<string, SxProps> = {
 
 }
 
-const VerticalSongCard = (props: IVerticalSongCardProps) => {
+export const VerticalSongCard = (props: IVerticalSongCardProps) => {
     const { songDetails, listRank } = props
     const { playingsongId, openPlaylist, setCurrentTrack, setPlaylistSongs } = useAppStore()
 
@@ -124,5 +125,3 @@ const VerticalSongCard = (props: IVerticalSongCardProps) => {
         </Box>
     )
 }
-
-export default VerticalSongCard

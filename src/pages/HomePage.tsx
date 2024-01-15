@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import { GetSpotifyDataAsJSON } from "../services/getApiData";
-import { CategorySection } from "../components/CategorySection/CategorySection";
-import { SkeletonCategorySection } from "../components/CategorySection/skeletonCategoryCard";
-import { CategoryDTO } from "../dto/categoryDTO";
+
+import { CategorySection, SkeletonCategoryCard } from "@components/CategorySection";
+import { CategoryDTO } from "@dto/categoryDTO";
+import { GetSpotifyDataAsJSON } from "@services/getApiData";
+
+// const loadingStateKey = {
+//     loading: "loading",
+//     fulfilled: "fulfilled",
+//     default: "default",
+// }
 
 const HomePage = () => {
     const [data, setData] = useState<CategoryDTO>()
@@ -13,7 +19,6 @@ const HomePage = () => {
         const trendingResponse = await GetSpotifyDataAsJSON<CategoryDTO>("browse/featured-playlists?limit=24", {
             params: {},
         });
-        console.log(trendingResponse, 'ds')
         setData(trendingResponse)
         setLoadingState("fulfilled")
         return trendingResponse
@@ -26,8 +31,8 @@ const HomePage = () => {
 
     return (
         <div>
-            {loadingState === "loading" && <SkeletonCategorySection />}
-            {loadingState === "fulfilled" && <CategorySection title="Browse your favorite" data={data} />}
+            {loadingState === "loading" && <SkeletonCategoryCard />}
+            {loadingState === "fulfilled" && <CategorySection title="Browse popular playlists" data={data} />}
         </div>
     )
 }

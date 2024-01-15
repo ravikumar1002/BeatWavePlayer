@@ -5,7 +5,7 @@ interface IProgressSLider {
     sliderFunction: (value: number | number[]) => void
 }
 
-const ProgressSlider = (props: IProgressSLider) => {
+export const ProgressSlider = (props: IProgressSLider) => {
     const { sliderValue, sliderFunction } = props
 
     return (
@@ -48,5 +48,3 @@ const ProgressSlider = (props: IProgressSLider) => {
         />
     )
 }
-
-export default ProgressSlider

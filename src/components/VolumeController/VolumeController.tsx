@@ -10,7 +10,7 @@ interface IVolumeController {
     volumeChangeHandler: (e: number | number[]) => void
 }
 
-const VolumeController = (props: IVolumeController) => {
+export const VolumeController = (props: IVolumeController) => {
 
     const { isAudioMuted, setIsAudioMuted, audioRef, audioLevel, volumeChangeHandler } = props
 
@@ -58,5 +58,3 @@ const VolumeController = (props: IVolumeController) => {
         </Stack>
     )
 }
-
-export default VolumeController
