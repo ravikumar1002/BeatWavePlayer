@@ -99,7 +99,7 @@ export interface Track {
 
 export interface Album {
     album_type: string
-    artists: Artist[]
+    artists: PlaylistArtist[]
     available_markets: string[]
     external_urls: ExternalUrls5
     href: string
@@ -113,7 +113,7 @@ export interface Album {
     uri: string
 }
 
-export interface Artist {
+export interface PlaylistArtist {
     external_urls: ExternalUrls4
     href: string
     id: string
