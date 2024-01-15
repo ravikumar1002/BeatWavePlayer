@@ -21,7 +21,6 @@ interface IPlaylistCardProps {
 
 const styles: Record<string, SxProps> = {
   wrapper: {
-    maxWidth: 165,
     "&:hover": {
       "& .image-container": {
         transform: "scale(1.1)",
@@ -43,7 +42,6 @@ export const PlaylistCard = (props: IPlaylistCardProps) => {
         >
           <CardMedia
             component="img"
-            height="140"
             image={image}
             alt={name}
             className="image-container"
@@ -68,9 +66,14 @@ export const PlaylistCard = (props: IPlaylistCardProps) => {
           </Typography>
           <Box className="mydiv">
             <Typography
-              variant="caption"
+              variant="subtitle2"
               color="text.secondary"
               className="mytext"
+              sx={
+                {
+                  fontSize: "0.8rem"
+                }
+              }
             >
               {description}
             </Typography>

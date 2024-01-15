@@ -1,7 +1,7 @@
 .mydiv {
   position: relative;
   display: block;
-  width: 135px;
+  /* width: 135px; */
   height: calc(38px + 5px);
   overflow: hidden;
   white-space: normal;
