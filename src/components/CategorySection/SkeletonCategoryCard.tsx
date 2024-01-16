@@ -6,7 +6,7 @@ export const SkeletonCategoryCard = () => {
     return (
         <Box className="p-6">
             <Box className="mb-5">
-                <Skeleton />
+                <Skeleton width={500} height={60} />
             </Box>
             <Grid container spacing={4} className="p-4">
                 {Array(40).fill(0).map((_, i) => {

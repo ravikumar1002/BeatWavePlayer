@@ -21,13 +21,17 @@ const styles: Record<string, SxProps> = {
         width: "100%",
         height: "100%",
         translate: "50% 50%,",
-        color: "brown",
+        color: "purple",
         padding: "1rem",
     },
     verticalSongContainer: {
         "&:hover": {
-            color: "red",
+            color: "purple",
+            background: "purple",
             cursor: "pointer",
+            transform: "scale(0.995)",
+            transition:" transform .2s",
+            zoom: "initial",
             "& .play": {
                 visibility: "visible",
                 zIndex: "10",
@@ -57,7 +61,6 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
         animationName: `${dDzoI}`,
     };
 
-    console.log(songDetails);
     return (
         <Box sx={styles.verticalSongContainer}>
             <Box
@@ -65,6 +68,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
                 sx={{
                     ...cardAnimation,
                     marginTop: "0.5rem",
+                    borderRadius: "10px",
                 }}
                 onClick={() => {
                     setPlaylistSongs(openPlaylist);
@@ -108,7 +112,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
                             variant="h5"
                             sx={{
                                 fontWeight: 700,
-                                color: `${playingsongId === songDetails.track.id && "blue"}`,
+                                color: `${playingsongId === songDetails.track.id && "maroon"}`,
                             }}
                         >
                             {listRank + 1}
@@ -127,7 +131,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
                             className="p-1"
                             sx={{
                                 fontWeight: 900,
-                                color: `${playingsongId === songDetails.track.id && "blue"}`,
+                                color: `${playingsongId === songDetails.track.id && "maroon"}`,
                                 "&:hover": {
                                     color: "inherit",
                                 },
