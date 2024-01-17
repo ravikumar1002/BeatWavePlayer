@@ -1,18 +1,37 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material"
 import { keyframes } from '@mui/system';
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PlaylistDataDTO } from "@dto/playlistDataDTO";
 import { useAppStore } from "@store/store";
 import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+// import ColorThief from 'colorthief'
 
 export const TrendingPage = () => {
     const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null)
     const { playlistid } = useParams();
     const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore()
     const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default")
+    // const colorThief = new ColorThief();
+
+    const imageRef = useRef(null)
+
+    // const getColor = () => {
+
+    // }
+
+    // if (imageRef?.current) {
+    //     colorThief.getColor(img);
+    // } else {
+    //     image.addEventListener('load', function () {
+    //         colorThief.getColor(img);
+    //     });
+    // }
+    useEffect(() => {
+        console.log(imageRef?.current)
+    }, [imageRef])
 
 
     const getTrendingData = async (playlistID: string) => {
@@ -55,7 +74,7 @@ export const TrendingPage = () => {
                         width: "20rem",
                         padding: "1rem 2rem",
                     }}>
-                        <img src={playlistDetails?.images[0].url} alt="" className="rounded" />
+                        <img ref={imageRef} src={playlistDetails?.images[0].url} alt={playlistDetails?.name} className="rounded" />
                     </Box>
                     <Box sx={{
                         marginTop: "1rem",

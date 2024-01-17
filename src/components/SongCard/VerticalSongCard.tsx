@@ -27,7 +27,6 @@ const styles: Record<string, SxProps> = {
     verticalSongContainer: {
         "&:hover": {
             color: "purple",
-            background: "purple",
             cursor: "pointer",
             transform: "scale(0.995)",
             transition:" transform .2s",
