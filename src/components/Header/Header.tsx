@@ -5,8 +5,11 @@ import {
   Toolbar,
   Typography,
   Container,
+  Box,
 } from "@mui/material";
 import { cloneElement } from "react";
+import { HeaderSearch } from "@components/HeaderSearch";
+
 
 interface Props {
   window?: () => Window;
@@ -41,24 +44,29 @@ export const Header = () => {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters className="p-6">
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="#"
-              sx={{
-                mr: 2,
-                fontWeight: 700,
-                color: "inherit",
-                textDecoration: "none",
-              }}
-              onClick={() => {
-                navigate("/");
-              }}
-              data-testid="pageTitle"
-            >
-              Yfitops
-            </Typography>
+            <Box>
+              <Typography
+                variant="h5"
+                noWrap
+                component="a"
+                href="#"
+                sx={{
+                  mr: 2,
+                  fontWeight: 700,
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+                onClick={() => {
+                  navigate("/");
+                }}
+                data-testid="pageTitle"
+              >
+                Yfitops
+              </Typography>
+            </Box>
+            <Box>
+              <HeaderSearch />
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
