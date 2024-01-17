@@ -26,6 +26,7 @@ export const ProgressSlider = (props: IProgressSLider) => {
                 height: 4,
                 margin: "0.1rem",
                 padding: "0",
+                color:"purple",
                 '& .MuiSlider-thumb': {
                     width: 8,
                     height: 8,

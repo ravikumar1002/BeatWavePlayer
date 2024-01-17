@@ -9,7 +9,7 @@ import "./playlist-card.css";
 
 export const SkeletonPlaylistCard = () => {
   return (
-    <Card sx={{ maxWidth: 145 }}>
+    <Card >
       <CardActionArea>
         <Box
           sx={{

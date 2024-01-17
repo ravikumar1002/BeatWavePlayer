@@ -1,6 +1,9 @@
+import { MiddleDot } from "@components/CenterDot";
 import { ProgressSlider } from "@components/ProgessSlider";
 import { SongController } from "@components/SongController";
 import { VolumeController } from "@components/VolumeController";
+import { PlaylistArtist } from "@dto/playlistDataDTO";
+import { useGetReleaseYear } from "@hooks/useGetReleaseYear";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
 import { useState, useEffect, useRef } from "react";
@@ -10,6 +13,9 @@ interface Track {
   url: string;
   image: string;
   id: string;
+  artists: PlaylistArtist[];
+  release_year: string;
+  album: string;
 }
 
 interface IAudioPlayerProps {
@@ -204,14 +210,48 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
             <Typography component="div" variant="h6" noWrap sx={{}}>
               {playlist[currentTrack].title}
             </Typography>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              component="div"
-              noWrap
-            >
-              Mac Miller
-            </Typography>
+            <Box className="flex flex-wrap mb-1">
+              {playlist[currentTrack].artists.map((details, i) => {
+                return (
+                  <Typography
+                    key={i}
+                    variant="caption"
+                    className="p-1"
+                    sx={{
+                      color: "gray",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {details.name}
+                    {i !== playlist[currentTrack].artists.length - 1 ? ", " : ""}
+                  </Typography>
+                );
+              })}
+
+              <MiddleDot />
+              <Typography
+                variant="caption"
+                className="p-1"
+                sx={{
+                  color: "gray",
+                  fontWeight: 500,
+                }}
+              >
+                {playlist[currentTrack].album}
+              </Typography>
+              <MiddleDot />
+
+              <Typography
+                variant="caption"
+                className="p-1"
+                sx={{
+                  color: "gray",
+                  fontWeight: 500,
+                }}
+              >
+                {useGetReleaseYear(playlist[currentTrack].release_year)}
+              </Typography>
+            </Box>
           </Box>
         </CardContent>
         <VolumeController
