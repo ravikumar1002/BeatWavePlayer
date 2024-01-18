@@ -1,9 +1,9 @@
 
-export const SearchResult = () => {
+export const SearchResultPage = () => {
 
     return (
         <div>
-            
+
         </div>
     )
 }
