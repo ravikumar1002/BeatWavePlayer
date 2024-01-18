@@ -6,10 +6,14 @@ import {
   Typography,
   Container,
   Box,
+  Paper,
+  InputBase,
+  IconButton,
 } from "@mui/material";
-import { cloneElement } from "react";
-import { HeaderSearch } from "@components/HeaderSearch";
-
+import { cloneElement, useState } from "react";
+import SearchIcon from '@mui/icons-material/Search';
+import { useDebounce } from "@hooks/useDebounce";
+import { spotifySearchApi } from "@hooks/useSpotifySearchApi";
 
 interface Props {
   window?: () => Window;
@@ -32,6 +36,11 @@ function ElevationScroll(props: Props) {
 
 export const Header = () => {
   const navigate = useNavigate();
+  const [searchString, setSearchString] = useState(" ")
+
+  const suggestionSearchhandler = useDebounce(() => spotifySearchApi(searchString));
+  suggestionSearchhandler()
+
   return (
     <ElevationScroll>
       <AppBar
@@ -43,7 +52,9 @@ export const Header = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Toolbar disableGutters className="p-6">
+          <Toolbar disableGutters className="p-6" sx={{
+            width: "100%",
+          }}>
             <Box>
               <Typography
                 variant="h5"
@@ -65,7 +76,22 @@ export const Header = () => {
               </Typography>
             </Box>
             <Box>
-              <HeaderSearch />
+              <Paper
+                component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 250 }}
+              >
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search"
+                  inputProps={{ 'aria-label': 'search' }}
+                  onChange={(e) => {
+                    setSearchString(e.target.value)
+                  }}
+                />
+                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
             </Box>
           </Toolbar>
         </Container>
