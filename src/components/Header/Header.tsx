@@ -10,11 +10,12 @@ import {
   InputBase,
   IconButton,
 } from "@mui/material";
-import { cloneElement, useState } from "react";
+import { cloneElement, useEffect, useRef, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import { useDebounce } from "@hooks/useDebounce";
 import { spotifySearchApi } from "@hooks/spotifySearchApi";
 import { data } from "./data";
+import CloseIcon from '@mui/icons-material/Close';
 
 interface Props {
   window?: () => Window;
@@ -39,6 +40,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState<string>("")
   const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false)
+  const searchSuggestionRef = useRef(null)
   const suggestionSearchhandler = useDebounce(() => spotifySearchApi(searchString, 5));
   suggestionSearchhandler()
 
@@ -51,6 +53,19 @@ export const Header = () => {
       setShowSearchSuggestion(false);
     }
   }
+
+  const handleClickOutside = (event) => {
+    if (searchSuggestionRef.current && !searchSuggestionRef.current.contains(event.target)) {
+      setShowSearchSuggestion(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
 
 
   console.log(dataAssemble)
@@ -94,7 +109,7 @@ export const Header = () => {
               display: "flex",
               justifyContent: "center",
             }}>
-              <Box
+              <Box ref={searchSuggestionRef}
               >
                 <Paper
                   component="div"
@@ -108,10 +123,19 @@ export const Header = () => {
                       showSuggestionFn(e.target.value.length)
                       setSearchString(e.target.value)
                     }}
+                    value={searchString}
                     onFocus={(e) => {
                       showSuggestionFn(e.target.value.length)
                     }}
                   />
+                  {
+                    searchString.length > 0 && <IconButton type="button" sx={{ p: '10px' }} aria-label="clear" onClick={() => {
+                      setSearchString("")
+                      showSuggestionFn(0)
+                    }}>
+                      < CloseIcon />
+                    </IconButton>
+                  }
                   <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
                     <SearchIcon />
                   </IconButton>
@@ -125,7 +149,7 @@ export const Header = () => {
                     overflowY: "scroll",
                     background: "white",
                     width: "100%"
-                  }} id="scrollBarDesign">
+                  }} id="scrollBarDesign" >
                     {
                       dataAssemble.map((item, i) => {
                         console.log(item)
@@ -140,6 +164,7 @@ export const Header = () => {
                               background: "lavender"
                             }
                           }}>
+
                             <Box>
                               <img src={item?.images ? item?.images[0]?.url : item?.album?.images[0]?.url} alt={item?.name} width={40} height={40} style={{ borderRadius: "5px" }} />
                             </Box>
