@@ -17,6 +17,7 @@ import { spotifySearchApi } from "@hooks/spotifySearchApi";
 import { data } from "./data";
 import CloseIcon from "@mui/icons-material/Close";
 import { ElevationScroll } from "@hooks/useElevationSroll";
+import { useAppStore } from "@store/store";
 
 const styles: Record<string, SxProps> = {
   searchSuggestionWrapperStyle: {
@@ -36,6 +37,7 @@ const styles: Record<string, SxProps> = {
     gap: "1rem",
     padding: "0.5rem",
     cursor: "pointer",
+    margin: "2px",
     "&:hover": {
       background: "lavender",
     },
@@ -45,14 +47,14 @@ const styles: Record<string, SxProps> = {
 export const Header = () => {
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState<string>("");
-  const [showSearchSuggestion, setShowSearchSuggestion] =  useState<boolean>(false);
-
+  const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false);
+  const { playingsongId, openPlaylist, setCurrentTrack, setPlaylistSongs } = useAppStore();
   const searchSuggestionRef = useRef(null);
-  
+
   const suggestionSearchhandler = useDebounce(() =>
     spotifySearchApi(searchString, 5)
   );
-  suggestionSearchhandler();
+  // suggestionSearchhandler();
 
   const dataAssemble = [
     ...data.albums.items,
@@ -85,7 +87,7 @@ export const Header = () => {
     };
   }, []);
 
-  console.log(dataAssemble);
+  // console.log(dataAssemble);
   return (
     <ElevationScroll>
       <AppBar
@@ -165,9 +167,18 @@ export const Header = () => {
                       id="scrollBarDesign"
                     >
                       {dataAssemble.map((item, i) => {
-                        console.log(item);
                         return (
-                          <Box key={i} sx={styles.searchSuggestionContentStyle}>
+                          <Box key={i} sx={{
+                            ...styles.searchSuggestionContentStyle,
+                            backgroundColor: item?.preview_url ? "lavender" : "initial",
+                          }}
+                            // onClick={() => {
+                            //   if (item?.preview_url) {
+                            //     setCurrentTrack(0)
+                            //     setPlaylistSongs([item])
+                            //   }
+                            // }} 
+                            >
                             <Box>
                               <img
                                 src={
@@ -190,16 +201,16 @@ export const Header = () => {
                               </Typography>
                             </Box>
                           </Box>
-                        );
+                  );
                       })}
-                    </Box>
-                  )}
-                </Paper>
               </Box>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </ElevationScroll>
+                  )}
+            </Paper>
+          </Box>
+        </Box>
+      </Toolbar>
+    </Container>
+      </AppBar >
+    </ElevationScroll >
   );
 };

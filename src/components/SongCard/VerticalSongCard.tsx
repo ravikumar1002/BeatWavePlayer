@@ -29,7 +29,7 @@ const styles: Record<string, SxProps> = {
             color: "purple",
             cursor: "pointer",
             transform: "scale(0.995)",
-            transition:" transform .2s",
+            transition: " transform .2s",
             zoom: "initial",
             "& .play": {
                 visibility: "visible",
@@ -70,7 +70,18 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
                     borderRadius: "10px",
                 }}
                 onClick={() => {
-                    setPlaylistSongs(openPlaylist);
+                    const tracksItems = openPlaylist?.tracks?.items.map((item) => {
+                        return {
+                            title: item.track.name,
+                            url: item.track?.preview_url ? item.track?.preview_url : "",
+                            image: item.track.album.images[0].url,
+                            id: item.track.id,
+                            artists: item.track.artists,
+                            release_year: item.track.album.release_date,
+                            album: item.track.album.name,
+                        }
+                    })
+                    setPlaylistSongs(tracksItems);
                     setCurrentTrack(listRank);
                 }}
             >

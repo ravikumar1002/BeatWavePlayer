@@ -146,7 +146,7 @@ export const HeaderSearch = () => {
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={(e) => {
-                    console.log(e.target.value)
+                    // console.log(e.target.value)
                     setSearchText(e.target.value)
                 }}
             />
