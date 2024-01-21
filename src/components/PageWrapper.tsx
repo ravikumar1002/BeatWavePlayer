@@ -13,13 +13,13 @@ export const PageWrapper = (props: IPageWrapper) => {
 
     const { playlistSongs } = useAppStore()
 
+    console.log(playlistSongs)
+
     return (
         <Box className={"relative min-h-screen"}>
             <Header />
             {children}
-            {playlistSongs && <AudioPlayer playlist={playlistSongs}
-            />
-            }
+            {playlistSongs && <AudioPlayer playlist={playlistSongs}/>}
         </Box >
     )
 }

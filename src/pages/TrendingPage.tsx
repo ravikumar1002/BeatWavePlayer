@@ -39,7 +39,6 @@ export const TrendingPage = () => {
         const trendingResponse = await GetSpotifyDataAsJSON<PlaylistDataDTO>(`/playlists/${playlistID}`, {
             params: {},
         });
-        console.log(trendingResponse, "trendingResponse")
         setPlaylistDetails(trendingResponse)
         setOpenPlaylist(trendingResponse)
         setLoadingState("fulfilled")
@@ -118,7 +117,7 @@ export const TrendingPage = () => {
                                         album: item.track.album.name,
                                     }
                                 })
-                                setPlaylistSongs(tracksItems)
+                                setPlaylistSongs(tracksItems ? tracksItems : null)
                                 setCurrentTrack(0)
                             }}
                                 sx={{

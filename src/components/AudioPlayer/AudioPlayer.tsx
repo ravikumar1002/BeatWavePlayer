@@ -8,7 +8,7 @@ import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
 import { useState, useEffect, useRef } from "react";
 
-interface Track {
+interface IAudioTrackData {
   title: string;
   url: string;
   image: string;
@@ -19,7 +19,7 @@ interface Track {
 }
 
 interface IAudioPlayerProps {
-  playlist: Track[];
+  playlist: IAudioTrackData[];
 }
 
 export const AudioPlayer = (props: IAudioPlayerProps) => {
@@ -27,6 +27,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
 
   const {
     audioLevel,
+    playingsongId,
     isAudioMuted,
     currentTrack,
     setAudioLevel,
@@ -39,7 +40,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
   const audioRef = useRef(new Audio(playlist[currentTrack]?.url));
 
   const songPlayHandler = (
-    songsList: Track[],
+    songsList: IAudioTrackData[],
     playingTrak: number,
     audioRef: React.MutableRefObject<HTMLAudioElement>,
     setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
@@ -83,12 +84,12 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
       audioRef.current.removeEventListener("timeupdate", updateProgress);
       audioRef.current.removeEventListener("ended", handleEnded);
     };
-  }, [currentTrack]);
+  }, [currentTrack, playingsongId]);
 
   useEffect(() => {
     songPlayHandler(playlist, currentTrack, audioRef, setIsPlaying);
     setPlayingSongId(playlist[currentTrack].id);
-  }, [currentTrack]);
+  }, [currentTrack, playingsongId]);
 
   const playPauseHandler = (): void => {
     if (isPlaying) {

@@ -81,7 +81,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
                             album: item.track.album.name,
                         }
                     })
-                    setPlaylistSongs(tracksItems);
+                    setPlaylistSongs(tracksItems ? tracksItems : null);
                     setCurrentTrack(listRank);
                 }}
             >

@@ -48,13 +48,13 @@ export const Header = () => {
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState<string>("");
   const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false);
-  const { playingsongId, openPlaylist, setCurrentTrack, setPlaylistSongs } = useAppStore();
+  const { setPlayingSongId, setCurrentTrack, setPlaylistSongs } = useAppStore();
   const searchSuggestionRef = useRef(null);
 
   const suggestionSearchhandler = useDebounce(() =>
     spotifySearchApi(searchString, 5)
   );
-  // suggestionSearchhandler();
+  suggestionSearchhandler();
 
   const dataAssemble = [
     ...data.albums.items,
@@ -87,7 +87,6 @@ export const Header = () => {
     };
   }, []);
 
-  // console.log(dataAssemble);
   return (
     <ElevationScroll>
       <AppBar
@@ -137,12 +136,12 @@ export const Header = () => {
                     placeholder="Search"
                     inputProps={{ "aria-label": "search" }}
                     onChange={(e) => {
-                      showSuggestionFn(e.target.value.length);
+                      showSuggestionFn(e.target.value.trim().length);
                       setSearchString(e.target.value);
                     }}
                     value={searchString}
                     onFocus={(e) => {
-                      showSuggestionFn(e.target.value.length);
+                      showSuggestionFn(e.target.value.trim().length);
                     }}
                   />
                   {searchString.length > 0 && (
@@ -172,13 +171,23 @@ export const Header = () => {
                             ...styles.searchSuggestionContentStyle,
                             backgroundColor: item?.preview_url ? "lavender" : "initial",
                           }}
-                            // onClick={() => {
-                            //   if (item?.preview_url) {
-                            //     setCurrentTrack(0)
-                            //     setPlaylistSongs([item])
-                            //   }
-                            // }} 
-                            >
+                            onClick={() => {
+                              if (item?.preview_url) {
+                                const songDetails = [{
+                                  title: item.name,
+                                  url: item?.preview_url ? item?.preview_url : "",
+                                  image: item.album.images[0].url,
+                                  id: item.id,
+                                  artists: item.artists,
+                                  release_year: item.album.release_date,
+                                  album: item.album.name,
+                                }]
+                                setPlayingSongId(item.id)
+                                setPlaylistSongs(songDetails ? songDetails : null)
+                                setCurrentTrack(0)
+                              }
+                            }}
+                          >
                             <Box>
                               <img
                                 src={
@@ -201,15 +210,15 @@ export const Header = () => {
                               </Typography>
                             </Box>
                           </Box>
-                  );
+                        );
                       })}
-              </Box>
+                    </Box>
                   )}
-            </Paper>
-          </Box>
-        </Box>
-      </Toolbar>
-    </Container>
+                </Paper>
+              </Box>
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar >
     </ElevationScroll >
   );
