@@ -87,36 +87,6 @@ export const HeaderSearch = () => {
             <Box sx={{
                 paddingLeft: "3.5rem",
             }}>
-                {/* <FormControl sx={{ width: 100 }} size="small">
-                    <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
-                    <Select
-                        labelId="demo-multiple-chip-label"
-                        id="demo-multiple-chip"
-                        multiple
-                        value={type}
-                        onChange={handleChange}
-                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                        renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', overflow: "scroll", gap: 0.5 }}>
-                                {selected.map((value) => (
-                                    <Chip key={value} label={value} />
-                                ))}
-                            </Box>
-                        )}
-                        MenuProps={MenuProps}
-                    >
-                        {typesList.map((name) => (
-                            <MenuItem
-                                key={name}
-                                value={name}
-                                style={getStyles(name, type, theme)}
-                            >
-                                {name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl> */}
-
                 <FormControl sx={{ width: 100 }} size="small">
                     <InputLabel id="demo-multiple-checkbox-label">Types*</InputLabel>
                     <Select
@@ -146,7 +116,6 @@ export const HeaderSearch = () => {
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={(e) => {
-                    console.log(e.target.value)
                     setSearchText(e.target.value)
                 }}
             />

@@ -6,6 +6,8 @@ import TrendingPage from '@pages/TrendingPage';
 import HomePage from '@pages/HomePage';
 import DetailsPage from '@pages/DetailsPage';
 import { PageWrapper } from '@components/PageWrapper';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 
 const App = () => {
 
@@ -36,6 +38,8 @@ const App = () => {
     },
   ]);
 
+  const queryClient = new QueryClient()
+
   const theme = createTheme(({
     typography: {
       fontFamily: 'Inter'
@@ -43,9 +47,12 @@ const App = () => {
   }))
 
   return (
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
+
   )
 }
 

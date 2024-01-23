@@ -17,6 +17,7 @@ import { spotifySearchApi } from "@hooks/spotifySearchApi";
 import { data } from "./data";
 import CloseIcon from "@mui/icons-material/Close";
 import { ElevationScroll } from "@hooks/useElevationSroll";
+import { useAppStore } from "@store/store";
 
 const styles: Record<string, SxProps> = {
   searchSuggestionWrapperStyle: {
@@ -36,6 +37,7 @@ const styles: Record<string, SxProps> = {
     gap: "1rem",
     padding: "0.5rem",
     cursor: "pointer",
+    margin: "2px",
     "&:hover": {
       background: "lavender",
     },
@@ -45,10 +47,10 @@ const styles: Record<string, SxProps> = {
 export const Header = () => {
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState<string>("");
-  const [showSearchSuggestion, setShowSearchSuggestion] =  useState<boolean>(false);
-
+  const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false);
+  const { setPlayingSongId, setCurrentTrack, setPlaylistSongs } = useAppStore();
   const searchSuggestionRef = useRef(null);
-  
+
   const suggestionSearchhandler = useDebounce(() =>
     spotifySearchApi(searchString, 5)
   );
@@ -85,7 +87,6 @@ export const Header = () => {
     };
   }, []);
 
-  console.log(dataAssemble);
   return (
     <ElevationScroll>
       <AppBar
@@ -135,12 +136,12 @@ export const Header = () => {
                     placeholder="Search"
                     inputProps={{ "aria-label": "search" }}
                     onChange={(e) => {
-                      showSuggestionFn(e.target.value.length);
+                      showSuggestionFn(e.target.value.trim().length);
                       setSearchString(e.target.value);
                     }}
                     value={searchString}
                     onFocus={(e) => {
-                      showSuggestionFn(e.target.value.length);
+                      showSuggestionFn(e.target.value.trim().length);
                     }}
                   />
                   {searchString.length > 0 && (
@@ -165,9 +166,28 @@ export const Header = () => {
                       id="scrollBarDesign"
                     >
                       {dataAssemble.map((item, i) => {
-                        console.log(item);
                         return (
-                          <Box key={i} sx={styles.searchSuggestionContentStyle}>
+                          <Box key={i} sx={{
+                            ...styles.searchSuggestionContentStyle,
+                            backgroundColor: item?.preview_url ? "lavender" : "initial",
+                          }}
+                            onClick={() => {
+                              if (item?.preview_url) {
+                                const songDetails = [{
+                                  title: item.name,
+                                  url: item?.preview_url ? item?.preview_url : "",
+                                  image: item.album.images[0].url,
+                                  id: item.id,
+                                  artists: item.artists,
+                                  release_year: item.album.release_date,
+                                  album: item.album.name,
+                                }]
+                                setPlayingSongId(item.id)
+                                setPlaylistSongs(songDetails ? songDetails : null)
+                                setCurrentTrack(0)
+                              }
+                            }}
+                          >
                             <Box>
                               <img
                                 src={
@@ -199,7 +219,7 @@ export const Header = () => {
             </Box>
           </Toolbar>
         </Container>
-      </AppBar>
-    </ElevationScroll>
+      </AppBar >
+    </ElevationScroll >
   );
 };

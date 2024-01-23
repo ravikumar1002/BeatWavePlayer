@@ -29,9 +29,9 @@ export const TrendingPage = () => {
     //         colorThief.getColor(img);
     //     });
     // }
-    useEffect(() => {
-        console.log(imageRef?.current)
-    }, [imageRef])
+    // useEffect(() => {
+    //     console.log(imageRef?.current)
+    // }, [imageRef])
 
 
     const getTrendingData = async (playlistID: string) => {
@@ -106,7 +106,18 @@ export const TrendingPage = () => {
                         </Box>
                         <Box className="ml-12 mt-4">
                             {<Button type="button" variant="contained" startIcon={<PlayArrowIcon />} onClick={() => {
-                                setPlaylistSongs(playlistDetails)
+                                const tracksItems = playlistDetails?.tracks?.items.map((item) => {
+                                    return {
+                                        title: item.track.name,
+                                        url: item.track?.preview_url ? item.track?.preview_url : "",
+                                        image: item.track.album.images[0].url,
+                                        id: item.track.id,
+                                        artists: item.track.artists,
+                                        release_year: item.track.album.release_date,
+                                        album: item.track.album.name,
+                                    }
+                                })
+                                setPlaylistSongs(tracksItems ? tracksItems : null)
                                 setCurrentTrack(0)
                             }}
                                 sx={{
@@ -118,7 +129,8 @@ export const TrendingPage = () => {
                     </Box>
                 </Box>
             }
-            {loadingState === "loading" &&
+            {
+                loadingState === "loading" &&
                 <Box className="flex items-center w-full" >
                     <Box sx={{
                         width: "20rem",
@@ -162,9 +174,9 @@ export const TrendingPage = () => {
             <Box sx={{
                 padding: "0.5rem 2rem",
             }}>
-                {loadingState === "loading" && Array(20).fill(0).map(() => {
+                {loadingState === "loading" && Array(20).fill(0).map((_, i) => {
                     return (
-                        <SkeletonVerticalSongCard />
+                        <SkeletonVerticalSongCard key={i} />
                     )
                 })}
                 {loadingState === "fulfilled" && playlistDetails && playlistDetails?.tracks?.items.map((item, i) => {
@@ -172,7 +184,7 @@ export const TrendingPage = () => {
                 })}
             </Box>
 
-        </Box>
+        </Box >
     )
 
 }
