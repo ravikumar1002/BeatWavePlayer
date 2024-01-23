@@ -1,14 +1,10 @@
 import { useNavigate } from "react-router";
 import {
+  useScrollTrigger,
   AppBar,
   Toolbar,
   Typography,
   Container,
-  Box,
-  Paper,
-  InputBase,
-  IconButton,
-  SxProps,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
