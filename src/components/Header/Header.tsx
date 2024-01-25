@@ -50,9 +50,10 @@ export const Header = () => {
   const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false);
   const { setPlayingSongId, setCurrentTrack, setPlaylistSongs } = useAppStore();
   const searchSuggestionRef = useRef(null);
+  const searchResultLimit = 5
 
   const suggestionSearchhandler = useDebounce(() =>
-    spotifySearchApi(searchString, 5)
+    spotifySearchApi(searchString, searchResultLimit)
   );
   suggestionSearchhandler();
 
@@ -172,6 +173,7 @@ export const Header = () => {
                             backgroundColor: item?.preview_url ? "lavender" : "initial",
                           }}
                             onClick={() => {
+                              console.log("click")
                               if (item?.preview_url) {
                                 const songDetails = [{
                                   title: item.name,
@@ -185,6 +187,9 @@ export const Header = () => {
                                 setPlayingSongId(item.id)
                                 setPlaylistSongs(songDetails ? songDetails : null)
                                 setCurrentTrack(0)
+                              } else {
+                                navigate(`/search?q=${searchString}&type=album%2Cartist%2Cplaylist%2Ctrack&limit=${searchResultLimit}`)
+                                setShowSearchSuggestion(false)
                               }
                             }}
                           >

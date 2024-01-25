@@ -151,7 +151,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
         flexDirection: "column",
         justifyContent: "center",
       }}
-      className={"sticky bottom-0 bg-gray-700 z-10 flex-wrap"}
+      className={"absolute top-full left-0 bg-gray-700 z-10 flex-wrap"}
       key={playlist[currentTrack].url}
     >
       <Box
