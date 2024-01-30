@@ -173,7 +173,6 @@ export const Header = () => {
                             backgroundColor: item?.preview_url ? "lavender" : "initial",
                           }}
                             onClick={() => {
-                              console.log("click")
                               if (item?.preview_url) {
                                 const songDetails = [{
                                   title: item.name,

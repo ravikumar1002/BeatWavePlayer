@@ -3,7 +3,7 @@ import { ProgressSlider } from "@components/ProgessSlider";
 import { SongController } from "@components/SongController";
 import { VolumeController } from "@components/VolumeController";
 import { PlaylistArtist } from "@dto/playlistDataDTO";
-import { useGetReleaseYear } from "@hooks/useGetReleaseYear";
+import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
 import { useState, useEffect, useRef } from "react";
@@ -250,7 +250,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
                   fontWeight: 500,
                 }}
               >
-                {useGetReleaseYear(playlist[currentTrack].release_year)}
+                {getReleaseYearValue(playlist[currentTrack].release_year)}
               </Typography>
             </Box>
           </Box>
