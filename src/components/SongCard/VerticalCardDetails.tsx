@@ -14,22 +14,22 @@ interface IValueDeatils {
   playingsongId: string | null;
   title: string;
   id: string;
-  SubDeatils1: string[];
-  SubDeatils2: string[];
-  SubDeatils3: string[];
+  subDetails1: string[];
+  subDetails2: string[];
+  subDetails3: string[];
 }
 
 interface IverticalCardDetails {
   valueDeatils: IValueDeatils;
 }
 
-export const SubTextloopComponent = ({ SubDeatils }: { SubDeatils: string[] }) => {
+export const SubTextloopComponent = ({ subDetails }: { subDetails: string[] }) => {
   return (
     <>
-      {SubDeatils.map((sub, i) => (
+      {subDetails.map((sub, i) => (
         <SubTextCard key={i} variant="caption">
           {sub}
-          {i !== SubDeatils.length - 1 ? ", " : ""}
+          {i !== subDetails.length - 1 ? ", " : ""}
         </SubTextCard>
       ))}
     </>
@@ -37,8 +37,7 @@ export const SubTextloopComponent = ({ SubDeatils }: { SubDeatils: string[] }) =
 };
 
 export const VerticalCardDetails = (props: IverticalCardDetails) => {
-  const { playingsongId, id, title, SubDeatils1, SubDeatils2, SubDeatils3 } = props.valueDeatils;
-  console.log(playingsongId, id, title, SubDeatils1, SubDeatils2, SubDeatils3, "deatils");
+  const { playingsongId, id, title, subDetails1, subDetails2, subDetails3 } = props.valueDeatils;
   return (
     <Box>
       <Typography
@@ -55,11 +54,11 @@ export const VerticalCardDetails = (props: IverticalCardDetails) => {
         {title}
       </Typography>
       <Box className="flex flex-wrap">
-        {SubDeatils1 && <SubTextloopComponent SubDeatils={SubDeatils1} />}
-        {SubDeatils2.length > 0 && <MiddleDot />}
-        {SubDeatils2 && <SubTextloopComponent SubDeatils={SubDeatils2} />}
-        {SubDeatils3.length > 0 && <MiddleDot />}
-        {SubDeatils3 && <SubTextloopComponent SubDeatils={SubDeatils3} />}
+        {subDetails1 && <SubTextloopComponent subDetails={subDetails1} />}
+        {subDetails2.length > 0 && <MiddleDot />}
+        {subDetails2 && <SubTextloopComponent subDetails={subDetails2} />}
+        {subDetails3.length > 0 && <MiddleDot />}
+        {subDetails3 && <SubTextloopComponent subDetails={subDetails3} />}
       </Box>
     </Box>
   );

@@ -105,9 +105,9 @@ export const SearchResultCard = (props: ISearchResultCard) => {
               playingsongId,
               title,
               id,
-              SubDeatils1: artists,
-              SubDeatils2: release_year ? [release_year] : [],
-              SubDeatils3: albumName ? [albumName] : [],
+              subDetails1: artists,
+              subDetails2: release_year ? [release_year] : [],
+              subDetails3: albumName ? [albumName] : [],
             }}
           />
         </Box>
