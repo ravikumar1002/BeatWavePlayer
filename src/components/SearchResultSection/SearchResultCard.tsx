@@ -16,6 +16,7 @@ export interface ISongDetails {
 
 interface ISearchResultCard {
   songDetails: ISongDetails;
+  isSong?: boolean;
 }
 
 const styles: Record<string, SxProps> = {
@@ -82,8 +83,11 @@ export const SearchResultCard = (props: ISearchResultCard) => {
         <Box className="flex gap-5 w-1/12 items-center rounded">
           <Box className="relative">
             <img src={image} alt={title} className="h-12 w-12 object-cover rounded" />
-            {playingsongId === id && <GraphicEqIcon fontSize="small" sx={styles.imageIconHover} />}
-            {playingsongId !== id && (
+
+            {props.isSong && playingsongId === id && (
+              <GraphicEqIcon fontSize="small" sx={styles.imageIconHover} />
+            )}
+            {props.isSong && playingsongId !== id && (
               <PlayArrowSharpIcon
                 fontSize="small"
                 sx={{

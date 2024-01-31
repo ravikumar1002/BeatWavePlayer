@@ -1,50 +1,48 @@
-import { Tracks } from "@dto/playlistDataDTO";
-import { Albums, Artists, Playlists } from "@dto/searchResultDTO";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { SearchResultCard } from "./SearchResultCard";
-import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+export interface ISectionSongDetails {
+  title: string;
+  image: string;
+  id: string;
+  artists: string[];
+  release_year: string;
+  albumName: string;
+}
 
 interface ISearchResultSetion {
   searchCategoryTitle: string;
-  songDeatils: Albums | Artists | Playlists | Tracks;
+  songDeatils: ISectionSongDetails[];
+  isSong: boolean;
 }
 
 export const SearchResultSection = (props: ISearchResultSetion) => {
-  const { searchCategoryTitle, songDeatils } = props;
-  const { items } = songDeatils;
+  const { searchCategoryTitle, songDeatils, isSong } = props;
+  //   const selectedCategory: string = "album";
+
+  //   const mediaType: string = "track";
+
+  //   if (selectedCategory && selectedCategory !== mediaType) return null;
   return (
     <Box>
       <Box>
         <Typography variant="h6">{searchCategoryTitle}</Typography>
       </Box>
       <Box>
-        {items &&
-          items.map((details) => {
-            const imageUrl = details.images
-              ? details?.images[0]?.url
-              : details?.album.images[0]?.url;
-            const artists = details.artists
-              ? details.artists.map((item) => item.name)
-              : [details?.type];
-            const release_year = details.album
-              ? getReleaseYearValue(details.album.release_date)
-              : "";
-            const albumName = details.album ? details.album.name : "";
-
-            const filterdDeatils = {
-              title: details?.name,
-              id: details.id,
-              artists,
-              release_year,
-              albumName,
-              image: imageUrl ? imageUrl : "",
-            };
+        {songDeatils &&
+          songDeatils.map((details) => {
             return (
-              <Box>
-                <SearchResultCard songDetails={filterdDeatils} />
+              <Box key={details.id}>
+                <SearchResultCard songDetails={details} isSong={isSong} />
               </Box>
             );
           })}
+      </Box>
+      <Box>
+        <Button variant="outlined" endIcon={<KeyboardArrowDownIcon />}>
+          View More
+        </Button>
       </Box>
     </Box>
   );

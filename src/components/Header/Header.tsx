@@ -50,7 +50,7 @@ export const Header = () => {
   const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false);
   const { setPlayingSongId, setCurrentTrack, setPlaylistSongs } = useAppStore();
   const searchSuggestionRef = useRef(null);
-  const searchResultLimit = 5
+  const searchResultLimit = 5;
 
   const suggestionSearchhandler = useDebounce(() =>
     spotifySearchApi(searchString, searchResultLimit)
@@ -73,10 +73,7 @@ export const Header = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (
-      searchSuggestionRef.current &&
-      !searchSuggestionRef.current.contains(event.target)
-    ) {
+    if (searchSuggestionRef.current && !searchSuggestionRef.current.contains(event.target)) {
       setShowSearchSuggestion(false);
     }
   };
@@ -87,6 +84,28 @@ export const Header = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
+
+  const searchSuggestionHandler = (item) => {
+    if (item?.preview_url) {
+      const songDetails = [
+        {
+          title: item.name,
+          url: item?.preview_url ? item?.preview_url : "",
+          image: item.album.images[0].url,
+          id: item.id,
+          artists: item.artists,
+          release_year: item.album.release_date,
+          album: item.album.name,
+        },
+      ];
+      setPlayingSongId(item.id);
+      setPlaylistSongs(songDetails ? songDetails : null);
+      setCurrentTrack(0);
+    } else {
+      navigate(`/search?q=${searchString}`);
+      setShowSearchSuggestion(false);
+    }
+  };
 
   return (
     <ElevationScroll>
@@ -162,42 +181,21 @@ export const Header = () => {
                     <SearchIcon />
                   </IconButton>
                   {showSearchSuggestion && (
-                    <Box
-                      sx={styles.searchSuggestionWrapperStyle}
-                      id="scrollBarDesign"
-                    >
+                    <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
                       {dataAssemble.map((item, i) => {
                         return (
-                          <Box key={i} sx={{
-                            ...styles.searchSuggestionContentStyle,
-                            backgroundColor: item?.preview_url ? "lavender" : "initial",
-                          }}
-                            onClick={() => {
-                              if (item?.preview_url) {
-                                const songDetails = [{
-                                  title: item.name,
-                                  url: item?.preview_url ? item?.preview_url : "",
-                                  image: item.album.images[0].url,
-                                  id: item.id,
-                                  artists: item.artists,
-                                  release_year: item.album.release_date,
-                                  album: item.album.name,
-                                }]
-                                setPlayingSongId(item.id)
-                                setPlaylistSongs(songDetails ? songDetails : null)
-                                setCurrentTrack(0)
-                              } else {
-                                navigate(`/search?q=${searchString}&type=album%2Cartist%2Cplaylist%2Ctrack&limit=${searchResultLimit}`)
-                                setShowSearchSuggestion(false)
-                              }
+                          <Box
+                            key={i}
+                            sx={{
+                              ...styles.searchSuggestionContentStyle,
+                              backgroundColor: item?.preview_url ? "lavender" : "initial",
                             }}
+                            onClick={() => searchSuggestionHandler(item)}
                           >
                             <Box>
                               <img
                                 src={
-                                  item?.images
-                                    ? item?.images[0]?.url
-                                    : item?.album?.images[0]?.url
+                                  item?.images ? item?.images[0]?.url : item?.album?.images[0]?.url
                                 }
                                 alt={item?.name}
                                 width={40}
@@ -206,10 +204,7 @@ export const Header = () => {
                               />
                             </Box>
                             <Box>
-                              <Typography
-                                variant="body2"
-                                sx={{ fontWeight: "600" }}
-                              >
+                              <Typography variant="body2" sx={{ fontWeight: "600" }}>
                                 {item?.name}
                               </Typography>
                             </Box>
@@ -223,7 +218,7 @@ export const Header = () => {
             </Box>
           </Toolbar>
         </Container>
-      </AppBar >
-    </ElevationScroll >
+      </AppBar>
+    </ElevationScroll>
   );
 };
