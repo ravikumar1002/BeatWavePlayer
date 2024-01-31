@@ -11,7 +11,7 @@ type SomeFunction = (...args: any[]) => void;
  */
 
 export const useDebounce = (
-    func: Func,
+    func: () => void,
     delay = 1000
 ) => {
     const timer = useRef<Timer>();
@@ -29,7 +29,7 @@ export const useDebounce = (
         }, delay);
         clearTimeout(timer.current);
         timer.current = newTimer;
-    }) as Func;
+    });
 
     return debouncedFunction;
 }

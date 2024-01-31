@@ -7,6 +7,7 @@ import HomePage from '@pages/HomePage';
 import DetailsPage from '@pages/DetailsPage';
 import { PageWrapper } from '@components/PageWrapper';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SearchResultPage } from '@pages/SearchResultPage';
 
 
 const App = () => {
@@ -17,6 +18,14 @@ const App = () => {
       element: (
         <PageWrapper>
           <HomePage />
+        </PageWrapper>
+      ),
+    },
+    {
+      path: "/search",
+      element: (
+        <PageWrapper>
+          <SearchResultPage />
         </PageWrapper>
       ),
     },

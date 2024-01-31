@@ -5,7 +5,7 @@ import PlayArrowSharpIcon from "@mui/icons-material/PlayArrowSharp";
 import { TrackItem } from "@dto/playlistDataDTO";
 import { useAppStore } from "@store/store";
 import { MiddleDot } from "@components/CenterDot";
-import { useGetReleaseYear } from "@hooks/useGetReleaseYear";
+import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 
 interface IVerticalSongCardProps {
     songDetails: TrackItem;
@@ -188,7 +188,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
                                     fontWeight: 500,
                                 }}
                             >
-                                {useGetReleaseYear(songDetails.track.album.release_date)}
+                                {getReleaseYearValue(songDetails.track.album.release_date)}
                             </Typography>
                         </Box>
                     </Box>
