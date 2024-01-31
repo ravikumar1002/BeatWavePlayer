@@ -21,16 +21,10 @@ interface ISearchResultSetion {
 export const SearchResultSection = (props: ISearchResultSetion) => {
   const { searchCategoryTitle, songDeatils, isSong } = props;
   const [searchParams, setSearchParams] = useSearchParams();
-  const filterSelected = searchParams.get("filterType");
+  const filterSelected = searchParams.get("category");
   console.log(searchCategoryTitle);
 
-  if (
-    searchCategoryTitle &&
-    searchCategoryTitle !== filterSelected &&
-    filterSelected !== "All" &&
-    filterSelected === undefined
-  )
-    return null;
+  if (filterSelected && searchCategoryTitle !== filterSelected) return null;
   return (
     <Box>
       <Box>
@@ -51,7 +45,7 @@ export const SearchResultSection = (props: ISearchResultSetion) => {
           variant="outlined"
           endIcon={<KeyboardArrowDownIcon />}
           onClick={() => {
-            setSearchParams({ filterType: searchCategoryTitle });
+            setSearchParams({ category: searchCategoryTitle });
           }}
         >
           View More

@@ -1,74 +1,65 @@
-import { Box, Tab, Tabs, tabScrollButtonClasses, tabsClasses } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { ClearFilterChip, FilterChip } from "./FilterChips";
 
 export const SearchFilterTabs = () => {
-  const [value, setValue] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<string>("");
 
   const [searchParams, setSearchParams] = useSearchParams();
   const categories = ["Artists", "Tracks", "Albums", "Playlists"];
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const deleteSelectedCategory = () => {
+    setActiveCategory("");
+    const param = searchParams.get("category");
+    if (param) {
+      searchParams.delete("category");
+      setSearchParams(searchParams);
+    }
+  };
+
+  const selectedCategory = (category: string) => {
+    setActiveCategory(category);
+    setSearchParams({ category: category });
   };
 
   return (
-    <Box sx={{ paddingBottom: "1rem", width: "100%", color: "purple" }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        variant="scrollable"
-        scrollButtons="auto"
-        aria-label="categories"
-        sx={{
-          color: "purple",
-          [`& .${tabsClasses.scroller}`]: {
-            // marginLeft: {
-            //   xs: "0",
-            //   sm: "-40px",
-            // },
-            marginRight: {
-              xs: "0",
-              sm: "-40px",
-            },
-          },
-          [`& .${tabsClasses.scrollButtons}`]: {
-            backgroundColor: "purple",
-            [`&:not(.${tabScrollButtonClasses.disabled})`]: {
-              zIndex: 10,
-              backgroundColor: "purple",
-              opacity: "1",
-            },
-          },
-        }}
-      >
-        <Tab
-          label="All"
-          sx={{
-            color: "purple",
-            padding: "0.5rem",
-            fontWeight: "600",
-          }}
-          onClick={() => {
-            setSearchParams({ filterType: "All" });
-          }}
-        />
-        {categories.map((categroy, i) => {
-          return (
-            <Tab
-              key={i}
-              label={`${categroy}`}
-              sx={{
-                padding: "0.5rem",
-                fontWeight: "600",
-              }}
-              onClick={(e) => {
-                setSearchParams({ filterType: categroy });
-              }}
-            />
-          );
+    <Box sx={{ paddingBottom: "1rem", width: "100%", paddingTop: "1rem" }}>
+      <Box className="flex gap-7 w-full items-center justify-center">
+        {activeCategory && (
+          <ClearFilterChip
+            variant="filled"
+            styleString="order-first"
+            onDelete={() => {
+              deleteSelectedCategory();
+            }}
+          />
+        )}
+        {categories.map((category, i) => {
+          if (category === activeCategory) {
+            return (
+              <FilterChip
+                key={i}
+                label={`${category}`}
+                variant="filled"
+                onClick={() => {
+                  selectedCategory(category);
+                }}
+              />
+            );
+          } else {
+            return (
+              <FilterChip
+                key={i}
+                label={`${category}`}
+                onClick={() => {
+                  selectedCategory(category);
+                }}
+              />
+            );
+          }
         })}
-      </Tabs>
+      </Box>
     </Box>
   );
 };

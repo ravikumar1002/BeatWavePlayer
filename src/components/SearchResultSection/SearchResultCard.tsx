@@ -81,7 +81,9 @@ export const SearchResultCard = (props: ISearchResultCard) => {
         onClick={() => {
           if (props?.isSong) {
             navigate(`/playlist/${id}`);
-          }else {}
+          }else {
+            
+          }
         }}
       >
         <Box className="flex gap-5 w-1/12 items-center rounded">

@@ -16,6 +16,8 @@ export const getFilterDataArray = (valueArray) => {
       ? getReleaseYearValue(details.release_date)
       : "";
     const albumName = details.album ? details.album.name : "";
+    const previewUrl = "";
+
     const filterdDeatils = {
       title: details?.name,
       id: details.id,
@@ -23,7 +25,9 @@ export const getFilterDataArray = (valueArray) => {
       release_year,
       albumName,
       image: imageUrl ? imageUrl : "",
+      ...(previewUrl ? { previewUrl } : {}),
     };
+
     return filterdDeatils;
   });
 
@@ -35,9 +39,9 @@ export const SearchResultPage = () => {
   const searchData = data;
 
   useEffect(() => {
-    const param = searchParams.get("filterType");
+    const param = searchParams.get("category");
     if (param) {
-      searchParams.delete("filterType");
+      searchParams.delete("category");
       setSearchParams(searchParams);
     }
   }, []);
