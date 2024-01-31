@@ -79,7 +79,9 @@ export const SearchResultCard = (props: ISearchResultCard) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          if (!props?.isSong) navigate(`/playlist/${id}`);
+          if (props?.isSong) {
+            navigate(`/playlist/${id}`);
+          }else {}
         }}
       >
         <Box className="flex gap-5 w-1/12 items-center rounded">

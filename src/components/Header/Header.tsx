@@ -102,7 +102,7 @@ export const Header = () => {
       setPlaylistSongs(songDetails ? songDetails : null);
       setCurrentTrack(0);
     } else {
-      navigate(`/search?q=${searchString}`);
+      navigate(`/playlist/${item.id}`);
       setShowSearchSuggestion(false);
     }
   };
@@ -159,6 +159,11 @@ export const Header = () => {
                       showSuggestionFn(e.target.value.trim().length);
                       setSearchString(e.target.value);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && e.target.value.length > 0) {
+                        navigate(`/search?q=${searchString}`);
+                      }
+                    }}
                     value={searchString}
                     onFocus={(e) => {
                       showSuggestionFn(e.target.value.trim().length);
@@ -177,7 +182,14 @@ export const Header = () => {
                       <CloseIcon />
                     </IconButton>
                   )}
-                  <IconButton type="button" className="p-3" aria-label="search">
+                  <IconButton
+                    type="button"
+                    className="p-3"
+                    aria-label="search"
+                    onClick={() => {
+                      if (searchString.length > 0) navigate(`/search?q=${searchString}`);
+                    }}
+                  >
                     <SearchIcon />
                   </IconButton>
                   {showSearchSuggestion && (
