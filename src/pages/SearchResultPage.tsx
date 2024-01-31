@@ -32,17 +32,10 @@ export const getFilterDataArray = (valueArray) => {
 
 export const SearchResultPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchString = searchParams.get("q");
   const searchData = data;
-
-  console.log(getFilterDataArray(searchData.albums.items));
-  console.log(getFilterDataArray(searchData.tracks.items));
-  console.log(getFilterDataArray(searchData.playlists.items));
-  console.log(getFilterDataArray(searchData.artists.items));
 
   useEffect(() => {
     const param = searchParams.get("filterType");
-
     if (param) {
       searchParams.delete("filterType");
       setSearchParams(searchParams);
@@ -56,7 +49,6 @@ export const SearchResultPage = () => {
         <SearchResultSection
           searchCategoryTitle="Albums"
           songDeatils={getFilterDataArray(searchData.albums.items)}
-          onClick={() => {}}
         />
         <SearchResultSection
           searchCategoryTitle="Tracks"

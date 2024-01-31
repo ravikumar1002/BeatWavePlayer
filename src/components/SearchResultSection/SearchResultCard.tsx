@@ -4,6 +4,7 @@ import GraphicEqIcon from "@mui/icons-material/GraphicEq";
 import PlayArrowSharpIcon from "@mui/icons-material/PlayArrowSharp";
 import { useAppStore } from "@store/store";
 import { VerticalCardDetails } from "@components/SongCard/VerticalCardDetails";
+import { useNavigate } from "react-router-dom";
 
 export interface ISongDetails {
   title: string;
@@ -51,6 +52,7 @@ export const SearchResultCard = (props: ISearchResultCard) => {
   const { title, image, id, artists, release_year, albumName } = props.songDetails;
   //   console.log(title, image, id, artists, release_year, albumName);
   const { playingsongId } = useAppStore();
+  const navigate = useNavigate();
 
   const dDzoI = keyframes`
     0% {
@@ -77,7 +79,7 @@ export const SearchResultCard = (props: ISearchResultCard) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          //   setPlaylistSongs(props?.songDetails ? props?.songDetails : null);
+          if (!props?.isSong) navigate(`/playlist/${id}`);
         }}
       >
         <Box className="flex gap-5 w-1/12 items-center rounded">

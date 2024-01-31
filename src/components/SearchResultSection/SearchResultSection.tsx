@@ -15,7 +15,7 @@ export interface ISectionSongDetails {
 interface ISearchResultSetion {
   searchCategoryTitle: string;
   songDeatils: ISectionSongDetails[];
-  isSong: boolean;
+  isSong?: boolean;
 }
 
 export const SearchResultSection = (props: ISearchResultSetion) => {

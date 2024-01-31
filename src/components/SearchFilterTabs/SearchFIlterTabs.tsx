@@ -12,9 +12,6 @@ export const SearchFilterTabs = () => {
     setValue(newValue);
   };
 
-  const filterSelected = searchParams.get("filterType");
-  console.log(filterSelected, "filterSelected");
-
   return (
     <Box sx={{ paddingBottom: "1rem", width: "100%", color: "purple" }}>
       <Tabs
