@@ -3,6 +3,8 @@ import { data } from "@components/Header/data";
 import { SearchResultSection } from "@components/SearchResultSection/SearchResultSection";
 import { Box } from "@mui/material";
 import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
+import { SearchFilterTabs } from "@components/SearchFilterTabs/SearchFIlterTabs";
+import { useEffect } from "react";
 
 export const getFilterDataArray = (valueArray) => {
   const valueFilter = valueArray.map((details) => {
@@ -38,10 +40,18 @@ export const SearchResultPage = () => {
   console.log(getFilterDataArray(searchData.playlists.items));
   console.log(getFilterDataArray(searchData.artists.items));
 
+  useEffect(() => {
+    const param = searchParams.get("filterType");
+
+    if (param) {
+      searchParams.delete("filterType");
+      setSearchParams(searchParams);
+    }
+  }, []);
+
   return (
     <div>
-      <h1>THis is a search page</h1>
-      <p>filter</p>
+      <SearchFilterTabs />
       <Box>
         <SearchResultSection
           searchCategoryTitle="Albums"
@@ -49,12 +59,12 @@ export const SearchResultPage = () => {
           onClick={() => {}}
         />
         <SearchResultSection
-          searchCategoryTitle="Songs"
+          searchCategoryTitle="Tracks"
           songDeatils={getFilterDataArray(searchData.tracks.items)}
           isSong={true}
         />
         <SearchResultSection
-          searchCategoryTitle="Playlist"
+          searchCategoryTitle="Playlists"
           songDeatils={getFilterDataArray(searchData.playlists.items)}
         />
         <SearchResultSection
