@@ -15,14 +15,26 @@ body {
   background-color: rgb(251, 249, 252);
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 600px) {
+  body {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 992px) {
   body {
     font-size: 14px;
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 1200px) {
   body {
-    font-size: 12px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  body {
+    font-size: 16px;
   }
 }
