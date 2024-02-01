@@ -40,17 +40,19 @@ export const SearchResultSection = (props: ISearchResultSetion) => {
             );
           })}
       </Box>
-      <Box>
-        <Button
-          variant="outlined"
-          endIcon={<KeyboardArrowDownIcon />}
-          onClick={() => {
-            setSearchParams({ category: searchCategoryTitle });
-          }}
-        >
-          View More
-        </Button>
-      </Box>
+      {!filterSelected && (
+        <Box>
+          <Button
+            variant="outlined"
+            endIcon={<KeyboardArrowDownIcon />}
+            onClick={() => {
+              setSearchParams({ category: searchCategoryTitle });
+            }}
+          >
+            View More
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

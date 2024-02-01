@@ -162,6 +162,7 @@ export const Header = () => {
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && e.target.value.length > 0) {
                         navigate(`/search?q=${searchString}`);
+                        setShowSearchSuggestion(false);
                       }
                     }}
                     value={searchString}

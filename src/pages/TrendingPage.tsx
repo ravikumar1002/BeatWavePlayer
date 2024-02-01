@@ -7,31 +7,13 @@ import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
 import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
 import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
-// import ColorThief from 'colorthief'
 
 export const TrendingPage = () => {
   const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null);
   const { playlistid } = useParams();
   const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore();
   const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default");
-  // const colorThief = new ColorThief();
 
-  // const imageRef = useRef(null)
-
-  // const getColor = () => {
-
-  // }
-
-  // if (imageRef?.current) {
-  //     colorThief.getColor(img);
-  // } else {
-  //     image.addEventListener('load', function () {
-  //         colorThief.getColor(img);
-  //     });
-  // }
-  // useEffect(() => {
-  //     console.log(imageRef?.current)
-  // }, [imageRef])
 
   const getTrendingData = async (playlistID: string) => {
     setLoadingState("loading");
