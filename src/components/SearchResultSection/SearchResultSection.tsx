@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { SearchResultCard } from "./SearchResultCard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useSearchParams } from "react-router-dom";
 
 export interface ISectionSongDetails {
   title: string;
@@ -14,16 +15,16 @@ export interface ISectionSongDetails {
 interface ISearchResultSetion {
   searchCategoryTitle: string;
   songDeatils: ISectionSongDetails[];
-  isSong: boolean;
+  cardType?: string;
 }
 
 export const SearchResultSection = (props: ISearchResultSetion) => {
-  const { searchCategoryTitle, songDeatils, isSong } = props;
-  //   const selectedCategory: string = "album";
+  const { searchCategoryTitle, songDeatils, cardType } = props;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filterSelected = searchParams.get("category");
+  console.log(searchCategoryTitle);
 
-  //   const mediaType: string = "track";
-
-  //   if (selectedCategory && selectedCategory !== mediaType) return null;
+  if (filterSelected && searchCategoryTitle !== filterSelected) return null;
   return (
     <Box>
       <Box>
@@ -34,16 +35,24 @@ export const SearchResultSection = (props: ISearchResultSetion) => {
           songDeatils.map((details) => {
             return (
               <Box key={details.id}>
-                <SearchResultCard songDetails={details} isSong={isSong} />
+                <SearchResultCard songDetails={details} cardType={cardType} />
               </Box>
             );
           })}
       </Box>
-      <Box>
-        <Button variant="outlined" endIcon={<KeyboardArrowDownIcon />}>
-          View More
-        </Button>
-      </Box>
+      {!filterSelected && (
+        <Box>
+          <Button
+            variant="outlined"
+            endIcon={<KeyboardArrowDownIcon />}
+            onClick={() => {
+              setSearchParams({ category: searchCategoryTitle });
+            }}
+          >
+            View More
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

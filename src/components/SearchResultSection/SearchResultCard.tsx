@@ -4,6 +4,7 @@ import GraphicEqIcon from "@mui/icons-material/GraphicEq";
 import PlayArrowSharpIcon from "@mui/icons-material/PlayArrowSharp";
 import { useAppStore } from "@store/store";
 import { VerticalCardDetails } from "@components/SongCard/VerticalCardDetails";
+import { useNavigate } from "react-router-dom";
 
 export interface ISongDetails {
   title: string;
@@ -16,7 +17,7 @@ export interface ISongDetails {
 
 interface ISearchResultCard {
   songDetails: ISongDetails;
-  isSong?: boolean;
+  cardType?: string;
 }
 
 const styles: Record<string, SxProps> = {
@@ -51,6 +52,7 @@ export const SearchResultCard = (props: ISearchResultCard) => {
   const { title, image, id, artists, release_year, albumName } = props.songDetails;
   //   console.log(title, image, id, artists, release_year, albumName);
   const { playingsongId } = useAppStore();
+  const navigate = useNavigate();
 
   const dDzoI = keyframes`
     0% {
@@ -77,17 +79,21 @@ export const SearchResultCard = (props: ISearchResultCard) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          //   setPlaylistSongs(props?.songDetails ? props?.songDetails : null);
+          if (props?.cardType === "Tracks") {
+            console.log(props?.cardType);
+          } else if (props?.cardType === "Playlists") {
+            navigate(`/playlist/${id}`);
+          }
         }}
       >
         <Box className="flex gap-5 w-1/12 items-center rounded">
           <Box className="relative">
             <img src={image} alt={title} className="h-12 w-12 object-cover rounded" />
 
-            {props.isSong && playingsongId === id && (
+            {props?.cardType === "Song" && playingsongId === id && (
               <GraphicEqIcon fontSize="small" sx={styles.imageIconHover} />
             )}
-            {props.isSong && playingsongId !== id && (
+            {props?.cardType === "Song" && playingsongId !== id && (
               <PlayArrowSharpIcon
                 fontSize="small"
                 sx={{

@@ -1,17 +1,17 @@
-import './App.css'
+import "./App.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { createTheme, ThemeProvider } from '@mui/material';
-import TrendingPage from '@pages/TrendingPage';
-import HomePage from '@pages/HomePage';
-import DetailsPage from '@pages/DetailsPage';
-import { PageWrapper } from '@components/PageWrapper';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SearchResultPage } from '@pages/SearchResultPage';
-
+import { createTheme, ThemeProvider } from "@mui/material";
+import TrendingPage from "@pages/TrendingPage";
+import HomePage from "@pages/HomePage";
+import { PageWrapper } from "@components/PageWrapper";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SearchResultPage } from "@pages/SearchResultPage";
+import PlaylistsPage from "@pages/PlaylistsPage";
+import { ArtistDetailsPage, ArtistsPage } from "@pages/Artists";
+import { AlbumDetailsPage, AlbumsPage } from "@pages/Albums";
 
 const App = () => {
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -33,9 +33,9 @@ const App = () => {
       path: "/playlist",
       element: (
         <PageWrapper>
-          <DetailsPage />
+          <PlaylistsPage />
         </PageWrapper>
-      )
+      ),
     },
     {
       path: "/playlist/:playlistid",
@@ -45,15 +45,47 @@ const App = () => {
         </PageWrapper>
       ),
     },
+    {
+      path: "/artists",
+      element: (
+        <PageWrapper>
+          <ArtistsPage />
+        </PageWrapper>
+      ),
+    },
+    {
+      path: "/artists/:artistId",
+      element: (
+        <PageWrapper>
+          <ArtistDetailsPage />
+        </PageWrapper>
+      ),
+    },
+    {
+      path: "/albums",
+      element: (
+        <PageWrapper>
+          <AlbumsPage />
+        </PageWrapper>
+      ),
+    },
+    {
+      path: "/albums/:albumId",
+      element: (
+        <PageWrapper>
+          <AlbumDetailsPage />
+        </PageWrapper>
+      ),
+    },
   ]);
 
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
 
-  const theme = createTheme(({
+  const theme = createTheme({
     typography: {
-      fontFamily: 'Inter'
-    }
-  }))
+      fontFamily: "Inter",
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -61,8 +93,7 @@ const App = () => {
         <RouterProvider router={router} />
       </ThemeProvider>
     </QueryClientProvider>
+  );
+};
 
-  )
-}
-
-export default App
+export default App;
