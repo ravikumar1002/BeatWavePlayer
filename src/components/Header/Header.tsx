@@ -52,10 +52,10 @@ export const Header = () => {
   const searchSuggestionRef = useRef(null);
   const searchResultLimit = 5;
 
-  const suggestionSearchhandler = useDebounce(() =>
-    spotifySearchApi(searchString, searchResultLimit)
-  );
-  suggestionSearchhandler();
+  // const suggestionSearchhandler = useDebounce(() =>
+  //   spotifySearchApi(searchString, searchResultLimit)
+  // );
+  // suggestionSearchhandler();
 
   const dataAssemble = [
     ...data.albums.items,
