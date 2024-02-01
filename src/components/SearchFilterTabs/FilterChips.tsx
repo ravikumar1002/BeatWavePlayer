@@ -4,7 +4,6 @@ const styles: Record<string, SxProps> = {
   chipStyle: {
     padding: "0.3rem",
     fontWeight: "600",
-    // borderRadius: "5px",
   },
 };
 
@@ -45,16 +44,7 @@ export const ClearFilterChip = ({
   return (
     <Chip
       label={`${label}`}
-      sx={{
-        ...styles.chipStyle,
-        // "& .css-6od3lo-MuiChip-label": {
-        //   paddingLeft: 0,
-        //   paddingRight: 0,
-        // },
-        // "& .MuiChip-deleteIcon": {
-        //   margin: 0,
-        // },
-      }}
+      sx={styles.chipStyle}
       variant={variant}
       className={styleString}
       onDelete={() => {
