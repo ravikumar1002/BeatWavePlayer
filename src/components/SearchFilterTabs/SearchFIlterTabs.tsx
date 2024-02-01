@@ -25,25 +25,16 @@ export const SearchFilterTabs = () => {
 
   return (
     <Box sx={{ paddingBottom: "1rem", width: "100%", paddingTop: "1rem" }}>
-      <Box className="flex gap-7 w-full items-center justify-center">
-        {activeCategory && (
-          <ClearFilterChip
-            variant="filled"
-            styleString="order-first"
-            onDelete={() => {
-              deleteSelectedCategory();
-            }}
-          />
-        )}
+      <Box className="flex gap-3 w-full items-center justify-center">
         {categories.map((category, i) => {
           if (category === activeCategory) {
             return (
-              <FilterChip
+              <ClearFilterChip
                 key={i}
                 label={`${category}`}
                 variant="filled"
-                onClick={() => {
-                  selectedCategory(category);
+                onDelete={() => {
+                  deleteSelectedCategory();
                 }}
               />
             );

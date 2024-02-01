@@ -2,9 +2,9 @@ import { Chip, SxProps } from "@mui/material";
 
 const styles: Record<string, SxProps> = {
   chipStyle: {
-    padding: "0.5rem",
+    padding: "0.3rem",
     fontWeight: "600",
-    borderRadius: "5px",
+    // borderRadius: "5px",
   },
 };
 
@@ -47,13 +47,13 @@ export const ClearFilterChip = ({
       label={`${label}`}
       sx={{
         ...styles.chipStyle,
-        "& .css-6od3lo-MuiChip-label": {
-          paddingLeft: 0,
-          paddingRight: 0,
-        },
-        "& .MuiChip-deleteIcon": {
-          margin: 0,
-        },
+        // "& .css-6od3lo-MuiChip-label": {
+        //   paddingLeft: 0,
+        //   paddingRight: 0,
+        // },
+        // "& .MuiChip-deleteIcon": {
+        //   margin: 0,
+        // },
       }}
       variant={variant}
       className={styleString}
