@@ -15,11 +15,11 @@ export interface ISectionSongDetails {
 interface ISearchResultSetion {
   searchCategoryTitle: string;
   songDeatils: ISectionSongDetails[];
-  isSong?: boolean;
+  cardType?: string;
 }
 
 export const SearchResultSection = (props: ISearchResultSetion) => {
-  const { searchCategoryTitle, songDeatils, isSong } = props;
+  const { searchCategoryTitle, songDeatils, cardType } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const filterSelected = searchParams.get("category");
   console.log(searchCategoryTitle);
@@ -35,7 +35,7 @@ export const SearchResultSection = (props: ISearchResultSetion) => {
           songDeatils.map((details) => {
             return (
               <Box key={details.id}>
-                <SearchResultCard songDetails={details} isSong={isSong} />
+                <SearchResultCard songDetails={details} cardType={cardType} />
               </Box>
             );
           })}

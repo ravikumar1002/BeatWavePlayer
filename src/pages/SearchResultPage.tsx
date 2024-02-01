@@ -6,7 +6,7 @@ import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 import { SearchFilterTabs } from "@components/SearchFilterTabs/SearchFIlterTabs";
 import { useEffect } from "react";
 
-export const getFilterDataArray = (valueArray) => {
+const getFilterDataArray = (valueArray) => {
   const valueFilter = valueArray.map((details) => {
     const imageUrl = details.images ? details?.images[0]?.url : details?.album.images[0]?.url;
     const artists = details.artists ? details.artists.map((item) => item.name) : [details?.type];
@@ -57,11 +57,12 @@ export const SearchResultPage = () => {
         <SearchResultSection
           searchCategoryTitle="Tracks"
           songDeatils={getFilterDataArray(searchData.tracks.items)}
-          isSong={true}
+          cardType={"Tracks"}
         />
         <SearchResultSection
           searchCategoryTitle="Playlists"
           songDeatils={getFilterDataArray(searchData.playlists.items)}
+          cardType={"Playlists"}
         />
         <SearchResultSection
           searchCategoryTitle="Artists"

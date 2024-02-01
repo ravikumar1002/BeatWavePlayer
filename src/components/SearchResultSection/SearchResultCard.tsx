@@ -17,7 +17,7 @@ export interface ISongDetails {
 
 interface ISearchResultCard {
   songDetails: ISongDetails;
-  isSong?: boolean;
+  cardType?: string;
 }
 
 const styles: Record<string, SxProps> = {
@@ -79,10 +79,10 @@ export const SearchResultCard = (props: ISearchResultCard) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          if (props?.isSong) {
+          if (props?.cardType === "Tracks") {
+            console.log(props?.cardType);
+          } else if (props?.cardType === "Playlists") {
             navigate(`/playlist/${id}`);
-          }else {
-            
           }
         }}
       >
@@ -90,10 +90,10 @@ export const SearchResultCard = (props: ISearchResultCard) => {
           <Box className="relative">
             <img src={image} alt={title} className="h-12 w-12 object-cover rounded" />
 
-            {props.isSong && playingsongId === id && (
+            {props?.cardType === "Song" && playingsongId === id && (
               <GraphicEqIcon fontSize="small" sx={styles.imageIconHover} />
             )}
-            {props.isSong && playingsongId !== id && (
+            {props?.cardType === "Song" && playingsongId !== id && (
               <PlayArrowSharpIcon
                 fontSize="small"
                 sx={{
