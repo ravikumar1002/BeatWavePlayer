@@ -3,35 +3,42 @@ import { Box, Typography, styled } from "@mui/material";
 
 const SubTextCard = styled(
   Typography,
-  {}
+  {},
 )(() => ({
   color: "gray",
   fontWeight: 500,
   padding: "0.25rem",
 }));
 
-interface IValueDeatils {
+interface IValueDetails {
   playingsongId: string | null;
   title: string;
-  id: string;
-  subDetails1: string[];
-  subDetails2: string[];
-  subDetails3: string[];
+  id?: string;
+  subDetails1: string[] | string;
+  subDetails2: string[] | string;
+  subDetails3: string[] | string;
 }
 
 interface IverticalCardDetails {
-  valueDeatils: IValueDeatils;
+  valueDeatils: IValueDetails;
 }
 
-export const SubTextloopComponent = ({ subDetails }: { subDetails: string[] }) => {
+export const SubTextloopComponent = ({ subDetails }: { subDetails: string[] | string }) => {
+  if (Array.isArray(subDetails)) {
+    return (
+      <>
+        {subDetails.map((sub, i) => (
+          <SubTextCard key={i} variant="caption">
+            {sub}
+            {i !== subDetails.length - 1 ? ", " : ""}
+          </SubTextCard>
+        ))}
+      </>
+    );
+  }
   return (
     <>
-      {subDetails.map((sub, i) => (
-        <SubTextCard key={i} variant="caption">
-          {sub}
-          {i !== subDetails.length - 1 ? ", " : ""}
-        </SubTextCard>
-      ))}
+      <SubTextCard variant="caption">{subDetails}</SubTextCard>
     </>
   );
 };
@@ -43,6 +50,7 @@ export const VerticalCardDetails = (props: IverticalCardDetails) => {
       <Typography
         variant="subtitle2"
         className="p-1"
+        noWrap
         sx={{
           fontWeight: 700,
           color: `${playingsongId === id && "maroon"}`,
