@@ -9,9 +9,10 @@ import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/Details
 import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 import { getTracksItemsData } from "@utils/getTracksItemsData";
 import { useAppStore } from "@store/store";
+import useALbumDetailsPage from "./useAlbumDetailsPage";
 
 export const AlbumDetailsPage = () => {
-  const { albumId } = useParams();
+  /*   const { albumId } = useParams();
   const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore();
 
   const getAlbumDetails = async (albumId: string | undefined) => {
@@ -21,56 +22,51 @@ export const AlbumDetailsPage = () => {
     return trendingResponse;
   };
 
-  const AlbumDetailsQuery = useQuery({
+  const albumDetailsQuery = useQuery({
     queryKey: ["albumDetails"],
     queryFn: async () => {
       const albumData = await getAlbumDetails(albumId);
       setOpenPlaylist(albumData);
       return albumData;
     },
-  });
+  }); */
 
-  console.log(AlbumDetailsQuery.data, AlbumDetailsQuery.isLoading);
-  console.log(getBannerData(AlbumDetailsQuery.data));
+  const { albumDetailsQuery, onBannerClick } = useALbumDetailsPage();
+
+  console.log(albumDetailsQuery.data, albumDetailsQuery.isLoading);
+  console.log(getBannerData(albumDetailsQuery.data));
+
   return (
-    <Box
-      sx={{
-        background: "azure",
-      }}
-    >
-      {AlbumDetailsQuery.isSuccess && (
+    <Box sx={{ background: "azure" }}>
+      {albumDetailsQuery.isSuccess && (
         <DetailsPageBanner
           bannerDetails={{
-            ...getBannerData(AlbumDetailsQuery.data),
-            subText3: getReleaseYearValue(AlbumDetailsQuery?.data?.release_date),
-            subText1: AlbumDetailsQuery.data?.artists.map((artist) => artist.name),
+            ...getBannerData(albumDetailsQuery.data),
+            subText3: getReleaseYearValue(albumDetailsQuery?.data?.release_date),
+            subText1: albumDetailsQuery.data?.artists.map((artist) => artist.name),
           }}
-          onClick={() => {
-            const tracksItems = getTracksItemsData(AlbumDetailsQuery.data?.tracks.items);
-            setPlaylistSongs(tracksItems ? tracksItems : null);
-            setCurrentTrack(0);
-          }}
+          onClick={onBannerClick}
         />
       )}
-      {AlbumDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
+      {albumDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
 
       <Box className="px-8 py-2">
-        {AlbumDetailsQuery.isLoading &&
+        {albumDetailsQuery.isLoading &&
           Array(20)
             .fill(0)
             .map((_, i) => {
               return <SkeletonVerticalSongCard key={i} />;
             })}
-        {AlbumDetailsQuery.isSuccess &&
-          AlbumDetailsQuery.data &&
-          AlbumDetailsQuery.data?.tracks.items.map((item, i) => {
+        {albumDetailsQuery.isSuccess &&
+          albumDetailsQuery.data &&
+          albumDetailsQuery.data?.tracks.items.map((item, i) => {
             const songDetails = {
               title: item.name,
               image: "",
               id: item.id,
               artists: item.artists.map((artist) => artist.name),
-              release_year: AlbumDetailsQuery?.data?.release_date,
-              album: AlbumDetailsQuery.data.name,
+              release_year: albumDetailsQuery?.data?.release_date,
+              album: albumDetailsQuery.data.name,
               url: item.preview_url,
             };
 
