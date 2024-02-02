@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
-import { keyframes } from "@mui/system";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { MiddleDot } from "@components/CenterDot";
+import { useBannerDetailsPage } from "./useBannerDetailsPage";
 
 interface IBannerDetails {
   imageUrl: string;
@@ -10,7 +10,6 @@ interface IBannerDetails {
   subText2: string;
   subText3?: string;
 }
-
 interface IDetailsPageBanner {
   bannerDetails: IBannerDetails;
   onClick: () => void;
@@ -20,19 +19,7 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
   const { bannerDetails, onClick } = props;
   const { imageUrl, name, subText1, subText2, subText3 } = bannerDetails;
 
-  const detailsPageBannerAnimation = keyframes`
-    100% {
-      transform: translate(0px);
-  }`;
-
-  const animationHeading = {
-    animationDuration: "0.3s",
-    animationFillMode: "forwards",
-    display: "block",
-    animationName: `${detailsPageBannerAnimation}`,
-    transform: "translateY(100%)",
-    animationPlayState: "running",
-  };
+  const { SubTextStyle, animationHeading } = useBannerDetailsPage();
 
   return (
     <Box className="flex items-center w-full">
@@ -62,42 +49,12 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
           >
             {name}
           </Typography>
-          <Typography
-            variant="body1"
-            className="p-2"
-            sx={{
-              color: "gray",
-              fontWeight: 500,
-              ...animationHeading,
-            }}
-          >
-            {subText1}
-          </Typography>
+          <SubTextStyle variant="body1">{subText1}</SubTextStyle>
         </Box>
         <Box className="flex gap-5 flex-wrap content-center">
-          <Typography
-            variant="body2"
-            className="p-2"
-            sx={{
-              color: "gray",
-              fontWeight: 500,
-              ...animationHeading,
-            }}
-          >
-            {subText2}
-          </Typography>
+          <SubTextStyle variant="body2">{subText2}</SubTextStyle>
           {subText2.length > 0 && <MiddleDot />}
-          <Typography
-            variant="body2"
-            className="p-2"
-            sx={{
-              color: "gray",
-              fontWeight: 500,
-              ...animationHeading,
-            }}
-          >
-            {subText3}
-          </Typography>
+          <SubTextStyle variant="body2">{subText3}</SubTextStyle>
         </Box>
         <Box className="ml-12 mt-4">
           {
