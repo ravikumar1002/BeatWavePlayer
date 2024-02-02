@@ -7,6 +7,8 @@ import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
 import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
 import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
+import { getBannerData } from "@utils/getBannerData";
+import { getTracksItemsData } from "@utils/getTracksItemsData";
 
 export const TrendingPage = () => {
   const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null);
@@ -32,30 +34,15 @@ export const TrendingPage = () => {
     getTrendingData(`${playlistid}`);
   }, [playlistid]);
 
-  const getBannerData = (playlistDetails: any) => {
-    return {
-      imageUrl: playlistDetails?.images[0].url ? playlistDetails?.images[0].url : "",
-      name: playlistDetails?.name ? playlistDetails?.name : "",
-      description: playlistDetails?.description ? playlistDetails?.description : "",
-      itemsLength: playlistDetails?.tracks.items.length ? playlistDetails?.tracks.items.length : 0,
-      followers: playlistDetails?.followers.total ? playlistDetails?.followers.total : 0,
-    };
-  };
-
-  const getTracksItemsData = (items: any) => {
-    const tracksItems = items.map((item) => {
-      return {
-        title: item.track.name,
-        url: item.track?.preview_url ? item.track?.preview_url : "",
-        image: item.track.album.images[0].url,
-        id: item.track.id,
-        artists: item.track.artists,
-        release_year: item.track.album.release_date,
-        album: item.track.album.name,
-      };
-    });
-    return tracksItems;
-  };
+  // const getBannerData = (playlistDetails: any) => {
+  //   return {
+  //     imageUrl: playlistDetails?.images[0].url ? playlistDetails?.images[0].url : "",
+  //     name: playlistDetails?.name ? playlistDetails?.name : "",
+  //     description: playlistDetails?.description ? playlistDetails?.description : "",
+  //     itemsLength: playlistDetails?.tracks.items.length ? playlistDetails?.tracks.items.length : 0,
+  //     followers: playlistDetails?.followers.total ? playlistDetails?.followers.total : 0,
+  //   };
+  // };
 
   return (
     <Box
