@@ -1,36 +1,12 @@
 import { Box } from "@mui/material";
-import { useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
 import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
 import { getBannerData } from "@utils/getBannerData";
 import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
 import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
-import { getTracksItemsData } from "@utils/getTracksItemsData";
-import { useAppStore } from "@store/store";
 import useALbumDetailsPage from "./useAlbumDetailsPage";
 
 export const AlbumDetailsPage = () => {
-  /*   const { albumId } = useParams();
-  const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore();
-
-  const getAlbumDetails = async (albumId: string | undefined) => {
-    const trendingResponse = await GetSpotifyDataAsJSON(`/albums/${albumId}`, {
-      params: {},
-    });
-    return trendingResponse;
-  };
-
-  const albumDetailsQuery = useQuery({
-    queryKey: ["albumDetails"],
-    queryFn: async () => {
-      const albumData = await getAlbumDetails(albumId);
-      setOpenPlaylist(albumData);
-      return albumData;
-    },
-  }); */
-
   const { albumDetailsQuery, onBannerClick } = useALbumDetailsPage();
 
   console.log(albumDetailsQuery.data, albumDetailsQuery.isLoading);

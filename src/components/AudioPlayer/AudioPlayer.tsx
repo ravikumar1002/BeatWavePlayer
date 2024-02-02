@@ -1,149 +1,47 @@
-import { MiddleDot } from "@components/CenterDot";
 import { ProgressSlider } from "@components/ProgessSlider";
+import { VerticalCardDetails } from "@components/SongCard/VerticalCardDetails";
 import { SongController } from "@components/SongController";
 import { VolumeController } from "@components/VolumeController";
-import { PlaylistArtist } from "@dto/playlistDataDTO";
-import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
+import { ICommonPropsDataSharingDTO } from "@dto/CommonDTO";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
-import { useState, useEffect, useRef } from "react";
-
-interface IAudioTrackData {
-  title: string;
-  url: string;
-  image: string;
-  id: string;
-  artists: PlaylistArtist[];
-  release_year: string;
-  album: string;
-}
+import { useAudioPlayer } from "./useAudioPlayer";
 
 interface IAudioPlayerProps {
-  playlist: IAudioTrackData[];
+  tracksDetails: ICommonPropsDataSharingDTO[];
 }
 
-export const AudioPlayer = (props: IAudioPlayerProps) => {
-  const { playlist } = props;
+const getVerticalCardPropsDataPattern = (data: ICommonPropsDataSharingDTO) => {
+  const playingsongId = data.id;
+  const title = data.title;
+  const subDetails1 = data.artists;
+  const subDetails2 = [`${data.release_year}`];
+  const subDetails3 = [`${data.album}`];
 
-  const {
-    audioLevel,
+  return {
     playingsongId,
-    isAudioMuted,
-    currentTrack,
-    setAudioLevel,
-    setIsAudioMuted,
-    setCurrentTrack,
-    setPlayingSongId,
-  } = useAppStore();
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0);
-  const audioRef = useRef(new Audio(playlist[currentTrack]?.url));
-
-  const songPlayHandler = (
-    songsList: IAudioTrackData[],
-    playingTrak: number,
-    audioRef: React.MutableRefObject<HTMLAudioElement>,
-    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    const trackURL = songsList[playingTrak]?.url
-      ? songsList[playingTrak]?.url
-      : "";
-    audioRef.current.src = trackURL;
-    setTimeout(() => {
-      const playPromise = audioRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((error) => {
-            console.log(error);
-            setIsPlaying(false);
-          });
-      }
-      setIsPlaying(true);
-    }, 0);
+    title,
+    subDetails1,
+    subDetails2,
+    subDetails3,
   };
+};
 
-  useEffect(() => {
-    const updateProgress = () => {
-      const currentTime = audioRef.current.currentTime;
-      const duration = audioRef.current.duration;
-      const progressPercentage = (currentTime / duration) * 100 || 0;
-      setProgress(progressPercentage);
-    };
-
-    const handleEnded = () => {
-      nextTrackHandler();
-    };
-
-    audioRef.current.addEventListener("timeupdate", updateProgress);
-    audioRef.current.addEventListener("ended", handleEnded);
-
-    return () => {
-      audioRef.current.removeEventListener("timeupdate", updateProgress);
-      audioRef.current.removeEventListener("ended", handleEnded);
-    };
-  }, [currentTrack, playingsongId]);
-
-  useEffect(() => {
-    songPlayHandler(playlist, currentTrack, audioRef, setIsPlaying);
-    setPlayingSongId(playlist[currentTrack].id);
-  }, [currentTrack, playingsongId]);
-
-  const playPauseHandler = (): void => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const nextTrackHandler = (): void => {
-    const trackNumber = (currentTrack + 1) % playlist.length;
-    setCurrentTrack(trackNumber);
-    songPlayHandler(playlist, trackNumber, audioRef, setIsPlaying);
-  };
-
-  const prevTrackHandler = (): void => {
-    const trackNumber =
-      currentTrack === 0 ? playlist.length - 1 : currentTrack - 1;
-    setCurrentTrack(trackNumber);
-    songPlayHandler(playlist, trackNumber, audioRef, setIsPlaying);
-  };
-
-  const volumeChangeHandler = (e: number | number[]): void => {
-    const newVolume = parseFloat(e.toString());
-    setAudioLevel(newVolume);
-    if (newVolume === 0) {
-      setIsAudioMuted(true);
-    } else {
-      setIsAudioMuted(false);
-    }
-    audioRef.current.volume = newVolume;
-  };
-
-  const progressChangeHandler = (e: number | number[]) => {
-    const newProgress = parseFloat(e.toString());
-    const newTime = (newProgress / 100) * audioRef.current.duration;
-    setProgress(newProgress);
-    audioRef.current.currentTime = newTime;
-
-    if (isNaN(newTime)) {
-      nextTrackHandler();
-    }
-  };
-
-  function formatDuration(value: number) {
-    const minute = Math.floor(value / 60);
-    const secondLeft = value - minute * 60;
-    if (isNaN(minute) || isNaN(secondLeft)) {
-      return "0:00";
-    }
-    return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
-  }
-
+export const AudioPlayer = (props: IAudioPlayerProps) => {
+  const { tracksDetails } = props;
+  const { audioLevel, isAudioMuted, currentTrack, setIsAudioMuted } = useAppStore();
+  const {
+    isPlaying,
+    audioRef,
+    progress,
+    nextTrackHandler,
+    prevTrackHandler,
+    formatDuration,
+    progressChangeHandler,
+    playPauseHandler,
+    volumeChangeHandler,
+  } = useAudioPlayer({ tracksDetails });
+  
   return (
     <Card
       sx={{
@@ -152,7 +50,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
         justifyContent: "center",
       }}
       className={"absolute top-full left-0 bg-gray-700 z-10 flex-wrap"}
-      key={playlist[currentTrack].url}
+      key={tracksDetails[currentTrack].url}
     >
       <Box
         sx={{
@@ -179,17 +77,8 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
           />
           <Box className="flex justify-between ml-2">
             <Typography variant="body2">
-              {
-                formatDuration(audioRef.current.currentTime)
-                  .toString()
-                  .split(".")[0]
-              }{" "}
-              /{" "}
-              {
-                formatDuration(audioRef.current.duration)
-                  .toString()
-                  .split(".")[0]
-              }
+              {formatDuration(audioRef.current.currentTime).toString().split(".")[0]} /
+              {formatDuration(audioRef.current.duration).toString().split(".")[0]}
             </Typography>
           </Box>
         </Box>
@@ -204,15 +93,16 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
           <CardMedia
             component="img"
             sx={{ width: 50, height: 50 }}
-            image={playlist[currentTrack].image}
-            alt={playlist[currentTrack].title}
+            image={tracksDetails[currentTrack].image}
+            alt={tracksDetails[currentTrack].title}
           />
-          <Box>
+          <VerticalCardDetails valueDeatils={getVerticalCardPropsDataPattern(tracksDetails)} />
+          {/* <Box>
             <Typography component="div" variant="h6" noWrap sx={{}}>
-              {playlist[currentTrack].title}
+              {tracksDetails[currentTrack].title}
             </Typography>
             <Box className="flex flex-wrap mb-1">
-              {playlist[currentTrack].artists.map((details, i) => {
+              {tracksDetails[currentTrack].artists.map((details, i) => {
                 return (
                   <Typography
                     key={i}
@@ -224,7 +114,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
                     }}
                   >
                     {details.name}
-                    {i !== playlist[currentTrack].artists.length - 1 ? ", " : ""}
+                    {i !== tracksDetails[currentTrack].artists.length - 1 ? ", " : ""}
                   </Typography>
                 );
               })}
@@ -238,7 +128,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
                   fontWeight: 500,
                 }}
               >
-                {playlist[currentTrack].album}
+                {tracksDetails[currentTrack].album}
               </Typography>
               <MiddleDot />
 
@@ -250,10 +140,10 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
                   fontWeight: 500,
                 }}
               >
-                {getReleaseYearValue(playlist[currentTrack].release_year)}
+                {getReleaseYearValue(tracksDetails[currentTrack].release_year)}
               </Typography>
             </Box>
-          </Box>
+          </Box> */}
         </CardContent>
         <VolumeController
           isAudioMuted={isAudioMuted}
@@ -263,10 +153,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
           volumeChangeHandler={volumeChangeHandler}
         />
       </Box>
-      <ProgressSlider
-        sliderValue={progress}
-        sliderFunction={progressChangeHandler}
-      />
+      <ProgressSlider sliderValue={progress} sliderFunction={progressChangeHandler} />
     </Card>
   );
 };
