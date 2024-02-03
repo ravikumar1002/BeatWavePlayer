@@ -8,3 +8,11 @@ export interface ICommonPropsDataSharingDTO {
     release_year: string;
     album: string;
 }
+
+
+export interface ICommonCategoryCardProps {
+    _id: string;
+    image: string;
+    name: string;
+    description: string;
+}

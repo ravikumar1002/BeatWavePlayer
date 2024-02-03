@@ -8,15 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 import "./playlist-card.css";
-
-interface IDetailsProps {
-  image: string;
-  name: string;
-  description: string;
-}
+import { ICommonCategoryCardProps } from "@dto/commonDTO";
 
 interface IPlaylistCardProps {
-  details: IDetailsProps;
+  details: ICommonCategoryCardProps;
 }
 
 const styles: Record<string, SxProps> = {
@@ -69,11 +64,9 @@ export const PlaylistCard = (props: IPlaylistCardProps) => {
               variant="subtitle2"
               color="text.secondary"
               className="mytext"
-              sx={
-                {
-                  fontSize: "0.8rem"
-                }
-              }
+              sx={{
+                fontSize: "0.8rem",
+              }}
             >
               {description}
             </Typography>

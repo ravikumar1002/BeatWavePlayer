@@ -2,7 +2,7 @@ import { ProgressSlider } from "@components/ProgessSlider";
 import { VerticalCardDetails } from "@components/SongCard/VerticalCardDetails";
 import { SongController } from "@components/SongController";
 import { VolumeController } from "@components/VolumeController";
-import { ICommonPropsDataSharingDTO } from "@dto/CommonDTO";
+import { ICommonPropsDataSharingDTO } from "@dto/commonDTO";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
 import { useAudioPlayer } from "./useAudioPlayer";
