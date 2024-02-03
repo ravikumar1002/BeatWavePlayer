@@ -1,4 +1,4 @@
-import { useSearchFn } from "@components/SearchBar/useSearchFn";
+import { useSearchBar } from "@components/SearchBar/useSearchBar";
 import { Box, SxProps, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ export const SearchSuggestion = (props) => {
   const navigate = useNavigate();
 
   const { setPlayingSongId, setCurrentTrack, setPlaylistSongs } = useAppStore();
-  const { setShowSearchSuggestion } = useSearchFn();
+  const { setShowSearchSuggestion } = useSearchBar();
 
   const { dataAssemble } = props;
 

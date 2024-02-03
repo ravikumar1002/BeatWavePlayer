@@ -2,7 +2,7 @@
 import { MouseEvent, RefObject, useEffect, useRef, useState } from "react";
 
 
-export const useSearchFn = () => {
+export const useSearchBar = () => {
     const [searchString, setSearchString] = useState<string>("");
     const [showSearchSuggestion, setShowSearchSuggestion] = useState<boolean>(false);
     const searchSuggestionRef = useRef(null);

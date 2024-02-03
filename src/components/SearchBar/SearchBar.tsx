@@ -1,4 +1,4 @@
-import { useSearchFn } from "@components/SearchBar/useSearchFn";
+import { useSearchBar } from "@components/SearchBar/useSearchBar";
 import { Box, IconButton, InputBase, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,7 +19,7 @@ export const SearchBar = (props: ISearchBarProps) => {
     setSearchString,
     setShowSearchSuggestion,
     showSearchSuggestion,
-  } = useSearchFn();
+  } = useSearchBar();
 
   return (
     <Box ref={searchSuggestionRef}>
