@@ -2,6 +2,12 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ClearFilterChip, FilterChip } from "./FilterChips";
+const CATEGORIES_FILTER = {
+  ARTISTS: "Artists",
+  TRACKS: "Tracks",
+  ALBUMS: "Albums",
+  PLAYLISTS: "Playlists",
+};
 
 export const SearchFilterTabs = () => {
   const [activeCategory, setActiveCategory] = useState<string>("");
