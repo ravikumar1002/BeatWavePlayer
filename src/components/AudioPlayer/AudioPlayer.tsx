@@ -41,7 +41,7 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
     playPauseHandler,
     volumeChangeHandler,
   } = useAudioPlayer({ tracksDetails });
-  
+
   return (
     <Card
       sx={{
@@ -96,7 +96,9 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
             image={tracksDetails[currentTrack].image}
             alt={tracksDetails[currentTrack].title}
           />
-          <VerticalCardDetails valueDeatils={getVerticalCardPropsDataPattern(tracksDetails)} />
+          <VerticalCardDetails
+            valueDeatils={getVerticalCardPropsDataPattern(tracksDetails[currentTrack])}
+          />
           {/* <Box>
             <Typography component="div" variant="h6" noWrap sx={{}}>
               {tracksDetails[currentTrack].title}
