@@ -44,11 +44,11 @@ export const SearchSuggestion = (props: {
     item: ISearchSuggestionDataProps,
     suggestionResultCategory: string,
   ) => {
-    if (suggestionResultCategory) {
-      console.log(item);
+    if (suggestionResultCategory === "Tracks") {
+      console.log(item, 'm---------------------------------------------------------------------------------------');
       setPlayingSongId(item.id);
       //@ts-expect-error mujhe nhi pta
-      setPlaylistSongs([...item]);
+      setPlaylistSongs([item]);
       setCurrentTrack(0);
       setShowSearchSuggestion(false);
     } else {

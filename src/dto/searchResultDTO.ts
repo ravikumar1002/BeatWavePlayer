@@ -144,7 +144,7 @@ export interface SearchResultTracksItem {
     isLocal: boolean;
     name: string;
     popularity: number;
-    previewURL: null | string;
+    preview_url: null | string;
     trackNumber: number;
     type: string;
     uri: string;

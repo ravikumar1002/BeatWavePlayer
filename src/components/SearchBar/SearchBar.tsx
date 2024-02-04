@@ -73,11 +73,13 @@ export const SearchBar = () => {
     return albumsFilter;
   };
   const getArtistsSearchCategoryData = (artistsList: SearchResultArtistsItem[]) => {
-    const artistsFilter = artistsList.map((artist) => ({
-      image: artist.images[0].url,
-      id: artist.id,
-      title: artist.name,
-    }));
+    const artistsFilter = artistsList.map((artist) => {
+      return {
+        image: artist.images.length > 0 ? artist.images[0].url : "",
+        id: artist.id,
+        title: artist.name,
+      };
+    });
 
     return artistsFilter;
   };
@@ -93,16 +95,20 @@ export const SearchBar = () => {
   };
 
   const getTracksSearchCategoryData = (tracksList: SearchResultTracksItem[]) => {
-    const tracksFilter = tracksList.map((track) => ({
-      image: track.images[0].url,
-      id: track.id,
-      title: track.name,
-      url: track.previewURL,
-      artists: track.artists.map((artist) => artist.name),
-      //@ts-expect-error mujhe nhi pta
-      release_year: getReleaseYearValue(track.album.releaseDate),
-      album: track.album.name,
-    }));
+    console.log(tracksList);
+    const tracksFilter = tracksList.map((track) => {
+      // console.log(track);
+      return {
+        image: track.album.images[0].url,
+        id: track.id,
+        title: track.name,
+        url: track.preview_url,
+        artists: track.artists.map((artist) => artist.name),
+        //@ts-expect-error mujhe nhi pta
+        release_year: getReleaseYearValue(track.album.release_date),
+        album: track.album.name,
+      };
+    });
     return tracksFilter;
   };
 
@@ -146,7 +152,7 @@ export const SearchBar = () => {
                   <SearchSuggestion
                     key={item.id}
                     suggestionData={item}
-                    suggestionResultCategory="Album"
+                    suggestionResultCategory="Albums"
                   />
                 );
               })}
@@ -176,6 +182,7 @@ export const SearchBar = () => {
             {dataAssemble.tracks.items &&
               //@ts-expect-error mujhe nhi pta
               getTracksSearchCategoryData(dataAssemble.tracks.items).map((item) => {
+                console.log(item, "nnnn");
                 return (
                   <SearchSuggestion
                     key={item.id}
