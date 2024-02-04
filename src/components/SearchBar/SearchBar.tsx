@@ -65,7 +65,7 @@ export const SearchBar = () => {
 
   const getAlbumSearchCategoryData = (albumsList: SearchResultAlbumItems[]) => {
     const albumsFilter = albumsList.map((album) => ({
-      image: album.images[0].url,
+      image: album.images[2].url,
       id: album.id,
       title: album.name,
     }));
@@ -75,7 +75,7 @@ export const SearchBar = () => {
   const getArtistsSearchCategoryData = (artistsList: SearchResultArtistsItem[]) => {
     const artistsFilter = artistsList.map((artist) => {
       return {
-        image: artist.images.length > 0 ? artist.images[0].url : "",
+        image: artist.images.length > 0 ? artist.images[2].url : "",
         id: artist.id,
         title: artist.name,
       };
@@ -86,7 +86,7 @@ export const SearchBar = () => {
 
   const getPlaylistsSearchCategoryData = (playlistsList: SearchResultPlaylistsItem[]) => {
     const playlistsFilter = playlistsList.map((playlist) => ({
-      image: playlist.images[0].url,
+      image: playlist.images[2].url,
       id: playlist.id,
       title: playlist.name,
     }));
@@ -99,7 +99,7 @@ export const SearchBar = () => {
     const tracksFilter = tracksList.map((track) => {
       // console.log(track);
       return {
-        image: track.album.images[0].url,
+        image: track.album.images[2].url,
         id: track.id,
         title: track.name,
         url: track.preview_url,

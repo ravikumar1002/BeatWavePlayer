@@ -4,7 +4,7 @@ import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 export const getPlaylistsTrackItemsData = (item: PlaylistTrackItems) => {
   const title = item.name
   const url = item.preview_url ? item.preview_url : ""
-  const image = item.album.images[0].url
+  const image = item.album.images[2].url
   const id = item.id
   const artists = item.artists.map((artist) => artist.name)
   const release_year = getReleaseYearValue(item.album.release_date)
@@ -23,7 +23,7 @@ export const getPlaylistsTracksItemsArray = (items: TrackItem[]) => {
     return ({
       title: item.name,
       url: item?.preview_url ? item?.preview_url : "",
-      image: item.album.images[0].url,
+      image: item.album.images[2].url,
       id: item.id,
       artists: item.artists.map((artist) => artist.name),
       release_year: getReleaseYearValue(item.album.release_date),
