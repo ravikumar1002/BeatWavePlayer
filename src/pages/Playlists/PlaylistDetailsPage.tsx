@@ -8,20 +8,21 @@ import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/Details
 import { getBannerData } from "@utils/getBannerData";
 import { getTracksItemsArray } from "@utils/getTracksItemsData";
 import { useQuery } from "@tanstack/react-query";
+import { PlaylistDataDTO } from "@dto/playlistDataDTO";
 
 export const PlaylistsDetailsPage = () => {
   const { playlistid } = useParams();
   const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore();
 
-  const getPlaylistsDetailsData = async (playlistID: string) => {
-    const trendingResponse = await GetSpotifyDataAsJSON(`/playlists/${playlistID}`, {
-      params: {},
-    });
+  const getPlaylistsDetailsData = async (playlistID: string | undefined) => {
+    const trendingResponse = await GetSpotifyDataAsJSON<PlaylistDataDTO>(
+      `/playlists/${playlistID}`,
+    );
     return trendingResponse;
   };
 
   const playlistsDetailsQuery = useQuery({
-    queryKey: ["playlists_details"],
+    queryKey: ["playlists_details", playlistid],
     queryFn: async () => {
       const playlistsData = await getPlaylistsDetailsData(playlistid);
       const playlistArrangeData = {
@@ -31,14 +32,12 @@ export const PlaylistsDetailsPage = () => {
       setOpenPlaylist(playlistArrangeData.tracksData);
       return playlistArrangeData;
     },
+    refetchOnWindowFocus: false,
+    enabled: !!playlistid,
   });
 
   return (
-    <Box
-      sx={{
-        background: "azure",
-      }}
-    >
+    <Box sx={{ background: "azure" }}>
       {playlistsDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
       <Box className="px-8 py-2">
         {playlistsDetailsQuery.isLoading &&
@@ -60,7 +59,7 @@ export const PlaylistsDetailsPage = () => {
         {playlistsDetailsQuery.isSuccess &&
           playlistsDetailsQuery?.data?.tracksData &&
           playlistsDetailsQuery?.data?.tracksData.map((item, i) => {
-            return <VerticalSongCard key={i} songDetails={item} listRank={i} />;
+            return <VerticalSongCard key={item.id} songDetails={item} listRank={i} />;
           })}
       </Box>
     </Box>

@@ -84,8 +84,8 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
               src={image}
               alt={title}
               style={{
-                height: "96px",
-                width: "96px",
+                height: "70px",
+                width: "70px",
                 objectFit: "cover",
                 borderRadius: "5px",
               }}
