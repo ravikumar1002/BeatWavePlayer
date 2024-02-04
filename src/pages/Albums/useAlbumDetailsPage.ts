@@ -1,7 +1,7 @@
 import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { useAppStore } from "@store/store";
 import { useQuery } from "@tanstack/react-query";
-import { getTracksItemsData } from "@utils/getTracksItemsData";
+import { getTracksItemsArray } from "@utils/getTracksItemsData";
 import { useParams } from "react-router-dom";
 
 const useALbumDetailsPage = () => {
@@ -25,7 +25,7 @@ const useALbumDetailsPage = () => {
 	});
 
 	const onBannerClick = () => {
-		const tracksItems = getTracksItemsData(albumDetailsQuery.data?.tracks.items);
+		const tracksItems = getTracksItemsArray(albumDetailsQuery.data?.tracks.items);
 		setPlaylistSongs(tracksItems ? tracksItems : null);
 		setCurrentTrack(0);
 	}

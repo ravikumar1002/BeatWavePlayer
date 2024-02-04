@@ -8,7 +8,7 @@ import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard
 import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
 import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
 import { getBannerData } from "@utils/getBannerData";
-import { getTracksItemsData } from "@utils/getTracksItemsData";
+import { getTracksItemsArray } from "@utils/getTracksItemsData";
 
 export const TrendingPage = () => {
   const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null);
@@ -22,7 +22,7 @@ export const TrendingPage = () => {
       `/playlists/${playlistID}`,
       {
         params: {},
-      }
+      },
     );
     setPlaylistDetails(trendingResponse);
     setOpenPlaylist(trendingResponse);
@@ -54,7 +54,7 @@ export const TrendingPage = () => {
         <DetailsPageBanner
           bannerDetails={getBannerData(playlistDetails)}
           onClick={() => {
-            const tracksItems = getTracksItemsData(playlistDetails?.tracks.items);
+            const tracksItems = getTracksItemsArray(playlistDetails?.tracks.items);
             setPlaylistSongs(tracksItems ? tracksItems : null);
             setCurrentTrack(0);
           }}
@@ -71,7 +71,7 @@ export const TrendingPage = () => {
         {loadingState === "fulfilled" &&
           playlistDetails &&
           playlistDetails?.tracks?.items.map((item, i) => {
-            return <VerticalSongCard key={i} songDetails={item} listRank={i} />;
+            return <VerticalSongCard key={i} songDetails={getTracksItemsData(item)} listRank={i} />;
           })}
       </Box>
     </Box>
