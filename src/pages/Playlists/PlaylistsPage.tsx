@@ -1,5 +1,5 @@
 import { CategorySection, SkeletonCategoryCard } from "@components/CategorySection";
-import { CategoryItem } from "@dto/categoryDTO";
+import { CategoryDTO, CategoryItem } from "@dto/categoryDTO";
 import { Box } from "@mui/material";
 import { GetSpotifyDataAsJSON } from "@services/getApiData";
 // import { useAppStore } from "@store/store";
@@ -9,9 +9,12 @@ export const PlaylistsPage = () => {
   //   const { setOpenPlaylist } = useAppStore();
 
   const getPlaylistsData = async () => {
-    const trendingResponse = await GetSpotifyDataAsJSON(`browse/featured-playlists?limit=24`, {
-      params: {},
-    });
+    const trendingResponse = await GetSpotifyDataAsJSON<CategoryDTO>(
+      `browse/featured-playlists?limit=24`,
+      {
+        params: {},
+      },
+    );
     return trendingResponse;
   };
 
@@ -21,6 +24,7 @@ export const PlaylistsPage = () => {
       const playlistsData = await getPlaylistsData();
       return playlistsData;
     },
+    refetchOnWindowFocus: false,
   });
 
   const getPlaylistCategory = (categories: CategoryItem[]) => {

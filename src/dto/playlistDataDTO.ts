@@ -1,3 +1,4 @@
+
 export interface PlaylistDataDTO {
     collaborative: boolean
     description: string
