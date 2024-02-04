@@ -2,14 +2,13 @@ import "./App.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
-import TrendingPage from "@pages/TrendingPage";
 import HomePage from "@pages/HomePage";
 import { PageWrapper } from "@components/PageWrapper";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SearchResultPage } from "@pages/SearchResultPage";
-import PlaylistsPage from "@pages/PlaylistsPage";
 import { ArtistDetailsPage, ArtistsPage } from "@pages/Artists";
 import { AlbumDetailsPage, AlbumsPage } from "@pages/Albums";
+import { PlaylistsDetailsPage, PlaylistsPage } from "@pages/Playlists";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -41,7 +40,7 @@ const App = () => {
       path: "/playlist/:playlistid",
       element: (
         <PageWrapper>
-          <TrendingPage />
+          <PlaylistsDetailsPage />
         </PageWrapper>
       ),
     },

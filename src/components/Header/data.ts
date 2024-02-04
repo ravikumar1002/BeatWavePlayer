@@ -1,3 +1,4 @@
+
 export const data = {
     albums: {
         "href": "https://api.spotify.com/v1/search?query=rama&type=album&locale=en-GB%2Cen-US%3Bq%3D0.9%2Cen%3Bq%3D0.8%2Chi%3Bq%3D0.7&offset=0&limit=5",
@@ -16,7 +17,7 @@ export const data = {
                         "uri": "spotify:artist:1mBydYMVBECdDmMfE2sEUO"
                     }
                 ],
-                "available_markets":  [],
+                "available_markets": [],
                 "external_urls": {
                     "spotify": "https://open.spotify.com/album/1VgXTSQsIrRn150j5MJrxR"
                 },

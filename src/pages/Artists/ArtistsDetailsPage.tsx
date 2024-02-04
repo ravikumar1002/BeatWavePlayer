@@ -1,60 +1,60 @@
 import { Box } from "@mui/material";
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
-import { PlaylistDataDTO } from "@dto/playlistDataDTO";
-import { useAppStore } from "@store/store";
-import { GetSpotifyDataAsJSON } from "@services/getApiData";
-import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
-import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
-import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
+// import { useParams } from "react-router";
+// import { useEffect, useState } from "react";
+// import { PlaylistDataDTO } from "@dto/playlistDataDTO";
+// import { useAppStore } from "@store/store";
+// import { GetSpotifyDataAsJSON } from "@services/getApiData";
+// import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
+// import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
+// import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
 
 export const ArtistDetailsPage = () => {
-  const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null);
-  const { artistID } = useParams();
-  const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore();
-  const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default");
+  // const [playlistDetails, setPlaylistDetails] = useState<PlaylistDataDTO | null>(null);
+  // const { artistID } = useParams();
+  // const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore();
+  // const [loadingState, setLoadingState] = useState<"loading" | "fulfilled" | "default">("default");
 
-  const getTrendingData = async (artistID: string) => {
-    // setLoadingState("loading");
-    console.log(artistID);
-    const trendingResponse = await GetSpotifyDataAsJSON(`/artists/${artistID}`, {
-      params: {},
-    });
-    console.log(trendingResponse);
-    // setPlaylistDetails(trendingResponse);
-    // setOpenPlaylist(trendingResponse);
-    // setLoadingState("fulfilled");
-    // return trendingResponse;
-  };
+  // const getTrendingData = async (artistID: string) => {
+  //   // setLoadingState("loading");
+  //   console.log(artistID);
+  //   const trendingResponse = await GetSpotifyDataAsJSON(`/artists/${artistID}`, {
+  //     params: {},
+  //   });
+  //   console.log(trendingResponse);
+  // setPlaylistDetails(trendingResponse);
+  // setOpenPlaylist(trendingResponse);
+  // setLoadingState("fulfilled");
+  // return trendingResponse;
+  // };
 
-  useEffect(() => {
-    getTrendingData(`${artistID}`);
-  }, [artistID]);
+  // useEffect(() => {
+  //   getTrendingData(`${artistID}`);
+  // }, [artistID]);
 
-  const getBannerData = (playlistDetails: any) => {
-    return {
-      imageUrl: playlistDetails?.images[0].url ? playlistDetails?.images[0].url : "",
-      name: playlistDetails?.name ? playlistDetails?.name : "",
-      description: playlistDetails?.description ? playlistDetails?.description : "",
-      itemsLength: playlistDetails?.tracks.items.length ? playlistDetails?.tracks.items.length : 0,
-      followers: playlistDetails?.followers.total ? playlistDetails?.followers.total : 0,
-    };
-  };
+  // const getBannerData = (playlistDetails: any) => {
+  //   return {
+  //     imageUrl: playlistDetails?.images[0].url ? playlistDetails?.images[0].url : "",
+  //     name: playlistDetails?.name ? playlistDetails?.name : "",
+  //     description: playlistDetails?.description ? playlistDetails?.description : "",
+  //     itemsLength: playlistDetails?.tracks.items.length ? playlistDetails?.tracks.items.length : 0,
+  //     followers: playlistDetails?.followers.total ? playlistDetails?.followers.total : 0,
+  //   };
+  // };
 
-  const getTracksItemsData = (items: any) => {
-    const tracksItems = items.map((item) => {
-      return {
-        title: item.track.name,
-        url: item.track?.preview_url ? item.track?.preview_url : "",
-        image: item.track.album.images[0].url,
-        id: item.track.id,
-        artists: item.track.artists,
-        release_year: item.track.album.release_date,
-        album: item.track.album.name,
-      };
-    });
-    return tracksItems;
-  };
+  // const getTracksItemsData = (items: any) => {
+  //   const tracksItems = items.map((item) => {
+  //     return {
+  //       title: item.track.name,
+  //       url: item.track?.preview_url ? item.track?.preview_url : "",
+  //       image: item.track.album.images[0].url,
+  //       id: item.track.id,
+  //       artists: item.track.artists,
+  //       release_year: item.track.album.release_date,
+  //       album: item.track.album.name,
+  //     };
+  //   });
+  //   return tracksItems;
+  // };
 
   return (
     <Box

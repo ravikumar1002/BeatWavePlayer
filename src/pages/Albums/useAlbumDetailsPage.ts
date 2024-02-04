@@ -1,7 +1,9 @@
+import { IAlbumDetailsDTO } from "@dto/albumDetailsDTO";
 import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { useAppStore } from "@store/store";
 import { useQuery } from "@tanstack/react-query";
-import { getTracksItemsData } from "@utils/getTracksItemsData";
+import { getAlbumTracksItemsArray } from "@utils/getAlbumsTracksData";
+import { getBannerData } from "@utils/getBannerData";
 import { useParams } from "react-router-dom";
 
 const useALbumDetailsPage = () => {
@@ -9,24 +11,28 @@ const useALbumDetailsPage = () => {
 	const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore()
 
 	const getAlbumDetails = async (albumId: string | undefined) => {
-		const trendingResponse = await GetSpotifyDataAsJSON(`/albums/${albumId}`, {
+		const trendingResponse = await GetSpotifyDataAsJSON<IAlbumDetailsDTO>(`/albums/${albumId}`, {
 			params: {},
 		});
 		return trendingResponse;
 	};
 
 	const albumDetailsQuery = useQuery({
-		queryKey: ["albumDetails"],
+		queryKey: ["album_details"],
 		queryFn: async () => {
 			const albumData = await getAlbumDetails(albumId);
-			setOpenPlaylist(albumData);
-			return albumData;
+			const albumArrangeData = {
+				bannerData: getBannerData(albumData),
+				tracksData: getAlbumTracksItemsArray(albumData?.tracks.items),
+			};
+			setOpenPlaylist(albumArrangeData.tracksData);
+			return albumArrangeData;
 		},
 	});
 
 	const onBannerClick = () => {
-		const tracksItems = getTracksItemsData(albumDetailsQuery.data?.tracks.items);
-		setPlaylistSongs(tracksItems ? tracksItems : null);
+		//@ts-expect-error "mujhe nhi pta"
+		setPlaylistSongs(albumDetailsQuery.data.tracksData);
 		setCurrentTrack(0);
 	}
 

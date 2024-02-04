@@ -8,19 +8,18 @@ export const getBannerData = (playlistDetails: any) => {
     };
 };
 
-type MediaType = 'ALBUM' | 'TRACK' | 'PLAYLIST'
+// type MediaType = 'ALBUM' | 'TRACK' | 'PLAYLIST'
 
-const obj: Record<MediaType, string> = {
-    ALBUM: '',
-    PLAYLIST: '',
-    TRACK: ''
-}
+// const obj: Record<MediaType, string> = {
+//     ALBUM: '',
+//     PLAYLIST: '',
+//     TRACK: ''
+// }
 
-const getbDate = (data, filterCategory: MediaType) => {
-    const imageUrl = 'adfda',
-    const subText1 = get(data, obj[filterCategory], '')
-
-    return {
-        imageUrl
-    }
-}
+// const getbDate = (data, filterCategory: MediaType) => {
+//     const imageUrl = 'adfda',
+//     const subText1 = get(data, obj[filterCategory], '')
+// return {
+//     imageUrl
+// }
+// }

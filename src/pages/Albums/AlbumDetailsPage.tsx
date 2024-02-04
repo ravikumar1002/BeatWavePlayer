@@ -1,20 +1,20 @@
 import { Box } from "@mui/material";
-import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
-import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
-import { getBannerData } from "@utils/getBannerData";
-import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
-import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
-import useALbumDetailsPage from "./useAlbumDetailsPage";
+// import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
+// import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard";
+// import { getBannerData } from "@utils/getBannerData";
+// import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
+// import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
+// import useALbumDetailsPage from "./useAlbumDetailsPage";
 
 export const AlbumDetailsPage = () => {
-  const { albumDetailsQuery, onBannerClick } = useALbumDetailsPage();
+  // const { albumDetailsQuery, onBannerClick } = useALbumDetailsPage();
 
-  console.log(albumDetailsQuery.data, albumDetailsQuery.isLoading);
-  console.log(getBannerData(albumDetailsQuery.data));
+  // console.log(albumDetailsQuery.data, albumDetailsQuery.isLoading);
+  // console.log(getBannerData(albumDetailsQuery.data));
 
   return (
     <Box sx={{ background: "azure" }}>
-      {albumDetailsQuery.isSuccess && (
+      {/* {albumDetailsQuery.isSuccess && (
         <DetailsPageBanner
           bannerDetails={{
             ...getBannerData(albumDetailsQuery.data),
@@ -48,7 +48,7 @@ export const AlbumDetailsPage = () => {
 
             return <VerticalSongCard key={i} songDetails={songDetails} listRank={i} />;
           })}
-      </Box>
+      </Box> */}
     </Box>
   );
 };

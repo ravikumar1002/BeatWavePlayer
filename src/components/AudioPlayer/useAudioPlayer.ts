@@ -1,4 +1,4 @@
-import { ICommonPropsDataSharingDTO } from "@dto/CommonDTO";
+import { ICommonPropsDataSharingDTO } from "@dto/commonDTO";
 import { useAppStore } from "@store/store";
 import { useEffect, useRef, useState } from "react";
 
@@ -8,7 +8,6 @@ interface IUseAudioPlayerProps {
 
 export const useAudioPlayer = (props: IUseAudioPlayerProps) => {
     const { tracksDetails } = props;
-
     const {
         playingsongId,
         currentTrack,

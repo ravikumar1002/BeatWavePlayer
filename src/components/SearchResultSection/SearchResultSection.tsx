@@ -22,7 +22,6 @@ export const SearchResultSection = (props: ISearchResultSetion) => {
   const { searchCategoryTitle, songDeatils, cardType } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const filterSelected = searchParams.get("category");
-  console.log(searchCategoryTitle);
 
   if (filterSelected && searchCategoryTitle !== filterSelected) return null;
   return (

@@ -1,3 +1,4 @@
+
 export interface PlaylistDataDTO {
     collaborative: boolean
     description: string
@@ -59,7 +60,7 @@ export interface TrackItem {
     added_by: AddedBy
     is_local: boolean
     primary_color: null
-    track: Track
+    track: PlaylistTrackItems
     video_thumbnail: VideoThumbnail
 }
 
@@ -75,7 +76,7 @@ export interface ExternalUrls3 {
     spotify: string
 }
 
-export interface Track {
+export interface PlaylistTrackItems {
     album: Album
     artists: Artist2[]
     available_markets: string[]

@@ -1,13 +1,13 @@
-export interface Welcome {
-    albums: Albums;
-    artists: Artists;
-    playlists: Playlists;
-    tracks: Tracks;
+export interface SearchResultDTO {
+    albums: SearchResultAlbums;
+    artists: SearchResultArtists;
+    playlists: SearchResultPlaylists;
+    tracks: SearchResultTracks;
 }
 
-export interface Albums {
+export interface SearchResultAlbums {
     href: string;
-    items: AlbumElement[];
+    items: SearchResultAlbumItems[];
     limit: number;
     next: string;
     offset: number;
@@ -15,7 +15,7 @@ export interface Albums {
     total: number;
 }
 
-export interface AlbumElement {
+export interface SearchResultAlbumItems {
     albumType: AlbumTypeEnum;
     artists: Owner[];
     availableMarkets: string[];
@@ -65,9 +65,9 @@ export enum ReleaseDatePrecision {
     Day = "day",
 }
 
-export interface Artists {
+export interface SearchResultArtists {
     href: string;
-    items: ArtistsItem[];
+    items: SearchResultArtistsItem[];
     limit: number;
     next: string;
     offset: number;
@@ -75,7 +75,7 @@ export interface Artists {
     total: number;
 }
 
-export interface ArtistsItem {
+export interface SearchResultArtistsItem {
     externalUrls: ExternalUrls;
     followers: Followers;
     genres: string[];
@@ -93,9 +93,9 @@ export interface Followers {
     total: number;
 }
 
-export interface Playlists {
+export interface SearchResultPlaylists {
     href: string;
-    items: PlaylistsItem[];
+    items: SearchResultPlaylistsItem[];
     limit: number;
     next: string;
     offset: number;
@@ -103,7 +103,7 @@ export interface Playlists {
     total: number;
 }
 
-export interface PlaylistsItem {
+export interface SearchResultPlaylistsItem {
     collaborative: boolean;
     description: string;
     externalUrls: ExternalUrls;
@@ -120,9 +120,9 @@ export interface PlaylistsItem {
     uri: string;
 }
 
-export interface Tracks {
+export interface SearchResultTracks {
     href: string;
-    items: TracksItem[];
+    items: SearchResultTracksItem[];
     limit: number;
     next: string;
     offset: number;
@@ -130,8 +130,8 @@ export interface Tracks {
     total: number;
 }
 
-export interface TracksItem {
-    album: AlbumElement;
+export interface SearchResultTracksItem {
+    album: SearchResultAlbumItems;
     artists: Owner[];
     availableMarkets: string[];
     discNumber: number;
@@ -144,11 +144,11 @@ export interface TracksItem {
     isLocal: boolean;
     name: string;
     popularity: number;
-    previewURL: null | string;
+    preview_url: null | string;
     trackNumber: number;
     type: string;
     uri: string;
-    images?: Image[];
+    images: Image[];
 }
 
 export interface ExternalIDS {

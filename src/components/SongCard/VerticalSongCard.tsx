@@ -4,18 +4,10 @@ import GraphicEqIcon from "@mui/icons-material/GraphicEq";
 import PlayArrowSharpIcon from "@mui/icons-material/PlayArrowSharp";
 import { useAppStore } from "@store/store";
 import { VerticalCardDetails } from "./VerticalCardDetails";
+import { ICommonPropsDataSharingDTO } from "@dto/commonDTO";
 
-interface ISongDetails {
-  title: string;
-  image: string;
-  id: string;
-  artists: string[];
-  release_year: string;
-  album: string;
-  url?: string;
-}
 interface IVerticalSongCardProps {
-  songDetails: ISongDetails;
+  songDetails: ICommonPropsDataSharingDTO;
   listRank: number;
 }
 
@@ -48,7 +40,7 @@ const styles: Record<string, SxProps> = {
 };
 
 export const VerticalSongCard = (props: IVerticalSongCardProps) => {
-  const { title, image, id, artists, release_year, album, url } = props.songDetails;
+  const { title, image, id, artists, release_year, album } = props.songDetails;
   const { playingsongId, openPlaylist, setCurrentTrack, setPlaylistSongs } = useAppStore();
 
   const dDzoI = keyframes`
@@ -76,18 +68,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          //   const tracksItems = openPlaylist?.tracks?.items.map((item) => {
-          //     return {
-          //       title: item.track.name,
-          //       url: item.track?.preview_url ? item.track?.preview_url : "",
-          //       image: item.track.album.images[0].url,
-          //       id: item.track.id,
-          //       artists: item.track.artists,
-          //       release_year: item.track.album.release_date,
-          //       album: item.track.album.name,
-          //     };
-          //   });
-          setPlaylistSongs(props.songDetails);
+          setPlaylistSongs(openPlaylist);
           setCurrentTrack(props.listRank);
         }}
       >
@@ -103,8 +84,8 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
               src={image}
               alt={title}
               style={{
-                height: "96px",
-                width: "96px",
+                height: "70px",
+                width: "70px",
                 objectFit: "cover",
                 borderRadius: "5px",
               }}
@@ -138,63 +119,6 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
             flexGrow: 2,
           }}
         >
-          {/* <Box>
-            <Typography
-              variant="h5"
-              className="p-1"
-              sx={{
-                fontWeight: 900,
-                color: `${playingsongId === id && "maroon"}`,
-                "&:hover": {
-                  color: "inherit",
-                },
-              }}
-            >
-              {title}
-            </Typography>
-            <Box className="flex flex-wrap">
-              {songDetails.track.artists.map((details, i) => {
-                return (
-                  <Typography
-                    key={i}
-                    variant="body1"
-                    className="p-1"
-                    sx={{
-                      color: "gray",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {details.name}
-                    {i !== songDetails.track.artists.length - 1 ? ", " : ""}
-                  </Typography>
-                );
-              })}
-
-              <MiddleDot />
-              <Typography
-                variant="body1"
-                className="p-1"
-                sx={{
-                  color: "gray",
-                  fontWeight: 500,
-                }}
-              >
-                {songDetails.track.album.name}
-              </Typography>
-              <MiddleDot />
-
-              <Typography
-                variant="body1"
-                className="p-1"
-                sx={{
-                  color: "gray",
-                  fontWeight: 500,
-                }}
-              >
-                {getReleaseYearValue(songDetails.track.album.release_date)}
-              </Typography>
-            </Box>
-          </Box> */}
           <VerticalCardDetails
             valueDeatils={{
               playingsongId,
