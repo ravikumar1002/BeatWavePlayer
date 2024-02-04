@@ -9,7 +9,7 @@ export const getTracksItemsData = (item: PlaylistTrackItems) => {
   const artists = item.artists.map((artist) => artist.name)
   const release_year = getReleaseYearValue(item.album.release_date)
   const album = item.album.name
-  
+
   return ({
     title, url, image, id, artists, release_year, album
   });
@@ -25,7 +25,7 @@ export const getTracksItemsArray = (items: TrackItem[]) => {
       image: track.album.images[0].url,
       id: track.id,
       artists: track.artists.map((artist) => artist.name),
-      release_year: track.album.release_date,
+      release_year: getReleaseYearValue(track.album.release_date),
       album: track.album.name,
     });
   });

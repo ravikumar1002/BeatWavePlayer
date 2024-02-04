@@ -1,6 +1,7 @@
 import { useSearchBar } from "@components/SearchBar/useSearchBar";
 import { Box, SxProps, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
+import { getTracksItemsData } from "@utils/getTracksItemsData";
 import { useNavigate } from "react-router-dom";
 
 const styles: Record<string, SxProps> = {
@@ -38,29 +39,21 @@ export const SearchSuggestion = (props) => {
 
   const searchSuggestionHandler = (item) => {
     if (item?.preview_url) {
-      const songDetails = [
-        {
-          title: item.name,
-          url: item?.preview_url ? item?.preview_url : "",
-          image: item.album.images[0].url,
-          id: item.id,
-          artists: item.artists,
-          release_year: item.album.release_date,
-          album: item.album.name,
-        },
-      ];
+      console.log(item);
+      const songDetails = getTracksItemsData(item);
       setPlayingSongId(item.id);
-      setPlaylistSongs(songDetails ? songDetails : null);
+      setPlaylistSongs(songDetails ? [songDetails] : null);
       setCurrentTrack(0);
+      setShowSearchSuggestion(false);
     } else {
-      navigate(`/playlist/${item.id}`);
+      console.log(item);
+      // navigate(`/playlist/${item.id}`);
       setShowSearchSuggestion(false);
     }
   };
 
   return (
     <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
-        
       {dataAssemble.map((item, i) => {
         return (
           <Box

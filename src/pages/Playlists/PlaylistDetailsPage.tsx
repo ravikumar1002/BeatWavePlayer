@@ -42,7 +42,7 @@ export const PlaylistsDetailsPage = () => {
       {playlistsDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
       <Box className="px-8 py-2">
         {playlistsDetailsQuery.isLoading &&
-          Array(20)
+          Array(8)
             .fill(0)
             .map((_, i) => {
               return <SkeletonVerticalSongCard key={i} />;

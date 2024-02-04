@@ -4,13 +4,9 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchSuggestion } from "@components/SearchSuggestion/SearchSuggestion";
+import { data } from "@components/Header/data";
 
-interface ISearchBarProps {
-  dataAssemble: any;
-}
-
-export const SearchBar = (props: ISearchBarProps) => {
-  const { dataAssemble } = props;
+export const SearchBar = () => {
   const navigate = useNavigate();
   const {
     searchSuggestionRef,
@@ -20,6 +16,13 @@ export const SearchBar = (props: ISearchBarProps) => {
     setShowSearchSuggestion,
     showSearchSuggestion,
   } = useSearchBar();
+
+  const dataAssemble = [
+    ...data.albums.items,
+    ...data.artists.items,
+    ...data.playlists.items,
+    ...data.tracks.items,
+  ];
 
   const inputChangeHandler = (e) => {
     showSuggestionFn(e.target.value.trim().length);

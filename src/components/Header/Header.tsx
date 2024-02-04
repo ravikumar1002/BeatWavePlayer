@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import { AppBar, Toolbar, Typography, Container, Box } from "@mui/material";
-import { data } from "./data";
 import { ElevationScroll } from "@hooks/useElevationSroll";
 import { SearchBar } from "@components/SearchBar";
 
@@ -12,12 +11,7 @@ export const Header = () => {
   // );
   // suggestionSearchhandler();
 
-  const dataAssemble = [
-    ...data.albums.items,
-    ...data.artists.items,
-    ...data.playlists.items,
-    ...data.tracks.items,
-  ];
+
 
   return (
     <ElevationScroll>
@@ -57,7 +51,7 @@ export const Header = () => {
               </Typography>
             </Box>
             <Box className="flex flex-shrink flex-grow justify-center">
-              <SearchBar dataAssemble={dataAssemble} />
+              <SearchBar/>
             </Box>
           </Toolbar>
         </Container>

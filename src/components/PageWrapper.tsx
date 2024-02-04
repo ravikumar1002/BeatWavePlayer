@@ -11,7 +11,6 @@ export const PageWrapper = (props: IPageWrapper) => {
   const { children } = props;
 
   const { playlistSongs } = useAppStore();
-  console.log(playlistSongs);
   return (
     <Box className={"relative min-h-screen"}>
       <Header />
