@@ -1,2 +1,2 @@
 export { getBannerData } from "./getBannerData"
-export { getTracksItemsData, getTracksItemsArray } from "./getTracksItemsData"
+export { getPlaylistsTrackItemsData as getTracksItemsData, getPlaylistsTracksItemsArray as getTracksItemsArray } from "./getTracksItemsData"

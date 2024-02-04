@@ -1,7 +1,7 @@
 import { PlaylistTrackItems, TrackItem } from "@dto/playlistDataDTO";
 import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 
-export const getTracksItemsData = (item: PlaylistTrackItems) => {
+export const getPlaylistsTrackItemsData = (item: PlaylistTrackItems) => {
   const title = item.name
   const url = item.preview_url ? item.preview_url : ""
   const image = item.album.images[0].url
@@ -16,17 +16,18 @@ export const getTracksItemsData = (item: PlaylistTrackItems) => {
 };
 
 
-export const getTracksItemsArray = (items: TrackItem[]) => {
-  const tracksItems = items.map((item) => {
-    const { track } = item
+export const getPlaylistsTracksItemsArray = (items: TrackItem[]) => {
+
+  const tracksItems = items.map((data) => {
+    const item = data.track
     return ({
-      title: track.name,
-      url: track?.preview_url ? track?.preview_url : "",
-      image: track.album.images[0].url,
-      id: track.id,
-      artists: track.artists.map((artist) => artist.name),
-      release_year: getReleaseYearValue(track.album.release_date),
-      album: track.album.name,
+      title: item.name,
+      url: item?.preview_url ? item?.preview_url : "",
+      image: item.album.images[0].url,
+      id: item.id,
+      artists: item.artists.map((artist) => artist.name),
+      release_year: getReleaseYearValue(item.album.release_date),
+      album: item.album.name,
     });
   });
   return tracksItems

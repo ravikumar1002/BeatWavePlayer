@@ -6,7 +6,7 @@ import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard
 import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
 import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
 import { getBannerData } from "@utils/getBannerData";
-import { getTracksItemsArray } from "@utils/getTracksItemsData";
+import { getPlaylistsTracksItemsArray } from "@utils/getTracksItemsData";
 import { useQuery } from "@tanstack/react-query";
 import { PlaylistDataDTO } from "@dto/playlistDataDTO";
 
@@ -25,9 +25,10 @@ export const PlaylistsDetailsPage = () => {
     queryKey: ["playlists_details", playlistid],
     queryFn: async () => {
       const playlistsData = await getPlaylistsDetailsData(playlistid);
+      console.log(playlistsData, "ssss");
       const playlistArrangeData = {
         bannerData: getBannerData(playlistsData),
-        tracksData: getTracksItemsArray(playlistsData?.tracks.items),
+        tracksData: getPlaylistsTracksItemsArray(playlistsData?.tracks.items),
       };
       setOpenPlaylist(playlistArrangeData.tracksData);
       return playlistArrangeData;
