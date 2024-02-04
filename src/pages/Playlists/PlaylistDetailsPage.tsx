@@ -6,7 +6,7 @@ import { SkeletonVerticalSongCard, VerticalSongCard } from "@components/SongCard
 import { DetailsPageBanner } from "@components/DetailsPageBanner/DetailsPageBanner";
 import { DetailsPageBannerSkeleton } from "@components/DetailsPageBanner/DetailsPageBannerSkeleton";
 import { getBannerData } from "@utils/getBannerData";
-import { getTracksItemsArray, getTracksItemsData } from "@utils/getTracksItemsData";
+import { getTracksItemsArray } from "@utils/getTracksItemsData";
 import { useQuery } from "@tanstack/react-query";
 
 export const PlaylistsDetailsPage = () => {
@@ -21,13 +21,17 @@ export const PlaylistsDetailsPage = () => {
   };
 
   const playlistsDetailsQuery = useQuery({
-    queryKey: ["playlists"],
+    queryKey: ["playlists_details"],
     queryFn: async () => {
       const playlistsData = await getPlaylistsDetailsData(playlistid);
-      return playlistsData;
+      const playlistArrangeData = {
+        bannerData: getBannerData(playlistsData),
+        tracksData: getTracksItemsArray(playlistsData?.tracks.items),
+      };
+      setOpenPlaylist(playlistArrangeData.tracksData);
+      return playlistArrangeData;
     },
   });
-  console.log(playlistsDetailsQuery);
 
   return (
     <Box
@@ -36,16 +40,6 @@ export const PlaylistsDetailsPage = () => {
       }}
     >
       {playlistsDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
-      {playlistsDetailsQuery.isSuccess && playlistsDetailsQuery?.data?.tracks.items && (
-        <DetailsPageBanner
-          bannerDetails={getBannerData(playlistsDetailsQuery.data)}
-          onClick={() => {
-            const tracksItems = getTracksItemsArray(playlistsDetailsQuery.data?.tracks.items);
-            setPlaylistSongs(tracksItems ? tracksItems : null);
-            setCurrentTrack(0);
-          }}
-        />
-      )}
       <Box className="px-8 py-2">
         {playlistsDetailsQuery.isLoading &&
           Array(20)
@@ -53,14 +47,20 @@ export const PlaylistsDetailsPage = () => {
             .map((_, i) => {
               return <SkeletonVerticalSongCard key={i} />;
             })}
-
+        {playlistsDetailsQuery.isSuccess && playlistsDetailsQuery?.data && (
+          <DetailsPageBanner
+            bannerDetails={playlistsDetailsQuery.data.bannerData}
+            onClick={() => {
+              const tracksItems = playlistsDetailsQuery.data.tracksData;
+              setPlaylistSongs(tracksItems ? tracksItems : null);
+              setCurrentTrack(0);
+            }}
+          />
+        )}
         {playlistsDetailsQuery.isSuccess &&
-          playlistsDetailsQuery?.data?.tracks.items &&
-          playlistsDetailsQuery?.data?.tracks?.items.map((item, i) => {
-            console.log(item);
-            return (
-              <VerticalSongCard key={i} songDetails={getTracksItemsData(item.track)} listRank={i} />
-            );
+          playlistsDetailsQuery?.data?.tracksData &&
+          playlistsDetailsQuery?.data?.tracksData.map((item, i) => {
+            return <VerticalSongCard key={i} songDetails={item} listRank={i} />;
           })}
       </Box>
     </Box>

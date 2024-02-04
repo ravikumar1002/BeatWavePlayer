@@ -50,7 +50,6 @@ const styles: Record<string, SxProps> = {
 
 export const SearchResultCard = (props: ISearchResultCard) => {
   const { title, image, id, artists, release_year, albumName } = props.songDetails;
-  //   console.log(title, image, id, artists, release_year, albumName);
   const { playingsongId } = useAppStore();
   const navigate = useNavigate();
 

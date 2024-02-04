@@ -7,7 +7,7 @@ import { VerticalCardDetails } from "./VerticalCardDetails";
 import { ICommonPropsDataSharingDTO } from "@dto/commonDTO";
 
 interface IVerticalSongCardProps {
-  songDetails: ICommonPropsDataSharingDTO[];
+  songDetails: ICommonPropsDataSharingDTO;
   listRank: number;
 }
 
@@ -40,7 +40,7 @@ const styles: Record<string, SxProps> = {
 };
 
 export const VerticalSongCard = (props: IVerticalSongCardProps) => {
-  const { title, image, id, artists, release_year, album, url } = props.songDetails;
+  const { title, image, id, artists, release_year, album } = props.songDetails;
   const { playingsongId, openPlaylist, setCurrentTrack, setPlaylistSongs } = useAppStore();
 
   const dDzoI = keyframes`
@@ -68,7 +68,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          setPlaylistSongs(props.songDetails);
+          setPlaylistSongs(openPlaylist);
           setCurrentTrack(props.listRank);
         }}
       >

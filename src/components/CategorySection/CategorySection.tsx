@@ -35,14 +35,7 @@ export const CategorySection = (props: ICategorySection) => {
               navigate(`/${routePath}/${item._id}`);
             }}
           >
-            <PlaylistCard
-              details={{
-                _id: item._id,
-                image: item.image,
-                name: item.name,
-                description: item.description,
-              }}
-            />
+            <PlaylistCard details={item} />
           </Grid>
         ))}
       </Grid>
