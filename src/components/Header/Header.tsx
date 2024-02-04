@@ -11,8 +11,6 @@ export const Header = () => {
   // );
   // suggestionSearchhandler();
 
-
-
   return (
     <ElevationScroll>
       <AppBar
@@ -36,7 +34,7 @@ export const Header = () => {
                 variant="h5"
                 noWrap
                 component="a"
-                href="#"
+                href="/"
                 sx={{
                   color: "inherit",
                   fontWeight: 700,
@@ -51,7 +49,7 @@ export const Header = () => {
               </Typography>
             </Box>
             <Box className="flex flex-shrink flex-grow justify-center">
-              <SearchBar/>
+              <SearchBar />
             </Box>
           </Toolbar>
         </Container>
