@@ -3,21 +3,20 @@ import { useAppStore } from "@store/store";
 import { Header } from "./Header";
 import { AudioPlayer } from "./AudioPlayer";
 
-
 interface IPageWrapper {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const PageWrapper = (props: IPageWrapper) => {
-    const { children } = props;
+  const { children } = props;
 
-    const { playlistSongs } = useAppStore()
-
-    return (
-        <Box className={"relative min-h-screen"}>
-            <Header />
-            {children}
-            {playlistSongs && <AudioPlayer playlist={playlistSongs}/>}
-        </Box >
-    )
-}
+  const { playlistSongs } = useAppStore();
+  console.log(playlistSongs);
+  return (
+    <Box className={"relative min-h-screen"}>
+      <Header />
+      {children}
+      {playlistSongs && <AudioPlayer tracksDetails={playlistSongs} />}
+    </Box>
+  );
+};

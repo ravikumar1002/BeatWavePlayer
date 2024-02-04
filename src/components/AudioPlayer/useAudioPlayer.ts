@@ -8,7 +8,6 @@ interface IUseAudioPlayerProps {
 
 export const useAudioPlayer = (props: IUseAudioPlayerProps) => {
     const { tracksDetails } = props;
-
     const {
         playingsongId,
         currentTrack,

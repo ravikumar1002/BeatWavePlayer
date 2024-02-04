@@ -48,6 +48,8 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        width: "100%",
+        // top: "400px",
       }}
       className={"absolute top-full left-0 bg-gray-700 z-10 flex-wrap"}
       key={tracksDetails[currentTrack].url}
@@ -99,53 +101,6 @@ export const AudioPlayer = (props: IAudioPlayerProps) => {
           <VerticalCardDetails
             valueDeatils={getVerticalCardPropsDataPattern(tracksDetails[currentTrack])}
           />
-          {/* <Box>
-            <Typography component="div" variant="h6" noWrap sx={{}}>
-              {tracksDetails[currentTrack].title}
-            </Typography>
-            <Box className="flex flex-wrap mb-1">
-              {tracksDetails[currentTrack].artists.map((details, i) => {
-                return (
-                  <Typography
-                    key={i}
-                    variant="caption"
-                    className="p-1"
-                    sx={{
-                      color: "gray",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {details.name}
-                    {i !== tracksDetails[currentTrack].artists.length - 1 ? ", " : ""}
-                  </Typography>
-                );
-              })}
-
-              <MiddleDot />
-              <Typography
-                variant="caption"
-                className="p-1"
-                sx={{
-                  color: "gray",
-                  fontWeight: 500,
-                }}
-              >
-                {tracksDetails[currentTrack].album}
-              </Typography>
-              <MiddleDot />
-
-              <Typography
-                variant="caption"
-                className="p-1"
-                sx={{
-                  color: "gray",
-                  fontWeight: 500,
-                }}
-              >
-                {getReleaseYearValue(tracksDetails[currentTrack].release_year)}
-              </Typography>
-            </Box>
-          </Box> */}
         </CardContent>
         <VolumeController
           isAudioMuted={isAudioMuted}
