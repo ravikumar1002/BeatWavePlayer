@@ -30,7 +30,7 @@ export const PlaylistsPage = () => {
   const getPlaylistCategory = (categories: CategoryItem[]) => {
     const filterData = categories.map((item) => ({
       _id: item.id,
-      image: item.images[1].url,
+      image: item.images[0].url,
       name: item.name,
       description: item.description,
     }));

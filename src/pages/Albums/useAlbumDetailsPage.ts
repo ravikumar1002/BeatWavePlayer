@@ -3,7 +3,7 @@ import { GetSpotifyDataAsJSON } from "@services/getApiData";
 import { useAppStore } from "@store/store";
 import { useQuery } from "@tanstack/react-query";
 import { getAlbumTracksItemsArray } from "@utils/getAlbumsTracksData";
-import { getBannerData } from "@utils/getBannerData";
+import { getBannerFilterdDataFromAlbums } from "@utils/getBannerData";
 import { useParams } from "react-router-dom";
 
 const useALbumDetailsPage = () => {
@@ -22,7 +22,7 @@ const useALbumDetailsPage = () => {
 		queryFn: async () => {
 			const albumData = await getAlbumDetails(albumId);
 			const albumArrangeData = {
-				bannerData: getBannerData(albumData),
+				bannerData: getBannerFilterdDataFromAlbums(albumData),
 				tracksData: getAlbumTracksItemsArray(albumData?.tracks.items),
 			};
 			setOpenPlaylist(albumArrangeData.tracksData);

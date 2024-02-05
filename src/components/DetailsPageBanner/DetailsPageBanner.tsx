@@ -2,6 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { MiddleDot } from "@components/CenterDot";
 import { useBannerDetailsPage } from "./useBannerDetailsPage";
+// import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface IBannerDetails {
   imageUrl: string;

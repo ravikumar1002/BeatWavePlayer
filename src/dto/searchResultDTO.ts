@@ -26,7 +26,7 @@ export interface SearchResultAlbumItems {
     name: string;
     releaseDate: Date;
     releaseDatePrecision: ReleaseDatePrecision;
-    totalTracks: number;
+    total_tracks: number;
     type: AlbumTypeEnum;
     uri: string;
 }
