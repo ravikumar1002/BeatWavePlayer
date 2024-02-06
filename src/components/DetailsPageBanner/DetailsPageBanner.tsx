@@ -2,14 +2,14 @@ import { Box, Button, Typography } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { MiddleDot } from "@components/CenterDot";
 import { useBannerDetailsPage } from "./useBannerDetailsPage";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+// import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface IBannerDetails {
   imageUrl: string;
   name: string;
-  subText1: string;
-  subText2: string;
-  subText3?: string;
+  subText1: string | string[];
+  subText2: string | string[];
+  subText3?: string | string[];
 }
 interface IDetailsPageBanner {
   bannerDetails: IBannerDetails;
@@ -54,7 +54,7 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
         </Box>
         <Box className="flex gap-5 flex-wrap content-center">
           <SubTextStyle variant="body2">{subText2}</SubTextStyle>
-          {subText2.length > 0 && <MiddleDot />}
+          {subText3 && subText3.length > 0 && <MiddleDot />}
           <SubTextStyle variant="body2">{subText3}</SubTextStyle>
         </Box>
         <Box className="ml-12 mt-4">

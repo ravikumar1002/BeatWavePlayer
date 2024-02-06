@@ -1,8 +1,9 @@
 import { IAlbumDetailsDTO } from "@dto/albumDetailsDTO";
 import { ArtistDetailsDTO } from "@dto/artistDetailsDTO";
+import { PlaylistDataDTO } from "@dto/playlistDataDTO";
 import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 
-export const getBannerData = (playlistDetails: any) => {
+export const getBannerData = (playlistDetails: PlaylistDataDTO) => {
     return {
         imageUrl: playlistDetails?.images[0].url ? playlistDetails?.images[0].url : "",
         name: playlistDetails?.name ? playlistDetails?.name : "",
@@ -45,7 +46,7 @@ export const getBannerArtistdDataFromArtist = (bannerDataRawDetails: ArtistDetai
     return ({
         imageUrl: bannerDataRawDetails?.images[0].url ? bannerDataRawDetails?.images[0].url : "",
         name: bannerDataRawDetails?.name ? bannerDataRawDetails?.name : "",
-        subText1: bannerDataRawDetails?.genres ? bannerDataRawDetails?.genres : [],
+        subText1: bannerDataRawDetails?.genres ? bannerDataRawDetails?.genres.map((genre, i) => bannerDataRawDetails?.genres.length - 1 === i ? genre.slice(0, 1).toUpperCase() + genre.slice(1) : genre.slice(0, 1).toUpperCase() + genre.slice(1) + ", ") : [],
         subText2: bannerDataRawDetails?.followers ? `${bannerDataRawDetails?.followers.total} followers` : "",
     })
 
