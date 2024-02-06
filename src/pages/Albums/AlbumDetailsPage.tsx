@@ -7,7 +7,7 @@ import useALbumDetailsPage from "./useAlbumDetailsPage";
 export const AlbumDetailsPage = () => {
   const { albumDetailsQuery, onBannerClick } = useALbumDetailsPage();
 
-  console.log(albumDetailsQuery.data, albumDetailsQuery.isLoading);
+  // console.log(albumDetailsQuery.data, albumDetailsQuery.isLoading);
 
   return (
     <Box sx={{ background: "azure" }}>

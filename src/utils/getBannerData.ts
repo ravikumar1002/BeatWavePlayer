@@ -1,4 +1,5 @@
 import { IAlbumDetailsDTO } from "@dto/albumDetailsDTO";
+import { ArtistDetailsDTO } from "@dto/artistDetailsDTO";
 import { getReleaseYearValue } from "@hooks/getReleaseYearValue";
 
 export const getBannerData = (playlistDetails: any) => {
@@ -35,6 +36,17 @@ export const getBannerFilterdDataFromAlbums = (bannerDataRawDetails: IAlbumDetai
         subText1: bannerDataRawDetails?.artists.map((artist) => artist.name) ? bannerDataRawDetails?.artists.map((artist) => artist.name) : "",
         subText2: bannerDataRawDetails?.total_tracks ? `${bannerDataRawDetails?.total_tracks} songs` : "",
         subText3: `${getReleaseYearValue(bannerDataRawDetails?.release_date)}`
+    })
+
+};
+
+
+export const getBannerArtistdDataFromArtist = (bannerDataRawDetails: ArtistDetailsDTO) => {
+    return ({
+        imageUrl: bannerDataRawDetails?.images[0].url ? bannerDataRawDetails?.images[0].url : "",
+        name: bannerDataRawDetails?.name ? bannerDataRawDetails?.name : "",
+        subText1: bannerDataRawDetails?.genres ? bannerDataRawDetails?.genres : [],
+        subText2: bannerDataRawDetails?.followers ? `${bannerDataRawDetails?.followers.total} followers` : "",
     })
 
 };

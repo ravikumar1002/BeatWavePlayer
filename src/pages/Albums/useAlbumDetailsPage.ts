@@ -18,7 +18,7 @@ const useALbumDetailsPage = () => {
 	};
 
 	const albumDetailsQuery = useQuery({
-		queryKey: ["album_details"],
+		queryKey: ["album_details", albumId],
 		queryFn: async () => {
 			const albumData = await getAlbumDetails(albumId);
 			const albumArrangeData = {
