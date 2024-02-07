@@ -15,7 +15,7 @@ export const HomePageCategorySection = (props: IHomePageCategorySection) => {
   return (
     <Box className="p-6">
       <Box className="mb-5 flex justify-between">
-        <Typography variant="h5" component="div">
+        <Typography variant="h5" component="div" fontWeight={600}>
           {title}
         </Typography>
         <Typography variant="body1" component="div">
