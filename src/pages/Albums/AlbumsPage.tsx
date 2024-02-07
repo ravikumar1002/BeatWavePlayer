@@ -1,30 +1,9 @@
-import { GetSpotifyDataAsJSON } from "@services/getApiData";
-import { SearchResultAlbumItems, SearchResultAlbums } from "@dto/searchResultDTO";
 import { useQuery } from "@tanstack/react-query";
 import { Box } from "@mui/material";
 import { CategorySection, SkeletonCategoryCard } from "@components/CategorySection";
+import { getAlbumsCategory, getAlbumsData } from "@services/trendingAlbumsExplore";
 
 export const AlbumsPage = () => {
-  const getAlbumsData = async () => {
-    const trendingResponse = await GetSpotifyDataAsJSON<{ albums: SearchResultAlbums }>(
-      `browse/new-releases?limit=24`,
-      {
-        params: {},
-      },
-    );
-    return trendingResponse;
-  };
-
-  const getAlbumsCategory = (categories: SearchResultAlbumItems[]) => {
-    const filterData = categories.map((item) => ({
-      _id: item.id,
-      image: item.images[0].url,
-      name: item.name,
-      description: `${item.total_tracks} songs inculded`,
-    }));
-    return filterData;
-  };
-
   const albumsQuery = useQuery({
     queryKey: ["Albums"],
     queryFn: async () => {
@@ -39,7 +18,7 @@ export const AlbumsPage = () => {
 
   return (
     <Box>
-      {albumsQuery.isLoading && <SkeletonCategoryCard />}
+      {albumsQuery.isLoading && <SkeletonCategoryCard limit={20} />}
       {albumsQuery.isSuccess && albumsQuery.data.filterAlbumList && (
         <CategorySection
           title="Browse popular playlists"

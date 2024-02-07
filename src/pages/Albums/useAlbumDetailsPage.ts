@@ -11,9 +11,7 @@ const useALbumDetailsPage = () => {
 	const { setPlaylistSongs, setOpenPlaylist, setCurrentTrack } = useAppStore()
 
 	const getAlbumDetails = async (albumId: string | undefined) => {
-		const trendingResponse = await GetSpotifyDataAsJSON<IAlbumDetailsDTO>(`/albums/${albumId}`, {
-			params: {},
-		});
+		const trendingResponse = await GetSpotifyDataAsJSON<IAlbumDetailsDTO>(`/albums/${albumId}`);
 		return trendingResponse;
 	};
 
