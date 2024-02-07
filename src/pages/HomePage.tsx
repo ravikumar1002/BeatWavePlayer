@@ -5,11 +5,13 @@ import { Box, Typography } from "@mui/material";
 import { getAlbumsCategory, getAlbumsData } from "@services/trendingAlbumsExplore";
 import { getPlaylistCategory, getPlaylistsData } from "@services/trendingPlaylistsExplore";
 import { getTredingTracksData } from "@services/trendingTracksExplore";
+import { useAppStore } from "@store/store";
 import { useQuery } from "@tanstack/react-query";
 import { getPlaylistsTracksItemsArray } from "@utils/getTracksItemsData";
-import { getHomeTracksItemsArray } from "@utils/getsTracksTrendingData";
 
 const HomePage = () => {
+  const { setOpenPlaylist } = useAppStore();
+
   const albumsHomeQuery = useQuery({
     queryKey: ["albums_home"],
     queryFn: async () => {
@@ -35,8 +37,10 @@ const HomePage = () => {
     queryKey: ["tracks_home"],
     queryFn: async () => {
       const playlistsData = await getTredingTracksData(15);
+      const filteredTracks = getPlaylistsTracksItemsArray(playlistsData?.tracks.items);
+      setOpenPlaylist(filteredTracks);
       return {
-        tracks: getPlaylistsTracksItemsArray(playlistsData?.tracks.items),
+        tracks: filteredTracks,
       };
     },
     refetchOnWindowFocus: false,
