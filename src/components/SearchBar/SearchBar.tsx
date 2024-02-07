@@ -86,7 +86,7 @@ export const SearchBar = () => {
 
   const getPlaylistsSearchCategoryData = (playlistsList: SearchResultPlaylistsItem[]) => {
     const playlistsFilter = playlistsList.map((playlist) => ({
-      image: playlist.images[2].url,
+      image: playlist.images[0].url,
       id: playlist.id,
       title: playlist.name,
     }));

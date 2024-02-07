@@ -13,7 +13,7 @@ export const getSongsFilteredData = (valueArray) => {
                 ? getReleaseYearValue(details.release_date)
                 : "";
         const albumName = details.album ? details.album.name : "";
-        const previewUrl = "";
+        const url = details.preview_url;
 
         const filterdDeatils = {
             title: details?.name,
@@ -22,7 +22,7 @@ export const getSongsFilteredData = (valueArray) => {
             release_year,
             albumName,
             image: imageUrl ? imageUrl : "",
-            ...(previewUrl ? { previewUrl } : {}),
+            ...(url ? { url } : {}),
         };
 
         return filterdDeatils;
