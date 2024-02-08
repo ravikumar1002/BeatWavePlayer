@@ -119,6 +119,7 @@ export const SearchBar = () => {
         sx={{
           p: "2px 4px",
           width: {
+            xs: 200,
             sm: 350,
             md: 400,
             lg: 450,
