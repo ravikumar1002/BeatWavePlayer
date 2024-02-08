@@ -23,20 +23,49 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
   const { SubTextStyle, animationHeading } = useBannerDetailsPage();
 
   return (
-    <Box className="flex items-center w-full">
+    <Box
+      className="flex items-center w-full"
+      sx={{
+        flexDirection: {
+          xs: "column",
+          sm: "row",
+        },
+      }}
+    >
       <Box
         sx={{
-          width: "20rem",
-          padding: "1rem 2rem",
+          width: {
+            xs: "100%",
+            sm: "20rem",
+          },
+          padding: {
+            xs: "0.5rem 1rem",
+            sm: "1rem 2rem",
+          },
+          height: {
+            xs: "15rem",
+          },
         }}
       >
-        <img src={imageUrl} alt={name} className="rounded" />
+        <img
+          src={imageUrl}
+          alt={name}
+          className="rounded"
+          style={{
+            width: "100%",
+            height: "inherit",
+          }}
+        />
       </Box>
       <Box
         sx={{
           marginTop: "1rem",
           flexGrow: 2,
-          width: "13rem",
+          width: {
+            xs: "100%",
+            sm: "13rem",
+          },
+          padding: "1rem 2rem",
         }}
       >
         <Box>
