@@ -26,6 +26,7 @@ export const useBannerDetailsPage = () => {
         color: "gray",
         fontWeight: 500,
         padding: "0.5rem",
+        
     }));
 
     return {

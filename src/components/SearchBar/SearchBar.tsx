@@ -31,12 +31,16 @@ const styles: Record<string, SxProps> = {
 export const SearchBar = () => {
   const navigate = useNavigate();
   const {
-    searchSuggestionRef,
+    searchInputRef,
     showSuggestionFn,
     searchString,
     setSearchString,
     setShowSearchSuggestion,
     showSearchSuggestion,
+    onSeacrchChange,
+    onSeacrchInputBlur,
+    onSearchInputFocus,
+    isFocused,
   } = useSearchBar();
 
   const dataAssemble = data;
@@ -72,6 +76,7 @@ export const SearchBar = () => {
 
     return albumsFilter;
   };
+
   const getArtistsSearchCategoryData = (artistsList: SearchResultArtistsItem[]) => {
     const artistsFilter = artistsList.map((artist) => {
       return {
@@ -113,7 +118,7 @@ export const SearchBar = () => {
   };
 
   return (
-    <Box ref={searchSuggestionRef}>
+    <Box>
       <Paper
         component="div"
         sx={{
@@ -133,10 +138,14 @@ export const SearchBar = () => {
             sx={{ ml: 1, flexGrow: 2 }}
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
-            onChange={inputChangeHandler}
-            onKeyDown={inputKeyDownHandler}
-            value={searchString}
-            onFocus={inputFocusHandler}
+            // onChange={inputChangeHandler}
+            // onKeyDown={inputKeyDownHandler}
+            // value={searchString}
+            // onFocus={inputFocusHandler}
+            onChange={onSeacrchChange}
+            inputRef={searchInputRef}
+            onBlur={onSeacrchInputBlur}
+            onFocus={onSearchInputFocus}
           />
           {searchString.length > 0 && (
             <IconButton
@@ -160,7 +169,7 @@ export const SearchBar = () => {
           </IconButton>
         </Box>
         <Box>
-          {showSearchSuggestion && (
+          {isFocused && (
             <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
               {dataAssemble.albums.items &&
                 // @ts-expect-error mujhe nhi pta
