@@ -23,26 +23,62 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
   const { SubTextStyle, animationHeading } = useBannerDetailsPage();
 
   return (
-    <Box className="flex items-center w-full">
+    <Box
+      className="flex items-center w-full"
+      sx={{
+        flexDirection: {
+          xs: "column",
+          sm: "row",
+        },
+        marginBottom: {
+          xs: "1rem",
+          sm: "2rem",
+        },
+      }}
+    >
       <Box
         sx={{
-          width: "20rem",
-          padding: "1rem 2rem",
+          width: {
+            xs: "100%",
+            sm: "20rem",
+          },
+          padding: {
+            xs: "0.5rem 1rem",
+            sm: "1rem 2rem",
+          },
+          height: {
+            xs: "15rem",
+          },
         }}
       >
-        <img src={imageUrl} alt={name} className="rounded" />
+        <img
+          src={imageUrl}
+          alt={name}
+          className="rounded"
+          style={{
+            width: "100%",
+            height: "inherit",
+          }}
+        />
       </Box>
       <Box
         sx={{
           marginTop: "1rem",
           flexGrow: 2,
-          width: "13rem",
+          width: {
+            xs: "100%",
+            sm: "13rem",
+          },
+          padding: {
+            xs: "1rem 1rem",
+            sm: "1rem 2rem",
+          },
         }}
       >
         <Box>
           <Typography
             variant="h4"
-            className="p-2"
+            className="p-1 md:p-2"
             sx={{
               fontWeight: "bold",
               ...animationHeading,
@@ -52,7 +88,7 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
           </Typography>
           <SubTextStyle variant="body1">{subText1}</SubTextStyle>
         </Box>
-        <Box className="flex gap-5 flex-wrap content-center">
+        <Box className="flex gap-1 md:gap-5 flex-wrap content-center">
           <SubTextStyle variant="body2">{subText2}</SubTextStyle>
           {subText3 && subText3.length > 0 && <MiddleDot />}
           <SubTextStyle variant="body2">{subText3}</SubTextStyle>

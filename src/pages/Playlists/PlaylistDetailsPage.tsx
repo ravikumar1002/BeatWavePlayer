@@ -40,7 +40,7 @@ export const PlaylistsDetailsPage = () => {
   return (
     <Box sx={{ background: "azure" }}>
       {playlistsDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
-      <Box className="px-8 py-2">
+      <Box className="px-4 md:px-8 py-2">
         {playlistsDetailsQuery.isLoading &&
           Array(8)
             .fill(0)

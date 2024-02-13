@@ -23,7 +23,7 @@ interface IverticalCardDetails {
   valueDeatils: IValueDetails;
 }
 
-export const SubTextloopComponent = ({ subDetails }: { subDetails: string[] | string }) => {
+const SubTextloopComponent = ({ subDetails }: { subDetails: string[] | string }) => {
   if (Array.isArray(subDetails)) {
     return (
       <>

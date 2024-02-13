@@ -61,7 +61,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
   return (
     <Box sx={styles.verticalSongContainer}>
       <Box
-        className="w-full flex p-6 bg-white"
+        className="w-full gap-3 flex p-1 md:p-6 bg-white"
         sx={{
           ...cardAnimation,
           marginTop: "0.5rem",
@@ -73,10 +73,15 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
         }}
       >
         <Box
-          className="flex gap-10 w-1/6"
+          className="flex gap-4 md:gap-10  md:1/6"
           sx={{
             alignItems: "center",
             borderRadius: "5px",
+            width: {
+              xs: "20%",
+              sm: "18%",
+              md: "13%",
+            },
           }}
         >
           <Box className="relative">
@@ -102,7 +107,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
               />
             )}
           </Box>
-          <Box>
+          <Box className="hidden sm:block">
             <Typography
               variant="h5"
               sx={{
@@ -118,6 +123,7 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
           sx={{
             flexGrow: 2,
           }}
+          className="w-4/6"
         >
           <VerticalCardDetails
             valueDeatils={{

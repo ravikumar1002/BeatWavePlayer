@@ -31,12 +31,16 @@ const styles: Record<string, SxProps> = {
 export const SearchBar = () => {
   const navigate = useNavigate();
   const {
-    searchSuggestionRef,
+    searchInputRef,
     showSuggestionFn,
     searchString,
     setSearchString,
     setShowSearchSuggestion,
     showSearchSuggestion,
+    onSeacrchChange,
+    onSeacrchInputBlur,
+    onSearchInputFocus,
+    isFocused,
   } = useSearchBar();
 
   const dataAssemble = data;
@@ -72,6 +76,7 @@ export const SearchBar = () => {
 
     return albumsFilter;
   };
+
   const getArtistsSearchCategoryData = (artistsList: SearchResultArtistsItem[]) => {
     const artistsFilter = artistsList.map((artist) => {
       return {
@@ -113,86 +118,108 @@ export const SearchBar = () => {
   };
 
   return (
-    <Box ref={searchSuggestionRef}>
+    <Box>
       <Paper
         component="div"
-        sx={{ p: "2px 4px", width: 600 }}
-        className="flex items-center relative"
+        sx={{
+          p: "2px 4px",
+          width: {
+            xs: 200,
+            sm: 350,
+            md: 400,
+            lg: 450,
+            xl: 600,
+          },
+        }}
+        className="relative"
       >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search"
-          inputProps={{ "aria-label": "search" }}
-          onChange={inputChangeHandler}
-          onKeyDown={inputKeyDownHandler}
-          value={searchString}
-          onFocus={inputFocusHandler}
-        />
-        {searchString.length > 0 && (
-          <IconButton type="button" className="p-3" aria-label="clear" onClick={closeButtonHandler}>
-            <CloseIcon />
+        <Box className="flex items-center justify-between">
+          <InputBase
+            sx={{ ml: 1, flexGrow: 2 }}
+            placeholder="Search..."
+            inputProps={{ "aria-label": "search" }}
+            // onChange={inputChangeHandler}
+            // onKeyDown={inputKeyDownHandler}
+            // value={searchString}
+            // onFocus={inputFocusHandler}
+            onChange={onSeacrchChange}
+            inputRef={searchInputRef}
+            onBlur={onSeacrchInputBlur}
+            onFocus={onSearchInputFocus}
+          />
+          {searchString.length > 0 && (
+            <IconButton
+              type="button"
+              className="p-3"
+              aria-label="clear"
+              onClick={closeButtonHandler}
+            >
+              <CloseIcon />
+            </IconButton>
+          )}
+          <IconButton
+            type="button"
+            className="p-3"
+            aria-label="search"
+            onClick={() => {
+              if (searchString.length > 0) navigate(`/search?q=${searchString}`);
+            }}
+          >
+            <SearchIcon />
           </IconButton>
-        )}
-        <IconButton
-          type="button"
-          className="p-3"
-          aria-label="search"
-          onClick={() => {
-            if (searchString.length > 0) navigate(`/search?q=${searchString}`);
-          }}
-        >
-          <SearchIcon />
-        </IconButton>
-        {showSearchSuggestion && (
-          <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
-            {dataAssemble.albums.items &&
-              // @ts-expect-error mujhe nhi pta
-              getAlbumSearchCategoryData(dataAssemble.albums.items).map((item) => {
-                return (
-                  <SearchSuggestion
-                    key={item.id}
-                    suggestionData={item}
-                    suggestionResultCategory="Albums"
-                  />
-                );
-              })}
+        </Box>
+        <Box>
+          {isFocused && (
+            <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
+              {dataAssemble.albums.items &&
+                // @ts-expect-error mujhe nhi pta
+                getAlbumSearchCategoryData(dataAssemble.albums.items).map((item) => {
+                  return (
+                    <SearchSuggestion
+                      key={item.id}
+                      suggestionData={item}
+                      suggestionResultCategory="Albums"
+                    />
+                  );
+                })}
 
-            {dataAssemble.artists.items &&
-              //@ts-expect-error mujhe nhi pta
-              getArtistsSearchCategoryData(dataAssemble.artists.items).map((item) => {
-                return (
-                  <SearchSuggestion
-                    key={item.id}
-                    suggestionData={item}
-                    suggestionResultCategory="Artists"
-                  />
-                );
-              })}
-            {dataAssemble.playlists.items &&
-              //@ts-expect-error mujhe nhi pta
-              getPlaylistsSearchCategoryData(dataAssemble.playlists.items).map((item) => {
-                return (
-                  <SearchSuggestion
-                    key={item.id}
-                    suggestionData={item}
-                    suggestionResultCategory="Playlists"
-                  />
-                );
-              })}
-            {dataAssemble.tracks.items &&
-              //@ts-expect-error mujhe nhi pta
-              getTracksSearchCategoryData(dataAssemble.tracks.items).map((item) => {
-                console.log(item, "nnnn");
-                return (
-                  <SearchSuggestion
-                    key={item.id}
-                    suggestionData={item}
-                    suggestionResultCategory="Tracks"
-                  />
-                );
-              })}
-          </Box>
-        )}
+              {dataAssemble.artists.items &&
+                //@ts-expect-error mujhe nhi pta
+                getArtistsSearchCategoryData(dataAssemble.artists.items).map((item) => {
+                  return (
+                    <SearchSuggestion
+                      key={item.id}
+                      suggestionData={item}
+                      suggestionResultCategory="Artists"
+                    />
+                  );
+                })}
+              {dataAssemble.playlists.items &&
+                //@ts-expect-error mujhe nhi pta
+                getPlaylistsSearchCategoryData(dataAssemble.playlists.items).map((item) => {
+                  return (
+                    <SearchSuggestion
+                      key={item.id}
+                      suggestionData={item}
+                      suggestionResultCategory="Playlists"
+                    />
+                  );
+                })}
+              {dataAssemble.tracks.items &&
+                //@ts-expect-error mujhe nhi pta
+                getTracksSearchCategoryData(dataAssemble.tracks.items).map((item) => {
+                  console.log(item, "nnnn");
+                  return (
+                    <SearchSuggestion
+                      key={item.id}
+                      suggestionData={item}
+                      suggestionResultCategory="Tracks"
+                    />
+                  );
+                })}
+            </Box>
+          )}
+        </Box>
       </Paper>
     </Box>
   );

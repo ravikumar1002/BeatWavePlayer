@@ -44,6 +44,7 @@ export const SearchSuggestion = (props: {
     item: ISearchSuggestionDataProps,
     suggestionResultCategory: string,
   ) => {
+    console.log('---f-f-f--f-f- clicked suggestion')
     if (suggestionResultCategory === "Tracks") {
       console.log(item, 'm---------------------------------------------------------------------------------------');
       setPlayingSongId(item.id);

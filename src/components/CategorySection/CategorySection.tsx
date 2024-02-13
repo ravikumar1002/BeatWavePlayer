@@ -9,6 +9,8 @@ interface ICategorySection {
   routePath: string;
 }
 
+
+
 export const CategorySection = (props: ICategorySection) => {
   const { title, categoriesItems, routePath } = props;
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export const CategorySection = (props: ICategorySection) => {
           {title}
         </Typography>
       </Box>
-      <Grid container spacing={4} className="p-4">
+      <Grid container className="p-4">
         {categoriesItems.map((item) => (
           <Grid
             item
@@ -29,10 +31,25 @@ export const CategorySection = (props: ICategorySection) => {
             md={3}
             lg={2}
             xl={2}
-            columnSpacing={2}
+            columnSpacing={{ xs: 1, md: 2 }}
             key={item._id}
             onClick={() => {
               navigate(`/${routePath}/${item._id}`);
+            }}
+            sx={{
+              "& .MuiGrid-item": {
+                background: "orange",
+                paddingLeft: {
+                  sm: 4,
+                  md: 6,
+                  lg: 8,
+                },
+                paddingTop: {
+                  sm: 4,
+                  md: 6,
+                  lg: 8,
+                },
+              },
             }}
           >
             <PlaylistCard details={item} />

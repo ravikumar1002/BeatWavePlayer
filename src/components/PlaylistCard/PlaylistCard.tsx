@@ -29,7 +29,7 @@ export const PlaylistCard = (props: IPlaylistCardProps) => {
   const { image, name, description } = props.details;
   return (
     <Card sx={styles.wrapper}>
-      <CardActionArea>
+      {/* <CardActionArea> */}
         <Box
           sx={{
             overflow: "hidden",
@@ -75,7 +75,7 @@ export const PlaylistCard = (props: IPlaylistCardProps) => {
             </Box>
           </Box>
         </CardContent>
-      </CardActionArea>
+      {/* </CardActionArea> */}
     </Card>
   );
 };

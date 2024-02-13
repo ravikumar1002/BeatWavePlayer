@@ -1,35 +1,20 @@
-// import { useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-// type Timer = ReturnType<typeof setTimeout>;
-// type SomeFunction = (...args: any[]) => void;
 
-// /**
-//  *
-//  * @param func The original, non debounced function (You can pass any number of args to it)
-//  * @param delay The delay (in ms) for the function to return
-//  * @returns The debounced function, which will run only if the debounced function has not been called in the last (delay) ms
-//  */
+const useDebounce = <T>(value: T, delay: number) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
 
-// export const useDebounce = (
-//     func: () => void,
-//     delay = 1000
-// ) => {
-//     const timer = useRef<Timer>();
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
 
-//     useEffect(() => {
-//         return () => {
-//             if (!timer.current) return;
-//             clearTimeout(timer.current);
-//         };
-//     }, []);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
 
-//     const debouncedFunction = ((...args) => {
-//         const newTimer = setTimeout(() => {
-//             func(...args);
-//         }, delay);
-//         clearTimeout(timer.current);
-//         timer.current = newTimer;
-//     });
+    return debouncedValue;
+}
 
-//     return debouncedFunction;
-// }
+export default useDebounce
