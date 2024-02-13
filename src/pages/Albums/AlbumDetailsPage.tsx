@@ -19,7 +19,7 @@ export const AlbumDetailsPage = () => {
       )}
       {albumDetailsQuery.isLoading && <DetailsPageBannerSkeleton />}
 
-      <Box className="px-8 py-2">
+      <Box className="px-4 md:px-8 py-2">
         {albumDetailsQuery.isLoading &&
           Array(20)
             .fill(0)

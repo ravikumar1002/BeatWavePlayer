@@ -68,7 +68,7 @@ const HomePage = () => {
           />
         )}
       </Box>
-      <Box className="p-6">
+      <Box className="p-3 md:p-6">
         <Box className="mb-5">
           <Typography variant="h5" component="div" fontWeight={600}>
             {" "}
