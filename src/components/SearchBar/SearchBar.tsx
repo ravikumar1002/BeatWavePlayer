@@ -4,8 +4,14 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchSuggestion } from "@components/SearchSuggestion/SearchSuggestion";
-import { data } from "@components/Header/data";
-import { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  RefObject,
+  useEffect,
+  useRef,
+} from "react";
 import {
   SearchResultAlbumItems,
   SearchResultArtistsItem,
@@ -30,23 +36,13 @@ const styles: Record<string, SxProps> = {
 
 export const SearchBar = () => {
   const navigate = useNavigate();
-  const {
-    searchInputRef,
-    showSuggestionFn,
-    searchString,
-    setSearchString,
-    setShowSearchSuggestion,
-    showSearchSuggestion,
-    onSeacrchChange,
-    onSeacrchInputBlur,
-    onSearchInputFocus,
-    isFocused,
-  } = useSearchBar();
+  const { searchString, setSearchString, isFocused, setIsFocused, suggestionSearchList } =
+    useSearchBar();
 
-  const dataAssemble = data;
+  const dataAssemble = suggestionSearchList;
+  const searchSuggestionRef = useRef<HTMLInputElement>(null);
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    showSuggestionFn(e.target.value.trim().length);
     setSearchString(e.target.value);
   };
 
@@ -54,17 +50,17 @@ export const SearchBar = () => {
     //@ts-expect-error mujhe nhi pta
     if (e.key === "Enter" && e.target.value.length > 0) {
       navigate(`/search?q=${searchString}`);
-      setShowSearchSuggestion(false);
+      setIsFocused(false);
     }
   };
 
-  const inputFocusHandler = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    showSuggestionFn(e.target.value.trim().length);
+  const inputFocusHandler = () => {
+    setIsFocused(true);
   };
 
   const closeButtonHandler = () => {
     setSearchString("");
-    showSuggestionFn(0);
+    setIsFocused(false);
   };
 
   const getAlbumSearchCategoryData = (albumsList: SearchResultAlbumItems[]) => {
@@ -100,9 +96,7 @@ export const SearchBar = () => {
   };
 
   const getTracksSearchCategoryData = (tracksList: SearchResultTracksItem[]) => {
-    console.log(tracksList);
     const tracksFilter = tracksList.map((track) => {
-      // console.log(track);
       return {
         image: track.album.images[2].url,
         id: track.id,
@@ -116,6 +110,32 @@ export const SearchBar = () => {
     });
     return tracksFilter;
   };
+
+  const handleClickOutside =
+    (searchSuggestionRef: RefObject<HTMLElement>, setIsFocused: (isFocused: boolean) => void) =>
+    (event: MouseEvent<Document>) => {
+      if (
+        searchSuggestionRef.current &&
+        !searchSuggestionRef.current.contains(event.target as Node)
+      ) {
+        setIsFocused(false);
+      }
+    };
+
+  useEffect(() => {
+    document.addEventListener(
+      "click",
+      () => handleClickOutside(searchSuggestionRef, setIsFocused),
+      true,
+    );
+    return () => {
+      document.removeEventListener(
+        "click",
+        () => handleClickOutside(searchSuggestionRef, setIsFocused),
+        true,
+      );
+    };
+  }, []);
 
   return (
     <Box>
@@ -132,20 +152,17 @@ export const SearchBar = () => {
           },
         }}
         className="relative"
+        ref={searchSuggestionRef}
       >
         <Box className="flex items-center justify-between">
           <InputBase
             sx={{ ml: 1, flexGrow: 2 }}
             placeholder="Search..."
             inputProps={{ "aria-label": "search" }}
-            // onChange={inputChangeHandler}
-            // onKeyDown={inputKeyDownHandler}
-            // value={searchString}
-            // onFocus={inputFocusHandler}
-            onChange={onSeacrchChange}
-            inputRef={searchInputRef}
-            onBlur={onSeacrchInputBlur}
-            onFocus={onSearchInputFocus}
+            onChange={inputChangeHandler}
+            onKeyDown={inputKeyDownHandler}
+            value={searchString}
+            onFocus={inputFocusHandler}
           />
           {searchString.length > 0 && (
             <IconButton
@@ -169,10 +186,9 @@ export const SearchBar = () => {
           </IconButton>
         </Box>
         <Box>
-          {isFocused && (
+          {searchString.length > 0 && isFocused && dataAssemble && (
             <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
               {dataAssemble.albums.items &&
-                // @ts-expect-error mujhe nhi pta
                 getAlbumSearchCategoryData(dataAssemble.albums.items).map((item) => {
                   return (
                     <SearchSuggestion
@@ -184,7 +200,6 @@ export const SearchBar = () => {
                 })}
 
               {dataAssemble.artists.items &&
-                //@ts-expect-error mujhe nhi pta
                 getArtistsSearchCategoryData(dataAssemble.artists.items).map((item) => {
                   return (
                     <SearchSuggestion
@@ -195,7 +210,6 @@ export const SearchBar = () => {
                   );
                 })}
               {dataAssemble.playlists.items &&
-                //@ts-expect-error mujhe nhi pta
                 getPlaylistsSearchCategoryData(dataAssemble.playlists.items).map((item) => {
                   return (
                     <SearchSuggestion
@@ -206,9 +220,7 @@ export const SearchBar = () => {
                   );
                 })}
               {dataAssemble.tracks.items &&
-                //@ts-expect-error mujhe nhi pta
                 getTracksSearchCategoryData(dataAssemble.tracks.items).map((item) => {
-                  console.log(item, "nnnn");
                   return (
                     <SearchSuggestion
                       key={item.id}

@@ -1,7 +1,7 @@
 import { useSearchBar } from "@components/SearchBar/useSearchBar";
 import { Box, SxProps, Typography } from "@mui/material";
 import { useAppStore } from "@store/store";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const styles: Record<string, SxProps> = {
   searchSuggestionContentStyle: {
@@ -31,7 +31,7 @@ export const SearchSuggestion = (props: {
   suggestionData: ISearchSuggestionDataProps;
   suggestionResultCategory: string;
 }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { setPlayingSongId, setCurrentTrack, setPlaylistSongs } = useAppStore();
   const { setShowSearchSuggestion } = useSearchBar();
@@ -44,17 +44,21 @@ export const SearchSuggestion = (props: {
     item: ISearchSuggestionDataProps,
     suggestionResultCategory: string,
   ) => {
-    console.log('---f-f-f--f-f- clicked suggestion')
+    console.log(item);
     if (suggestionResultCategory === "Tracks") {
-      console.log(item, 'm---------------------------------------------------------------------------------------');
       setPlayingSongId(item.id);
       //@ts-expect-error mujhe nhi pta
       setPlaylistSongs([item]);
       setCurrentTrack(0);
       setShowSearchSuggestion(false);
-    } else {
-      console.log(item);
-      // navigate(`/playlist/${item.id}`);
+    } else if (suggestionResultCategory === "Playlists") {
+      navigate(`/playlist/${item.id}`);
+      setShowSearchSuggestion(false);
+    } else if (suggestionResultCategory === "Artists") {
+      navigate(`/artists/${item.id}`);
+      setShowSearchSuggestion(false);
+    } else if (suggestionResultCategory === "Albums") {
+      navigate(`/albums/${item.id}`);
       setShowSearchSuggestion(false);
     }
   };

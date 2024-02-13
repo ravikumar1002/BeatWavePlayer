@@ -1,14 +1,16 @@
 import { useSearchParams } from "react-router-dom";
-import { data } from "@components/Header/data";
 import { SearchResultSection } from "@components/SearchResultSection/SearchResultSection";
 import { Box } from "@mui/material";
 import { SearchFilterTabs } from "@components/SearchFilterTabs/SearchFIlterTabs";
 import { useEffect } from "react";
 import { getSongsFilteredData } from "@utils/getSongsFilteredData";
+import { useSearchBar } from "@components/SearchBar/useSearchBar";
 
 export const SearchResultPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchData = data;
+
+  const { suggestionSearchList } = useSearchBar();
+  const searchData = suggestionSearchList;
 
   useEffect(() => {
     const param = searchParams.get("category");
@@ -24,21 +26,21 @@ export const SearchResultPage = () => {
       <Box>
         <SearchResultSection
           searchCategoryTitle="Albums"
-          songDeatils={getSongsFilteredData(searchData.albums.items)}
+          songDeatils={getSongsFilteredData(searchData?.albums.items)}
         />
         <SearchResultSection
           searchCategoryTitle="Tracks"
-          songDeatils={getSongsFilteredData(searchData.tracks.items)}
+          songDeatils={getSongsFilteredData(searchData?.tracks.items)}
           cardType={"Tracks"}
         />
         <SearchResultSection
           searchCategoryTitle="Playlists"
-          songDeatils={getSongsFilteredData(searchData.playlists.items)}
+          songDeatils={getSongsFilteredData(searchData?.playlists.items)}
           cardType={"Playlists"}
         />
         <SearchResultSection
           searchCategoryTitle="Artists"
-          songDeatils={getSongsFilteredData(searchData.artists.items)}
+          songDeatils={getSongsFilteredData(searchData?.artists.items)}
         />
       </Box>
     </div>
