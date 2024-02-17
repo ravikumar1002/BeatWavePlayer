@@ -78,9 +78,9 @@ export const VerticalSongCard = (props: IVerticalSongCardProps) => {
             alignItems: "center",
             borderRadius: "5px",
             width: {
-              xs: "20%",
-              sm: "18%",
-              md: "13%",
+              xs: "19%",
+              sm: "17%",
+              md: "12%",
             },
           }}
         >
