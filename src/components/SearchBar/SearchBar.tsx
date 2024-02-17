@@ -4,14 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchSuggestion } from "@components/SearchSuggestion/SearchSuggestion";
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
-  useEffect,
-  useRef,
-} from "react";
+import { ChangeEvent, KeyboardEvent, MouseEvent, RefObject, useEffect, useRef } from "react";
 import {
   SearchResultAlbumItems,
   SearchResultArtistsItem,
@@ -27,7 +20,7 @@ const styles: Record<string, SxProps> = {
     borderRadius: "5px",
     left: 0,
     zIndex: "20",
-    height: 400,
+    maxHeight: 400,
     overflowY: "scroll",
     background: "white",
     width: "100%",
@@ -87,7 +80,7 @@ export const SearchBar = () => {
 
   const getPlaylistsSearchCategoryData = (playlistsList: SearchResultPlaylistsItem[]) => {
     const playlistsFilter = playlistsList.map((playlist) => ({
-      image: playlist.images[0].url,
+      image: playlist?.images[0].url,
       id: playlist.id,
       title: playlist.name,
     }));
@@ -114,6 +107,7 @@ export const SearchBar = () => {
   const handleClickOutside =
     (searchSuggestionRef: RefObject<HTMLElement>, setIsFocused: (isFocused: boolean) => void) =>
     (event: MouseEvent<Document>) => {
+      console.log(searchSuggestionRef);
       if (
         searchSuggestionRef.current &&
         !searchSuggestionRef.current.contains(event.target as Node)
@@ -138,7 +132,7 @@ export const SearchBar = () => {
   }, []);
 
   return (
-    <Box>
+    <Box ref={searchSuggestionRef}>
       <Paper
         component="div"
         sx={{
@@ -152,7 +146,6 @@ export const SearchBar = () => {
           },
         }}
         className="relative"
-        ref={searchSuggestionRef}
       >
         <Box className="flex items-center justify-between">
           <InputBase
@@ -186,7 +179,7 @@ export const SearchBar = () => {
           </IconButton>
         </Box>
         <Box>
-          {searchString.length > 0 && isFocused && dataAssemble && (
+          {isFocused && searchString.length > 0 && dataAssemble && (
             <Box sx={styles.searchSuggestionWrapperStyle} id="scrollBarDesign">
               {dataAssemble.albums.items &&
                 getAlbumSearchCategoryData(dataAssemble.albums.items).map((item) => {

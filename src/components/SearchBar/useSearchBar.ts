@@ -1,6 +1,7 @@
 import { SearchResultDTO } from "@dto/searchResultDTO";
 import { spotifySearchApi } from "@hooks/spotifySearchApi";
 import useDebounce from "@hooks/useDebounce";
+import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, MouseEvent, RefObject, useEffect, useRef, useState } from "react";
 
 export const useSearchBar = () => {
@@ -12,10 +13,10 @@ export const useSearchBar = () => {
 
   // const searchResultLimit = 5;
 
-  const debouncedSearchTerm = useDebounce(searchString, 2000);
+  const debouncedSearchTerm = useDebounce(searchString, 200);
 
   const f = async () => {
-    const data = await spotifySearchApi(debouncedSearchTerm, 20);
+    const data = await spotifySearchApi(debouncedSearchTerm, 5);
     if (data) {
       //@ts-expect-error mujhe nhi pta
       setSuggestionSearchList(data);
@@ -23,8 +24,19 @@ export const useSearchBar = () => {
     return data;
   };
 
+  // const suggestionSearchListQuery = useQuery({
+  //   queryKey: ["search-suggestion"],
+  //   queryFn: async () => {
+  //     const albumsData = await spotifySearchApi(debouncedSearchTerm, 20);
+  //     return albumsData;
+  //   },
+  //   // refetchOnWindowFocus: false,
+  // });
+
   useEffect(() => {
-    f();
+    if (isFocused) {
+      f();
+    }
   }, [debouncedSearchTerm]);
 
   const showSuggestionFn = (searchLength: number) => {
@@ -57,7 +69,8 @@ export const useSearchBar = () => {
     onSearchInputFocus,
     onSeacrchInputBlur,
     isFocused,
-    suggestionSearchList,
+    // suggestionSearchListQuery,
     setIsFocused,
+    suggestionSearchList,
   };
 };
