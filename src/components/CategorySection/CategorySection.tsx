@@ -9,8 +9,6 @@ interface ICategorySection {
   routePath: string;
 }
 
-
-
 export const CategorySection = (props: ICategorySection) => {
   const { title, categoriesItems, routePath } = props;
   const navigate = useNavigate();
@@ -22,7 +20,7 @@ export const CategorySection = (props: ICategorySection) => {
           {title}
         </Typography>
       </Box>
-      <Grid container className="p-4">
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }} className="p-4">
         {categoriesItems.map((item) => (
           <Grid
             item
@@ -31,7 +29,7 @@ export const CategorySection = (props: ICategorySection) => {
             md={3}
             lg={2}
             xl={2}
-            columnSpacing={{ xs: 1, md: 2 }}
+            columnSpacing={2}
             key={item._id}
             onClick={() => {
               navigate(`/${routePath}/${item._id}`);
@@ -56,7 +54,6 @@ export const CategorySection = (props: ICategorySection) => {
           </Grid>
         ))}
       </Grid>
-      <Box className="flex flex-wrap gap-4"></Box>
     </Box>
   );
 };

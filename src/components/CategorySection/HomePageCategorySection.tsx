@@ -13,13 +13,19 @@ export const HomePageCategorySection = (props: IHomePageCategorySection) => {
   const { title, categoriesItems, routePath } = props;
   const navigate = useNavigate();
   return (
-    <Box className="p-6">
-      <Box className="mb-5 flex justify-between">
+    <Box className="px-3 py-1 pb-2">
+      <Box className="mb-2 flex justify-between">
         <Typography variant="h5" component="div" fontWeight={600}>
           {title}
         </Typography>
         <Typography variant="body1" component="div">
-          <Link href={`${routePath}`}>View More</Link>
+          <Link
+            onClick={() => {
+              navigate(`${routePath}`);
+            }}
+          >
+            View More
+          </Link>
         </Typography>
       </Box>
       <Grid container spacing={4} className="p-4">

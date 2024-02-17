@@ -16,6 +16,7 @@ interface IPlaylistCardProps {
 
 const styles: Record<string, SxProps> = {
   wrapper: {
+    cursor: "pointer",
     "&:hover": {
       "& .image-container": {
         transform: "scale(1.1)",
@@ -30,51 +31,60 @@ export const PlaylistCard = (props: IPlaylistCardProps) => {
   return (
     <Card sx={styles.wrapper}>
       {/* <CardActionArea> */}
-        <Box
+      <Box
+        sx={{
+          overflow: "hidden",
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={image}
+          alt={name}
+          className="image-container"
+          loading="lazy"
+        />
+      </Box>
+
+      <CardContent
+        sx={{
+          padding: {
+            xs: "0.5rem",
+            sm: "1rem",
+          },
+          "& .css-1d6y1ul-MuiCardContent-root:last-child": {
+            paddingBottom: 0,
+          },
+        }}
+      >
+        <Typography
+          variant="subtitle2"
+          component="div"
+          fontWeight={"800"}
           sx={{
+            lineBreak: "anywhere",
+            whiteSpace: "nowrap",
             overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
-          <CardMedia
-            component="img"
-            image={image}
-            alt={name}
-            className="image-container"
-            loading="lazy"
-          />
-        </Box>
-
-        <CardContent>
+          {name}
+        </Typography>
+        <Box className="mydiv">
           <Typography
-            gutterBottom
             variant="subtitle2"
-            component="div"
-            fontWeight={"800"}
+            color="text.secondary"
+            className="mytext"
             sx={{
-              lineBreak: "anywhere",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
+              fontSize: "0.8rem",
             }}
           >
-            {name}
+            {description}
           </Typography>
-          <Box className="mydiv">
-            <Typography
-              variant="subtitle2"
-              color="text.secondary"
-              className="mytext"
-              sx={{
-                fontSize: "0.8rem",
-              }}
-            >
-              {description}
-            </Typography>
-            <Box color="text.secondary" className="myelli">
-              ...
-            </Box>
+          <Box color="text.secondary" className="myelli">
+            ...
           </Box>
-        </CardContent>
+        </Box>
+      </CardContent>
       {/* </CardActionArea> */}
     </Card>
   );

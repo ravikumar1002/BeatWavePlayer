@@ -93,7 +93,7 @@ export const DetailsPageBanner = (props: IDetailsPageBanner) => {
           {subText3 && subText3.length > 0 && <MiddleDot />}
           <SubTextStyle variant="body2">{subText3}</SubTextStyle>
         </Box>
-        <Box className="ml-12 mt-4">
+        <Box className="ml-2 mt-4">
           {
             <Button
               type="button"

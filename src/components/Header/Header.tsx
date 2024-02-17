@@ -34,10 +34,10 @@ export const Header = () => {
                 variant="h5"
                 noWrap
                 component="a"
-                href="/"
                 sx={{
                   color: "inherit",
                   fontWeight: 700,
+                  cursor: "pointer",
                 }}
                 className="mr-2 no-underline"
                 onClick={() => {
