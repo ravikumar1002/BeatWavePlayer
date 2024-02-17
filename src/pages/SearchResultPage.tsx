@@ -5,11 +5,13 @@ import { SearchFilterTabs } from "@components/SearchFilterTabs/SearchFIlterTabs"
 import { useEffect } from "react";
 import { getSongsFilteredData } from "@utils/getSongsFilteredData";
 import { useSearchBar } from "@components/SearchBar/useSearchBar";
+import { useQuery } from "@tanstack/react-query";
+import { spotifySearchApi } from "@hooks/spotifySearchApi";
 
 export const SearchResultPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { suggestionSearchList } = useSearchBar();
+  const { suggestionSearchList, isFocused } = useSearchBar();
   const searchData = suggestionSearchList;
 
   useEffect(() => {
@@ -20,29 +22,50 @@ export const SearchResultPage = () => {
     }
   }, []);
 
+  const searchQueryParam = searchParams.get("q");
+  console.log(searchQueryParam);
+  const searchListQuery = useQuery({
+    queryKey: ["search-query", searchQueryParam],
+    queryFn: async () => {
+      if (searchQueryParam) {
+        const albumsData = await spotifySearchApi(searchQueryParam, 10);
+        return albumsData;
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  console.log(searchData, isFocused, searchListQuery, "search data");
+
   return (
-    <div>
-      <SearchFilterTabs />
+    <Box>
       <Box>
-        <SearchResultSection
-          searchCategoryTitle="Albums"
-          songDeatils={getSongsFilteredData(searchData?.albums.items)}
-        />
-        <SearchResultSection
-          searchCategoryTitle="Tracks"
-          songDeatils={getSongsFilteredData(searchData?.tracks.items)}
-          cardType={"Tracks"}
-        />
-        <SearchResultSection
-          searchCategoryTitle="Playlists"
-          songDeatils={getSongsFilteredData(searchData?.playlists.items)}
-          cardType={"Playlists"}
-        />
-        <SearchResultSection
-          searchCategoryTitle="Artists"
-          songDeatils={getSongsFilteredData(searchData?.artists.items)}
-        />
+        <SearchFilterTabs />
+        {searchListQuery.data && (
+          <Box>
+            <SearchResultSection
+              searchCategoryTitle="albums"
+              songDeatils={getSongsFilteredData(searchListQuery.data?.albums.items)}
+              cardType={"albums"}
+            />
+            <SearchResultSection
+              searchCategoryTitle="tracks"
+              songDeatils={getSongsFilteredData(searchListQuery.data?.tracks.items)}
+              cardType={"tracks"}
+            />
+            <SearchResultSection
+              searchCategoryTitle="playlists"
+              songDeatils={getSongsFilteredData(searchListQuery.data?.playlists.items)}
+              cardType={"playlists"}
+            />
+            <SearchResultSection
+              searchCategoryTitle="artists"
+              songDeatils={getSongsFilteredData(searchListQuery.data?.artists.items)}
+              cardType={"artists"}
+            />
+          </Box>
+        )}
       </Box>
-    </div>
+    </Box>
   );
 };

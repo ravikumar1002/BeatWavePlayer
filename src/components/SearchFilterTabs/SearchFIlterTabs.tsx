@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ClearFilterChip, FilterChip } from "./FilterChips";
 
@@ -14,7 +14,7 @@ export const SearchFilterTabs = () => {
   const [activeCategory, setActiveCategory] = useState<string>("");
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const categories = ["Artists", "Tracks", "Albums", "Playlists"];
+  const categories = ["artists", "tracks", "albums", "playlists"];
 
   const deleteSelectedCategory = () => {
     setActiveCategory("");
@@ -25,20 +25,34 @@ export const SearchFilterTabs = () => {
     }
   };
 
-  const selectedCategory = (category: string) => {
-    setActiveCategory(category);
-    setSearchParams({ category: category });
+  const selectCategory = (category: string) => {
+    // setActiveCategory(category);
+    // const qParam = searchParams.get("q");
+    // if (qParam && category) {
+    //   setSearchParams({ q: qParam, category: category });
+    // }
+    searchParams.set("category", category);
+    setSearchParams(searchParams);
   };
+
+  const selectedCategory = searchParams.get("category");
+
+  useEffect(() => {
+    deleteSelectedCategory();
+  }, [searchParams.get("q")]);
 
   return (
     <Box sx={{ paddingBottom: "1rem", width: "100%", paddingTop: "1rem" }}>
       <Box className="flex gap-3 w-full items-center justify-center">
         {categories.map((category, i) => {
-          if (category === activeCategory) {
+          if (category === selectedCategory) {
             return (
               <ClearFilterChip
                 key={i}
-                label={`${category}`}
+                label={`${category
+                  .split("")
+                  .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
+                  .join("")}`}
                 variant="filled"
                 onDelete={() => {
                   deleteSelectedCategory();
@@ -49,9 +63,12 @@ export const SearchFilterTabs = () => {
             return (
               <FilterChip
                 key={i}
-                label={`${category}`}
+                label={`${category
+                  .split("")
+                  .map((letter, i) => (i === 0 ? letter.toUpperCase() : letter))
+                  .join("")}`}
                 onClick={() => {
-                  selectedCategory(category);
+                  selectCategory(category);
                 }}
               />
             );

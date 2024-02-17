@@ -78,10 +78,25 @@ export const SearchResultCard = (props: ISearchResultCard) => {
           borderRadius: "10px",
         }}
         onClick={() => {
-          if (props?.cardType === "Tracks") {
-            console.log(props?.cardType);
-          } else if (props?.cardType === "Playlists") {
+          // if (props?.cardType === "Tracks") {
+          //   console.log(props?.cardType);
+          // } else if (props?.cardType === "Playlists") {
+          //   navigate(`/playlist/${id}`);
+          // }
+
+          console.log(props?.cardType, id);
+
+          if (props?.cardType === "tracks") {
+            // setPlayingSongId(id);
+            // //@ts-expect-error mujhe nhi pta
+            // setPlaylistSongs([item]);
+            // setCurrentTrack(0);
+          } else if (props?.cardType === "playlists") {
             navigate(`/playlist/${id}`);
+          } else if (props?.cardType === "artists") {
+            navigate(`/artists/${id}`);
+          } else if (props?.cardType === "albums") {
+            navigate(`/albums/${id}`);
           }
         }}
       >
